@@ -3,6 +3,8 @@
 
     <string name="app_name">ShouldBe</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Hello ShouldBe!</string>
+    <string name="tap_location">Tap Location</string>
+    <string name="post_wall">General Post</string>
 
 </resources>
