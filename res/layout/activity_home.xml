@@ -15,21 +15,23 @@
         android:text="@string/hello_world" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/tap_loc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="87dp"
-        android:text="@string/tap_location" />
+        android:text="@string/tap_location" 
+        android:onClick="tapLocation" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/post_wall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/button1"
+        android:layout_alignLeft="@+id/tap_loc"
+        android:layout_below="@+id/tap_loc"
         android:layout_marginTop="67dp"
-        android:text="@string/post_wall" />
+        android:text="@string/post_wall" 
+        android:onClick="postWall"  />
 
 </RelativeLayout>

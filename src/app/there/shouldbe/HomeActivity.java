@@ -1,8 +1,10 @@
 package app.there.shouldbe;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 public class HomeActivity extends Activity {
 
@@ -17,6 +19,20 @@ public class HomeActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.home, menu);
 		return true;
+	}
+	
+	/** Called when the user clicks the Tap Location button */
+	public void tapLocation(View view) {
+	    // Do something in response to button
+		Intent intent = new Intent(this, TapActivity.class);
+		startActivity(intent);
+	}
+	
+	/** Called when the user clicks the General Post button */
+	public void postWall(View view) {
+	    // Do something in response to button
+		Intent intent = new Intent(this, GeneralWallActivity.class);
+		startActivity(intent);
 	}
 
 }
