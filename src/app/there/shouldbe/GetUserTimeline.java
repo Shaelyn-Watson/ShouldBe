@@ -16,12 +16,13 @@
 
 package app.there.shouldbe;
 
+import java.util.List;
+
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-
-import java.util.List;
+import twitter4j.conf.ConfigurationBuilder;
 
 
 public class GetUserTimeline {
@@ -32,7 +33,16 @@ public class GetUserTimeline {
      */
     public static void main(String[] args) {
         // gets Twitter instance with default credentials
-        Twitter twitter = new TwitterFactory().getInstance();
+    	ConfigurationBuilder cb = new ConfigurationBuilder();
+    	cb.setDebugEnabled(true)
+    	  .setOAuthConsumerKey("dKC1yliVp7K7jLfdNWkKg")
+    	  .setOAuthConsumerSecret("RyN6VkkM6sue9mwtjLKTdLDc22YdPesUpkfEl5qBYM")
+    	  .setOAuthAccessToken("2360041674-cACB5pFLfUrqcmOSk6YM2awV5JV4rg4qZBJAAJi")
+    	  .setOAuthAccessTokenSecret("29xg2iop6eKeXVeUoKf4lHB5HaQwGK5CTATcNkwLLPVgB");
+    	TwitterFactory tf = new TwitterFactory(cb.build());
+    	Twitter twitter = tf.getInstance();
+    	
+//        Twitter twitter = new TwitterFactory().getInstance();
         try {
             List<Status> statuses;
             String user;
@@ -40,7 +50,8 @@ public class GetUserTimeline {
                 user = args[0];
                 statuses = twitter.getUserTimeline(user);
             } else {
-                user = twitter.verifyCredentials().getScreenName();
+//                user ="shouldbe"; 
+            	user = twitter.verifyCredentials().getScreenName();
                 statuses = twitter.getUserTimeline();
             }
             System.out.println("Showing @" + user + "'s user timeline.");
