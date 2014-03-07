@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
-public class GeneralWallActivity extends Activity{
+public class GeneralPostActivity extends Activity{
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {

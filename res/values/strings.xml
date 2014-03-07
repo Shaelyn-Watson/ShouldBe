@@ -6,5 +6,6 @@
     <string name="hello_world">Hello ShouldBe!</string>
     <string name="tap_location">Tap Location</string>
     <string name="post_wall">General Post</string>
+    <string name="title_activity_twitter_feed">TwitterFeedActivity</string>
 
 </resources>

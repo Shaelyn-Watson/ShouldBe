@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
-public class HomeActivity extends Activity {
+public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class HomeActivity extends Activity {
 	/** Called when the user clicks the General Post button */
 	public void postWall(View view) {
 	    // Do something in response to button
-		Intent intent = new Intent(this, GeneralWallActivity.class);
+		Intent intent = new Intent(this, GeneralPostActivity.class);
 		startActivity(intent);
 	}
 
