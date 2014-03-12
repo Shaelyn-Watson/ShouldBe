@@ -35,11 +35,9 @@ public final class R {
         public static final int activity_gen_wall=0x7f030000;
         public static final int activity_home=0x7f030001;
         public static final int activity_tap_location=0x7f030002;
-        public static final int activity_twitter_feed=0x7f030003;
     }
     public static final class menu {
         public static final int home=0x7f070000;
-        public static final int twitter_feed=0x7f070001;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
