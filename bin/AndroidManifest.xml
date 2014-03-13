@@ -33,7 +33,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="app.there.shouldbe.HomeActivity" />
+                android:value="app.there.shouldbe.MainActivity" />
         </activity>
         <activity
             android:name="app.there.shouldbe.GeneralPostActivity"
@@ -46,12 +46,15 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="app.there.shouldbe.HomeActivity" />
+                android:value="app.there.shouldbe.MainActivity" />
         </activity>
         <activity
             android:name="app.there.shouldbe.TwitterFeedActivity"
             android:label="@string/title_activity_twitter_feed" >
         </activity>
+        <meta-data
+    		android:name="com.google.android.gms.version"
+    		android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
