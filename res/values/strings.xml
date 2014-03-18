@@ -7,5 +7,6 @@
     <string name="tap_location">Tap Location</string>
     <string name="post_wall">General Post</string>
     <string name="title_activity_twitter_feed">TwitterFeedActivity</string>
+    <string name="twitter_feed">Twitter Feed</string>
 
 </resources>

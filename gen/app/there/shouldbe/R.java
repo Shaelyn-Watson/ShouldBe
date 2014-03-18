@@ -24,12 +24,14 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090005;
-        public static final int button1=0x7f090003;
-        public static final int button2=0x7f090004;
+        public static final int action_settings=0x7f090007;
+        public static final int button1=0x7f090004;
+        public static final int button2=0x7f090005;
         public static final int post_wall=0x7f090002;
         public static final int tap_loc=0x7f090001;
         public static final int textView1=0x7f090000;
+        public static final int twitterFeed=0x7f090006;
+        public static final int twitterfeed=0x7f090003;
     }
     public static final class integer {
         public static final int google_play_services_version=0x7f050000;
@@ -38,6 +40,8 @@ public final class R {
         public static final int activity_gen_wall=0x7f030000;
         public static final int activity_home=0x7f030001;
         public static final int activity_tap_location=0x7f030002;
+        public static final int activity_twitter_feed=0x7f030003;
+        public static final int list_item=0x7f030004;
     }
     public static final class menu {
         public static final int home=0x7f080000;
@@ -49,6 +53,7 @@ public final class R {
         public static final int post_wall=0x7f060004;
         public static final int tap_location=0x7f060003;
         public static final int title_activity_twitter_feed=0x7f060005;
+        public static final int twitter_feed=0x7f060006;
     }
     public static final class style {
         /** 

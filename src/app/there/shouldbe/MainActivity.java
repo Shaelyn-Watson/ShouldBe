@@ -35,5 +35,12 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, GeneralPostActivity.class);
 		startActivity(intent);
 	}
+	
+	/** Called when the user clicks the Twitter Feed button */
+	public void openTwitterFeed(View view) {
+	    // Do something in response to button
+		Intent intent = new Intent(this, TwitterFeedActivity.class);
+		startActivity(intent);
+	}
 
 }

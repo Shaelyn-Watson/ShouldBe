@@ -4,7 +4,8 @@
 	<classpathentry kind="src" path="libs"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="lib" path="/Users/imconfusedsoleav/android-sdks/extras/android/support/v4/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="libs/twitter4j-core-3.0.5.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
