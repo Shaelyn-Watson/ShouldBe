@@ -8,5 +8,7 @@
     <string name="post_wall">General Post</string>
     <string name="title_activity_twitter_feed">TwitterFeedActivity</string>
     <string name="twitter_feed">Twitter Feed</string>
+    <string name="tvGenPostText">What #shouldbe?</string>
+    <string name="etGenPostPrompt">\@shouldbeApp There #shouldbe</string>
 
 </resources>
