@@ -32,6 +32,8 @@ public class TwitterFeedActivity extends ListActivity {
 	private final String ACCESS_KEY = "2360041674-Z2lfohxkkx3ZCeNEldLwLP81VXk8eB6rH7PKMsc";
 	private final String ACCESS_SECRET = "gDznLbH7tnYXwjaW53uqon33pKMcrIV6OYxVi2Y6nU7Zh";
 	private final long SHOULDBE_TWITTER_ID = 2360041674L; // L is required for long value - not a part of ID
+	private ConnectionDetector cd;
+	private AlertDialogManager alert;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class TwitterFeedActivity extends ListActivity {
         }
         view = getListView();
         setAdapter();
+        
 	}
 	
 	@Override
@@ -74,6 +77,7 @@ public class TwitterFeedActivity extends ListActivity {
 	
 	public void getTimeLine() {
 		ArrayList<Status> tweets = new ArrayList<Status>();
+		
 		try {
 			TwitterListener listener = new TwitterAdapter() {
 				@Override

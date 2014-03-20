@@ -51,15 +51,29 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
+        <!-- <activity
             android:name="app.there.shouldbe.TwitterLoginActivity"
             android:label="@string/title_activity_twitter_login"
             android:parentActivityName="app.there.shouldbe.MainActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.there.shouldbe.MainActivity" /> 
+        </activity> -->
+        
+        <!-- Allow the Settings activity to be launched --> 
+		<activity android:name=".Settings" android:label="Settings"
+		    android:parentActivityName="aemperor.tictactoe.AndroidTicTacToe">
+		    <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.there.shouldbe.MainActivity" />
-        </activity>
+		    <intent-filter>
+            	<action android:name   = "android.intent.action.VIEW" />
+            	<category android:name="android.intent.category.DEFAULT" />
+            	<category android:name="android.intent.category.BROWSABLE" />
+            	<data android:scheme="shouldbe" android:host="tweet" />
+        	</intent-filter>
+		</activity> 
     </application>
 
 </manifest>

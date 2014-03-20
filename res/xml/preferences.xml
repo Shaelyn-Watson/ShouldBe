@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <Preference android:key="twitter_login"
+        android:summary="@string/twitterLoginSummary"
+        android:title="@string/twitterLogin"
+        android:icon="@drawable/twitter"></Preference>
+
+</PreferenceScreen>
