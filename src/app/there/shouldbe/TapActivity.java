@@ -1,51 +1,19 @@
 package app.there.shouldbe;
 
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
+import android.support.v4.app.FragmentActivity;
 
-public class TapActivity extends Activity {
-	
-	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tap_location);
+//import com.google.android.gms.maps.GoogleMap;
+//import com.google.android.gms.maps.SupportMapFragment;
 
-        // Make sure we're running on Honeycomb or higher to use ActionBar APIs
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // Show the Up button in the action bar.
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        
-        
-        //======
-        
-        // Get a handle to the Map Fragment
-//        GoogleMap map = ((MapFragment) getFragmentManager()
-//                .findFragmentById(R.id.map)).getMap();
-//
-//        LatLng sydney = new LatLng(-33.867, 151.206);
-//
-//        map.setMyLocationEnabled(true);
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-//
-//        map.addMarker(new MarkerOptions()
-//                .title("Sydney")
-//                .snippet("The most populous city in Australia.")
-//                .position(sydney));
-    }
+public class TapActivity extends FragmentActivity {
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home:
-        	this.finish();
-            NavUtils.navigateUpFromSameTask(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onCreate(Bundle savedInstanceState) {
+    	//Log.d("play_services", "is google play services available = " +  GooglePlayServicesUtil.isGooglePlayServicesAvailable(null));
+        super.onCreate(savedInstanceState);
+        //GoogleMap mMap = ((SupportMapFragment) getSupportFragmentManager()
+                //.findFragmentById(R.id.map)).getMap();
+        setContentView(R.layout.activity_tap_location);
     }
-
 }
