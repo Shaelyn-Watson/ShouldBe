@@ -2,9 +2,6 @@ package app.there.shouldbe;
 
 import twitter4j.Status;
 
-/**
- * Created by GHawkins on 11/16/13.
- */
 public class Tweet {
    private String name;
    private String message;
