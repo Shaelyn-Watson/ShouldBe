@@ -5,7 +5,9 @@ import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.maps.MapActivity;
 
 public class TapActivity extends MapActivity {
@@ -22,6 +24,17 @@ public class TapActivity extends MapActivity {
         mMap.setMyLocationEnabled(true);
         setUpMapIfNeeded();
         manipulateMap();
+        
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
+            @Override
+            public void onMapClick(LatLng point) {
+                // TODO Auto-generated method stub
+                //lstLatLngs.add(point);
+                mMap.addMarker(new MarkerOptions().position(point)
+                	.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+            }
+        });
 
     }
     
@@ -36,7 +49,7 @@ public class TapActivity extends MapActivity {
 
 
     private void manipulateMap() {
-    	// Move the camera instantly to Sydney with a zoom of 15.
+    	// Move the camera instantly to campus with a zoom of 15.
     	mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(GDC, 15));
 
 	}
