@@ -1,9 +1,12 @@
 package app.there.shouldbe;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
+import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.TwitterAdapter;
@@ -16,7 +19,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -34,6 +36,7 @@ public class TwitterFeedActivity extends ListActivity {
 	private final long SHOULDBE_TWITTER_ID = 2360041674L; // L is required for long value - not a part of ID
 	private ConnectionDetector cd;
 	private AlertDialogManager alert;
+	ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,21 +79,19 @@ public class TwitterFeedActivity extends ListActivity {
 	}
 	
 	public void getTimeLine() {
-		ArrayList<Status> tweets = new ArrayList<Status>();
-		
 		try {
 			TwitterListener listener = new TwitterAdapter() {
 				@Override
 				public void gotUserTimeline(ResponseList<Status> statuses) {
-					String msg = "ShouldBe Twitter:" + statuses.size();
-
-					ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
 					for(Status st : statuses) {
 						tweetList.add(new Tweet((st)));
 					}
-					
-					for (int i = 0; i < tweetList.size(); i++) {
-						Log.d("TWEETLIST", tweetList.get(i).toString());
+				}
+				
+				@Override
+				public void gotMentions(ResponseList<Status> statuses) {
+					for(Status st: statuses) {
+						tweetList.add(new Tweet((st)));
 					}
 					displayTwitter(tweetList);
 				}
@@ -99,13 +100,18 @@ public class TwitterFeedActivity extends ListActivity {
 				public void onException(TwitterException e, TwitterMethod method) {
 				    if(method == TwitterMethod.HOME_TIMELINE) {
 						e.printStackTrace();
-					} else {
+					} 
+				    else {
 					    e.printStackTrace();
 					}
 				}
 			};
+			
 			twitter.addListener(listener);
-			twitter.getUserTimeline(SHOULDBE_TWITTER_ID);
+//			twitter.getUserTimeline(SHOULDBE_TWITTER_ID);
+			Paging paging = new Paging();
+			paging.setCount(20);
+			twitter.getMentions(paging);
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
@@ -114,14 +120,19 @@ public class TwitterFeedActivity extends ListActivity {
 	}
 	
 	private void displayTwitter(final ArrayList<Tweet> tweetList) {
-
-	      final TweetAdapter<Tweet> adapter = new TweetAdapter<Tweet>(this, tweetList);
-	      
-	      this.runOnUiThread(new Runnable() {
-	         @Override
-	         public void run() {
-	        	 setListAdapter(adapter);
-	         }
-	      });
+		Collections.sort(tweetList, new Comparator<Tweet>() {
+			public int compare(Tweet t1, Tweet t2) {
+				return t1.getDate().compareTo(t2.getDate());
+			}
+		});
+	
+		final TweetAdapter<Tweet> adapter = new TweetAdapter<Tweet>(this, tweetList);
+      
+		this.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				setListAdapter(adapter);
+			}
+		});
 	}
 }

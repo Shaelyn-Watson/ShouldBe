@@ -80,9 +80,14 @@
 
 		<meta-data android:name="com.google.android.gms.version"
            android:value="@integer/google_play_services_version" />
-		<meta-data
+		<!-- Shaelyn's Key -->
+		<!-- <meta-data
 		   		android:name="com.google.android.maps.v2.API_KEY"
-		   		android:value="AIzaSyCOl8qrlZX_1mjQ3ntAXaigvVe20pQQIF8"/>
+		   		android:value="AIzaSyCOl8qrlZX_1mjQ3ntAXaigvVe20pQQIF8"/> -->
+	   	<!-- Alexis's Debug Key -->
+	   	<meta-data
+	   		android:name="com.google.android.maps.v2.API_KEY"
+	   		android:value="AIzaSyAzxQXjQm94cpHlZf6Nk_QhDb9gyb-WCyo"/>
 		<uses-library android:name="com.google.android.maps" />
 	    
     </application>
