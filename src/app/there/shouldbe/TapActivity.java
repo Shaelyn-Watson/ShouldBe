@@ -1,14 +1,13 @@
 package app.there.shouldbe;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -19,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.maps.MapActivity;
 
@@ -55,12 +55,17 @@ public class TapActivity extends MapActivity implements
 
             @Override
             public void onMapClick(LatLng point) { 
-                // TODO Auto-generated method stub 
-                //lstLatLngs.add(point);
-                mMap.addMarker(new MarkerOptions().position(point)
-                	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin)));
+                
+                Marker shouldBePin = mMap.addMarker(new MarkerOptions().position(point)
+                	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
+                	.title("There should be:")
+                	);
+                // TODO
+                shouldBePin.showInfoWindow();
             }
         });
+        
+        mMap.setInfoWindowAdapter(new IconizedWindowAdapter(getLayoutInflater()));   
 
     }
     
@@ -101,16 +106,9 @@ public class TapActivity extends MapActivity implements
     	super.onStop();
     }
 
-    private void manipulateMap() {
-    	// Move the camera instantly to campus with a zoom of 15.
-    	mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(GDC, 15));
-
-	}
-    
     private void zoomToUserLocation() {
     	mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, 15));
     }
-
 
 	@Override
     protected boolean isRouteDisplayed() {
