@@ -24,8 +24,9 @@ public class IconizedWindowAdapter implements InfoWindowAdapter {
   @Override
   public View getInfoContents(Marker marker) {
     View popup=inflater.inflate(R.layout.map_info_window, null);
-
-
+    TextView tv=(TextView)popup.findViewById(R.id.title);
+    tv.setText(marker.getTitle());
+    
     return(popup);
   }
 } 
