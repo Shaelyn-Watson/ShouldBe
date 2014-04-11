@@ -46,9 +46,10 @@ public class TapActivity extends MapActivity implements
 	
 	//info window
 	private ViewGroup infoWindow;
-    private TextView infoTitle;    //There should be:
-    private TextView infoSnippet;  //Twitter display/input
-    private Button infoButton;     //like the ShouldBe *if exists
+    private TextView thereShouldBe;    //There should be:
+    private TextView shouldBeText;   //Twitter display/input
+    private Button likeButton;      //like the ShouldBe *TODO facebook
+    private TextView likeCount;     //display current number of likes
     private OnInfoWindowElemTouchListener infoButtonListener;
 	
     @Override
@@ -72,27 +73,25 @@ public class TapActivity extends MapActivity implements
         setUpMapIfNeeded(); //ensure map loads
         
         /*
-         * TODO
-         * Click on map = show existing pin's info window or create new pin waiting for input
-         * 
+         *Click on map = show existing pin's info window or create new pin waiting for input 
          * */
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng point) { 
-                Marker shouldBePin = mMap.addMarker(new MarkerOptions().position(point)
+                Marker shouldBePin = null;
+                shouldBePin = mMap.addMarker(new MarkerOptions().position(point)
                 	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
                 	.title("There should be:")
+                	//.snippet(String.valueOf( (pins.get(shouldBePin)==null ? "" : pins.get(shouldBePin))))
                 	);
-                // TODO
                 shouldBePin.showInfoWindow();
-                pins.put(shouldBePin, 0);     //**needs test to confirm
+                pins.put(shouldBePin, 0);    
+                likeCount.setText(String.valueOf(pins.get(shouldBePin)));
             }
         });
         
         /*
-         * TODO
-         * click on infowindow 
-         * 
+         * Click on a marker's infowindow 
          * */
         // MapWrapperLayout initialization
         // 39 - default marker height
@@ -100,24 +99,26 @@ public class TapActivity extends MapActivity implements
         mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20)); 
 
         this.infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
-        this.infoTitle = (TextView)infoWindow.findViewById(R.id.title);
-        this.infoSnippet = (TextView)infoWindow.findViewById(R.id.snippet);
-        this.infoButton = (Button)infoWindow.findViewById(R.id.button);
+        this.thereShouldBe = (TextView)infoWindow.findViewById(R.id.there_should_be);
+        //this. shouldbeText TODO
+        this.likeButton = (Button)infoWindow.findViewById(R.id.button);
+        this.likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
 
         // Setting custom OnTouchListener which deals with the pressed state 
-        this.infoButtonListener = new OnInfoWindowElemTouchListener(infoButton,
-                getResources().getDrawable(R.drawable.twitter),
-                getResources().getDrawable(R.drawable.twitter)) 
+        this.infoButtonListener = new OnInfoWindowElemTouchListener(likeButton,
+                getResources().getDrawable(R.drawable.like1),
+                getResources().getDrawable(R.drawable.like2)) 
         {
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 // *** TODO register click as a "like" counting towards the ShouldBe
             	int pastLikes = (Integer) pins.get(marker);
             	pins.put(marker, pastLikes+1);
+            	likeCount.setText(String.valueOf(pins.get(marker)));
                 Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked!" + pins.get(marker), Toast.LENGTH_SHORT).show();
             }
         }; 
-        this.infoButton.setOnTouchListener(infoButtonListener);
+        this.likeButton.setOnTouchListener(infoButtonListener);
 
         mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
             @Override
@@ -128,8 +129,9 @@ public class TapActivity extends MapActivity implements
             @Override
             public View getInfoContents(Marker marker) {
                 // Setting up the infoWindow with current's marker info
-                infoTitle.setText(marker.getTitle());
-                //infoSnippet.setText(marker.getSnippet());
+                thereShouldBe.setText(marker.getTitle());
+                //likeCount.setText(marker.getSnippet());
+                
                 infoButtonListener.setMarker(marker);
 
                 // We must call this to set the current marker and infoWindow references

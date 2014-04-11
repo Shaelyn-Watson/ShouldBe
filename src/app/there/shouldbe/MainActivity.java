@@ -29,12 +29,9 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()) {
-		case R.id.settings: 
-			 startActivity(new Intent(this, Settings.class)); 
-			 return true; 
-		default:
-			break;
+		if(item.getItemId() == R.id.settings){
+			startActivity(new Intent(this, Settings.class)); 
+			return true;
 		}
 		
 		return false;
