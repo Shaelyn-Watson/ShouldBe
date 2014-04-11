@@ -1,5 +1,7 @@
 package app.there.shouldbe;
 
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,17 +35,20 @@ public class TapActivity extends MapActivity implements
 	GooglePlayServicesClient.OnConnectionFailedListener {
 	
 	private GoogleMap mMap;
-	private static final LatLng GDC = new LatLng(30.286336,-97.736693);
+	private static final LatLng GDC = new LatLng(30.286336,-97.736693);  //Yay UT
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	private LocationClient mLocationClient;
 	private Location mCurrentLocation;
 	private LatLng mCurrentLatLng;
-
+	
+	//Marker handling
+	private HashMap pins = new HashMap<Marker, Integer>();
+	
 	//info window
 	private ViewGroup infoWindow;
-    private TextView infoTitle;
-    private TextView infoSnippet;
-    private Button infoButton;
+    private TextView infoTitle;    //There should be:
+    private TextView infoSnippet;  //Twitter display/input
+    private Button infoButton;     //like the ShouldBe *if exists
     private OnInfoWindowElemTouchListener infoButtonListener;
 	
     @Override
@@ -56,6 +62,9 @@ public class TapActivity extends MapActivity implements
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         
+        /* 
+         * Load google map 
+         * */
         mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         mMap.setMyLocationEnabled(true);
         final MapWrapperLayout mapWrapperLayout = (MapWrapperLayout)findViewById(R.id.map_relative_layout);
@@ -64,7 +73,7 @@ public class TapActivity extends MapActivity implements
         
         /*
          * TODO
-         * click on map = show existing pin or create new 
+         * Click on map = show existing pin's info window or create new pin waiting for input
          * 
          * */
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -76,6 +85,7 @@ public class TapActivity extends MapActivity implements
                 	);
                 // TODO
                 shouldBePin.showInfoWindow();
+                pins.put(shouldBePin, 0);     //**needs test to confirm
             }
         });
         
@@ -91,7 +101,7 @@ public class TapActivity extends MapActivity implements
 
         this.infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
         this.infoTitle = (TextView)infoWindow.findViewById(R.id.title);
-        //this.infoSnippet = (TextView)infoWindow.findViewById(R.id.snippet);
+        this.infoSnippet = (TextView)infoWindow.findViewById(R.id.snippet);
         this.infoButton = (Button)infoWindow.findViewById(R.id.button);
 
         // Setting custom OnTouchListener which deals with the pressed state 
@@ -101,8 +111,10 @@ public class TapActivity extends MapActivity implements
         {
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
-                // Here we can perform some action triggered after clicking the button
-                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked!", Toast.LENGTH_SHORT).show();
+                // *** TODO register click as a "like" counting towards the ShouldBe
+            	int pastLikes = (Integer) pins.get(marker);
+            	pins.put(marker, pastLikes+1);
+                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked!" + pins.get(marker), Toast.LENGTH_SHORT).show();
             }
         }; 
         this.infoButton.setOnTouchListener(infoButtonListener);
