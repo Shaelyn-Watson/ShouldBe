@@ -12,29 +12,20 @@
         android:id="@+id/tap_loc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="87dp"
+        android:layout_marginTop="72dp"
         android:onClick="tapLocation"
         android:text="@string/tap_location" />
-
-    <Button
-        android:id="@+id/post_wall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tap_loc"
-        android:layout_below="@+id/tap_loc"
-        android:layout_marginTop="67dp"
-        android:text="@string/post_wall" 
-        android:onClick="postWall"  />
 
     <Button
         android:id="@+id/twitterfeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/post_wall"
-        android:layout_below="@+id/post_wall"
-        android:layout_marginTop="60dp"
-        android:text="@string/twitter_feed"
-        android:onClick="openTwitterFeed" />
+        android:layout_alignLeft="@+id/tap_loc"
+        android:layout_below="@+id/tap_loc"
+        android:layout_marginTop="110dp"
+        android:onClick="openTwitterFeed"
+        android:text="@string/twitter_feed" />
 
 </RelativeLayout>

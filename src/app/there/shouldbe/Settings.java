@@ -1,5 +1,7 @@
 package app.there.shouldbe;
 
+import java.util.Calendar;
+
 import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
 import twitter4j.auth.AccessToken;
@@ -15,6 +17,7 @@ import android.os.StrictMode;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,9 +38,9 @@ public class Settings extends PreferenceActivity {
     private final String URL_TWITTER_OAUTH_TOKEN = "oauth_token";
 	
     private AsyncTwitter twitter;
-	private RequestToken requestToken;
+	private static RequestToken requestToken;
 	private SharedPreferences mSharedPreferences;
-	private String reqToken;
+//	private String reqToken;
 	
 	private ConnectionDetector cd;
 	private Preference twitterPref;
@@ -63,7 +66,7 @@ public class Settings extends PreferenceActivity {
 		}
 		
 		mSharedPreferences = this.getSharedPreferences("shouldbe_prefs", 0);
-		reqToken = mSharedPreferences.getString(PREF_REQUEST_TOKEN, ""); // retrieve request token 
+//		reqToken = mSharedPreferences.getString(PREF_REQUEST_TOKEN, ""); // retrieve request token 
 		
 		twitterPref = findPreference("twitter_login");
 		
@@ -91,7 +94,10 @@ public class Settings extends PreferenceActivity {
 				// oAuth Verifier
 				final String verifier = uri.getQueryParameter(URL_TWITTER_OAUTH_VERIFIER);
 				try {
-					AccessToken accessToken = twitter.getOAuthAccessToken(reqToken, verifier);
+					Time now = new Time();
+					now.setToNow();
+					Log.d("TIME", now.toString());
+					AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier);
 					twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
 					twitter.setOAuthAccessToken(accessToken);
 					Editor e = mSharedPreferences.edit();
@@ -124,25 +130,13 @@ public class Settings extends PreferenceActivity {
 			AsyncTwitterFactory tf = new AsyncTwitterFactory(cb.build());
 			twitter = tf.getInstance();
 			
-			Thread thread = new Thread(new Runnable() {
-				@Override
-				public void run () {
-					try {
-						requestToken = twitter.getOAuthRequestToken(TWITTER_CALLBACK_URL);
-						
-						Editor e = mSharedPreferences.edit();
-						e.putString(PREF_REQUEST_TOKEN, requestToken.getToken()); // save current request token
-						e.commit(); // save changes
-						
-						Settings.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(requestToken.getAuthenticationURL())));
-					}
-					catch (Exception ex) {
-						ex.printStackTrace();
-					}
-				}
-			});
-			thread.start();
-			
+			try {
+				requestToken = twitter.getOAuthRequestToken(TWITTER_CALLBACK_URL);
+				this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(requestToken.getAuthenticationURL())));
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		else {
 			Toast.makeText(getApplicationContext(), "Already logged into Twitter!", Toast.LENGTH_LONG).show();
