@@ -219,32 +219,38 @@ containing a value of this type.
         public static final int ic_plusone_small_off_client=0x7f02001a;
         public static final int ic_plusone_standard_off_client=0x7f02001b;
         public static final int ic_plusone_tall_off_client=0x7f02001c;
-        public static final int shouldbepin=0x7f02001d;
-        public static final int twitter=0x7f02001e;
+        public static final int like1=0x7f02001d;
+        public static final int like2=0x7f02001e;
+        public static final int shouldbepin=0x7f02001f;
+        public static final int twitter=0x7f020020;
     }
     public static final class id {
-        public static final int action_settings=0x7f060015;
+        public static final int action_settings=0x7f060019;
+        public static final int button=0x7f060017;
         public static final int button1=0x7f06000c;
         public static final int button2=0x7f06000d;
         public static final int buttonGenPost=0x7f060007;
         public static final int etGenPost=0x7f060006;
         public static final int hybrid=0x7f060004;
-        public static final int map=0x7f06000e;
+        public static final int like_count=0x7f060018;
+        public static final int map=0x7f06000f;
+        public static final int map_relative_layout=0x7f06000e;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
         public static final int post_wall=0x7f060009;
         public static final int satellite=0x7f060002;
-        public static final int settings=0x7f060016;
+        public static final int settings=0x7f06001a;
         public static final int tap_loc=0x7f060008;
         public static final int terrain=0x7f060003;
         public static final int textView1=0x7f06000b;
+        public static final int there_should_be=0x7f060016;
         public static final int tvGenPost=0x7f060005;
-        public static final int tweet_date=0x7f060012;
-        public static final int tweet_message=0x7f060013;
-        public static final int tweet_name=0x7f060014;
-        public static final int twitterEmail=0x7f06000f;
-        public static final int twitterLogin=0x7f060011;
-        public static final int twitterPassword=0x7f060010;
+        public static final int tweet_date=0x7f060013;
+        public static final int tweet_message=0x7f060014;
+        public static final int tweet_name=0x7f060015;
+        public static final int twitterEmail=0x7f060010;
+        public static final int twitterLogin=0x7f060012;
+        public static final int twitterPassword=0x7f060011;
         public static final int twitterfeed=0x7f06000a;
     }
     public static final class integer {
@@ -257,6 +263,7 @@ containing a value of this type.
         public static final int activity_twitter_feed=0x7f030003;
         public static final int activity_twitter_login=0x7f030004;
         public static final int list_item=0x7f030005;
+        public static final int map_info_window=0x7f030006;
     }
     public static final class menu {
         public static final int home=0x7f0b0000;
@@ -359,23 +366,24 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f070013;
-        public static final int etGenPostPrompt=0x7f070023;
+        public static final int etGenPostPrompt=0x7f070024;
         public static final int hello_world=0x7f07001d;
         /**  Location client code resources (prefix with location_client) 
          */
         public static final int location_client_powered_by_google=0x7f07001a;
-        public static final int loginWithTwitter=0x7f070028;
-        public static final int post_wall=0x7f07001f;
-        public static final int settings=0x7f07002a;
+        public static final int loginWithTwitter=0x7f070029;
+        public static final int post_wall=0x7f070020;
+        public static final int settings=0x7f07002b;
         public static final int tap_location=0x7f07001e;
-        public static final int title_activity_twitter_feed=0x7f070020;
-        public static final int title_activity_twitter_login=0x7f070024;
-        public static final int tvGenPostText=0x7f070022;
-        public static final int twitterEmailPrompt=0x7f070026;
-        public static final int twitterLogin=0x7f070025;
-        public static final int twitterLoginSummary=0x7f070029;
-        public static final int twitterPasswordPrompt=0x7f070027;
-        public static final int twitter_feed=0x7f070021;
+        public static final int there_should_be=0x7f07001f;
+        public static final int title_activity_twitter_feed=0x7f070021;
+        public static final int title_activity_twitter_login=0x7f070025;
+        public static final int tvGenPostText=0x7f070023;
+        public static final int twitterEmailPrompt=0x7f070027;
+        public static final int twitterLogin=0x7f070026;
+        public static final int twitterLoginSummary=0x7f07002a;
+        public static final int twitterPasswordPrompt=0x7f070028;
+        public static final int twitter_feed=0x7f070022;
     }
     public static final class style {
         /** 

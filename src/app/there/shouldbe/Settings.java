@@ -21,8 +21,8 @@ import android.widget.Toast;
 public class Settings extends PreferenceActivity {
 	
 	private final String TWITTER_PREF_KEY = "twitter_login";
-	private final String CONSUMER_KEY = "dKC1yliVp7K7jLfdNWkKg";
-	private final String CONSUMER_SECRET = "RyN6VkkM6sue9mwtjLKTdLDc22YdPesUpkfEl5qBYM";
+	private final String CONSUMER_KEY = "7TKDKSkU8e1DiF2oLTdA";
+	private final String CONSUMER_SECRET = "jRtJeN2NSXmxfAB8TV2YtS11dYrVkHQ8mG7tOxOXXw";
 	private final long SHOULDBE_TWITTER_ID = 2360041674L; // L is required for long value - not a part of ID
 	private final String PREFERENCE_NAME = "twitter_oauth";
 	private final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
