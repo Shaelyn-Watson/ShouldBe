@@ -42,7 +42,7 @@ public class TapActivity extends MapActivity implements
 	private LatLng mCurrentLatLng;
 	
 	//Marker handling
-	private HashMap pins = new HashMap<Marker, Integer>();
+	private HashMap<Marker, Integer> pins = new HashMap<Marker, Integer>();
 	
 	//info window
 	private ViewGroup infoWindow;
@@ -78,15 +78,15 @@ public class TapActivity extends MapActivity implements
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng point) { 
-                Marker shouldBePin = null;
-                shouldBePin = mMap.addMarker(new MarkerOptions().position(point)
+                Marker marker = null;
+                marker = mMap.addMarker(new MarkerOptions().position(point)
                 	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
                 	.title("There should be:")
-                	//.snippet(String.valueOf( (pins.get(shouldBePin)==null ? "" : pins.get(shouldBePin))))
                 	);
-                shouldBePin.showInfoWindow();
-                pins.put(shouldBePin, 0);    
-                likeCount.setText(String.valueOf(pins.get(shouldBePin)));
+                pins.put(marker, 0);    
+                likeCount.setText(String.valueOf(pins.get(marker)));
+                marker.showInfoWindow();
+                Toast.makeText(TapActivity.this, marker.getTitle() + " is created " + pins.get(marker), Toast.LENGTH_SHORT).show();
             }
         });
         
@@ -115,7 +115,7 @@ public class TapActivity extends MapActivity implements
             	int pastLikes = (Integer) pins.get(marker);
             	pins.put(marker, pastLikes+1);
             	likeCount.setText(String.valueOf(pins.get(marker)));
-                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked!" + pins.get(marker), Toast.LENGTH_SHORT).show();
+                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
             }
         }; 
         this.likeButton.setOnTouchListener(infoButtonListener);
@@ -130,8 +130,6 @@ public class TapActivity extends MapActivity implements
             public View getInfoContents(Marker marker) {
                 // Setting up the infoWindow with current's marker info
                 thereShouldBe.setText(marker.getTitle());
-                //likeCount.setText(marker.getSnippet());
-                
                 infoButtonListener.setMarker(marker);
 
                 // We must call this to set the current marker and infoWindow references
