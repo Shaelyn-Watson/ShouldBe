@@ -43,6 +43,8 @@ public class TapActivity extends MapActivity implements
 	//Marker mapped to number of likes
 	private HashMap<Marker, Integer> pins = new HashMap<Marker, Integer>();
 	private HashMap<Marker, TextView> likeCounts = new HashMap<Marker, TextView>();
+	//Marker mapped to positions
+	private HashMap<Marker, LatLng> markerPositions = new HashMap<Marker, LatLng>();
 	
 	//info window global elements
 	private ViewGroup infoWindow;
@@ -77,9 +79,7 @@ public class TapActivity extends MapActivity implements
          * */
         this.infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
         this.thereShouldBe = (TextView)infoWindow.findViewById(R.id.there_should_be);
-//      //this. shouldbeText TODO
         this.likeButton = (Button)infoWindow.findViewById(R.id.button);
-//      this.likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
         
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -90,11 +90,7 @@ public class TapActivity extends MapActivity implements
                 	.title("There should be:")
                 	);
                 
-                //**data structure to collect all this info window shiz together
-                //ViewGroup infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
-                //TextView thereShouldBe = (TextView)infoWindow.findViewById(R.id.there_should_be);
-                //this. shouldbeText TODO
-                //Button likeButton = (Button)infoWindow.findViewById(R.id.button);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); //position of new marker
                 TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
                 
                 pins.put(marker, 0);    
@@ -146,7 +142,6 @@ public class TapActivity extends MapActivity implements
             	likeCount.setText(String.valueOf(pins.get(marker)));
 
                 // We must call this to set the current marker and infoWindow references
-                // to the MapWrapperLayout
                 mapWrapperLayout.setMarkerWithInfoWindow(marker, infoWindow);
                 return infoWindow;
             }
