@@ -3,6 +3,12 @@
     <Preference android:key="twitter_login"
         android:summary="@string/twitterLoginSummary"
         android:title="@string/twitterLogin"
-        android:icon="@drawable/twitter"></Preference>
+        android:icon="@drawable/twitter"
+        android:shouldDisableView="false"></Preference>
+    <Preference android:key="twitter_logout"
+        android:summary="@string/twitterLogoutSummary"
+        android:title="@string/twitterLogout"
+        android:icon="@drawable/twitter"
+        android:shouldDisableView="false"></Preference>
 
 </PreferenceScreen>

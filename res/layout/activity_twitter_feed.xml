@@ -6,7 +6,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".TwitterFeedActivity" >
+    tools:context=".TwitterFeedActivity"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true" >
     
     <ListView
         android:id="@android:id/list"
@@ -14,6 +16,25 @@
         android:layout_height="fill_parent" >
     </ListView>
 
-    
+    <EditText
+        android:id="@+id/tweetText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@android:id/list"
+        android:layout_alignLeft="@android:id/list"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="@string/etGenPostPrompt"
+        android:background="#FFFFFF"
+        android:imeOptions="flagNoExtractUi"
+        android:maxLength="112" />
+
+    <Button
+        android:id="@+id/tweet_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/tweetButton_text" />
 
 </RelativeLayout>
