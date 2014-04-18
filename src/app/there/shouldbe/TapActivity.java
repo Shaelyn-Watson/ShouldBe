@@ -85,7 +85,7 @@ public class TapActivity extends MapActivity implements
             @Override
             public void onMapClick(LatLng point) { 
                 Marker marker = null;
-                marker = mMap.addMarker(new MarkerOptions().position(point)
+                marker = mMap.addMarker(new MarkerOptions().position(point) //**point has LatLng info ALEXIS
                 	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
                 	.title("There should be:")
                 	);
@@ -93,7 +93,7 @@ public class TapActivity extends MapActivity implements
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); //position of new marker
                 TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
                 
-                pins.put(marker, 0);    
+                pins.put(marker, 0);   //put in hashmap 
                 likeCount.setText(String.valueOf(pins.get(marker)));
                 likeCounts.put(marker, likeCount);
                 marker.showInfoWindow(); //**need this line?
@@ -122,6 +122,7 @@ public class TapActivity extends MapActivity implements
             	pins.put(marker, pastLikes+1);
             	TextView likeCount = likeCounts.get(marker);
             	likeCount.setText(String.valueOf(pins.get(marker)));
+            	marker.showInfoWindow();
                 Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
             }
         }; 
