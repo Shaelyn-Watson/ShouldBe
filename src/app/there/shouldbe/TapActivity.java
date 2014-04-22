@@ -53,19 +53,20 @@ public class TapActivity extends MapActivity implements
 	//Marker mapped to number of likes
 	private HashMap<Marker, Integer> pins = new HashMap<Marker, Integer>();
 	private HashMap<Marker, TextView> likeCounts = new HashMap<Marker, TextView>();
+	
 	//Marker mapped to positions
 	private HashMap<Marker, LatLng> markerPositions = new HashMap<Marker, LatLng>();
 	
 	//info window global elements
 	private ViewGroup infoWindow;
     private TextView thereShouldBe;    //"There should be:"
-    //private TextView shouldBeText;   //Twitter display/input
     private Button likeButton;      //like the ShouldBe *TODO facebook
-    //private TextView likeCount;     //display current number of likes
-    private OnInfoWindowElemTouchListener infoButtonListener;
-    private RemoteDBConnection dbConn;
-    private EditText mapSearchBox; 
+    private OnInfoWindowElemTouchListener infoButtonListener; 
     private Button whatShouldBe;
+    
+    private EditText mapSearchBox;
+    
+    private DBConnection dbConn;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,24 +75,23 @@ public class TapActivity extends MapActivity implements
         
         // Make sure we're running on Honeycomb or higher to use ActionBar APIs
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // Show the Up button in the action bar.
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         
-//        dbConn = new DatabaseConnection(); // this may take awhile
         
-        /* 
-         * Load google map 
-         * */
+       // Load Google Map
         mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         mMap.setMyLocationEnabled(true);
         final MapWrapperLayout mapWrapperLayout = (MapWrapperLayout)findViewById(R.id.map_relative_layout);
         mLocationClient = new LocationClient(this, this, this);
-        setUpMapIfNeeded(); //ensure map loads
-        mMap.getUiSettings().setZoomControlsEnabled(false); // remove +/- zoom controls since pinching is enabled
-        /*
-         *Click on map = show existing pin's info window or create new pin waiting for input 
-         * */
+
+        // Check to make sure map loads
+        setUpMapIfNeeded(); 
+        
+        // Remove +/- zoom controls since pinching is enabled
+        mMap.getUiSettings().setZoomControlsEnabled(false); 
+        
+        // Click on map = show existing pin's info window or create new pin waiting for input 
         this.infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
         this.thereShouldBe = (TextView)infoWindow.findViewById(R.id.there_should_be);
         this.likeButton = (Button)infoWindow.findViewById(R.id.button);
@@ -106,17 +106,20 @@ public class TapActivity extends MapActivity implements
                 	.title("There should be:")
                 	);
                 
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); //position of new marker
+                // Move camera to position of new marker
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); 
                 TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
                 
-                pins.put(marker, 0);   //put in hashmap 
+                // Add pin to hashmap 
+                pins.put(marker, 0);
                 likeCount.setText(String.valueOf(pins.get(marker)));
                 likeCounts.put(marker, likeCount);
-                marker.showInfoWindow(); //**need this line?
+                marker.showInfoWindow(); 
                 Toast.makeText(TapActivity.this, marker.getTitle() + " is created " + pins.get(marker), Toast.LENGTH_SHORT).show();
             }
         });
         
+        // Search Box on map
         mapSearchBox = (EditText) findViewById(R.id.mapSearchBox);
         mapSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
@@ -141,15 +144,12 @@ public class TapActivity extends MapActivity implements
 		});
         
         
-        /*
-         * Click on a marker's infowindow 
-         */
+        // Click on a marker's infowindow 
         // MapWrapperLayout initialization
         // 39 - default marker height
         // 20 - offset between the default InfoWindow bottom edge and it's content bottom edge 
         mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20)); 
-
-
+        
         // Setting custom OnTouchListener which deals with the pressed state 
         this.infoButtonListener = new OnInfoWindowElemTouchListener(likeButton,
                 getResources().getDrawable(R.drawable.like1),
@@ -209,13 +209,21 @@ public class TapActivity extends MapActivity implements
         return super.onOptionsItemSelected(item);
     }
     
+    /**
+     * Method to check if the map is null, if so, setup the map
+     */
     private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         }
     }
     
+    /**
+     * Converts dp to px
+     * @param context	this context
+     * @param dp	dp to convert
+     * @return	returns dp in pixels
+     */
     public static int getPixelsFromDp(Context context, float dp) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int)(dp * scale + 0.5f);
@@ -239,13 +247,6 @@ public class TapActivity extends MapActivity implements
     	super.onStop();
     	if (mLocationClient != null)
     		mLocationClient.disconnect();
-//    	if (dbConn != null) {  // close database connection
-//			try {
-//				dbConn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			} 
-//    	}
     }
 
     private void zoomToUserLocation() {
@@ -266,15 +267,9 @@ public class TapActivity extends MapActivity implements
         // Decide what to do based on the original request code
         switch (requestCode) {
             case CONNECTION_FAILURE_RESOLUTION_REQUEST :
-            /*
-             * If the result code is Activity.RESULT_OK, try
-             * to connect again
-             */
                 switch (resultCode) {
                     case Activity.RESULT_OK :
-                    /*
-                     * Try the request again
-                     */
+                    // Try request again TODO
                     break;
                     default:
                     	break;
@@ -316,7 +311,8 @@ public class TapActivity extends MapActivity implements
 		protected Boolean doInBackground(Void... voids) {
 			Boolean result = false;
 			try {
-				Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.US); // search addresses in the US
+				// Locale.US to only search addresses in US
+				Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.US); 
 				List<Address> results = geocoder.getFromLocationName(toSearch, 1);
 				
 				if (results.size() > 0) {
