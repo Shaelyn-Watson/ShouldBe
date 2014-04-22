@@ -14,7 +14,7 @@ import android.util.Log;
  * This is a wrapper class for the Connection class using our database information
  * @author Alexis Emperador
  */
-public class DatabaseConnection {
+public class RemoteDBConnection {
 	
 	private final static String DATABASE_URL = "ec2-54-225-101-199.compute-1.amazonaws.com";
 	private final static String DATABASE_NAME = "d5puq82aq6a28e";

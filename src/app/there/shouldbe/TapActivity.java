@@ -63,7 +63,7 @@ public class TapActivity extends MapActivity implements
     private Button likeButton;      //like the ShouldBe *TODO facebook
     //private TextView likeCount;     //display current number of likes
     private OnInfoWindowElemTouchListener infoButtonListener;
-    private DatabaseConnection dbConn;
+    private RemoteDBConnection dbConn;
     private EditText mapSearchBox; 
     private Button whatShouldBe;
 	
