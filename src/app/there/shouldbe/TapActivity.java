@@ -141,7 +141,7 @@ public class TapActivity extends MapActivity implements
         
         /*
          * Click on a marker's infowindow 
-         * */
+         */
         // MapWrapperLayout initialization
         // 39 - default marker height
         // 20 - offset between the default InfoWindow bottom edge and it's content bottom edge 
