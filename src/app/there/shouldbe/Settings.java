@@ -137,10 +137,6 @@ public class Settings extends PreferenceActivity {
 					e.putBoolean(PREF_KEY_TWITTER_LOGIN, true);
 					e.commit();
 					Toast.makeText(this, "You are signed in!", Toast.LENGTH_LONG).show();
-//					long userID = accessToken.getUserId();
-//					User user = twitter.showUser(userID);
-//					String username = user.getName();
-//					Toast.makeText(this, "Welcome " + username + "!", Toast.LENGTH_LONG).show();
 				}
 				catch (Exception e) {
 					e.printStackTrace();
@@ -164,11 +160,8 @@ public class Settings extends PreferenceActivity {
 			Editor e = mSharedPreferences.edit();
 			e.putString(PREF_KEY_OAUTH_TOKEN, token);
 			e.putString(PREF_KEY_OAUTH_SECRET, secret);
+			e.putBoolean(PREF_KEY_TWITTER_LOGIN, true);
 			e.commit();
-			long userID = accessToken.getUserId();
-			User user = twitter.showUser(userID);
-			String username = user.getName();
-			Toast.makeText(this, "Welcome " + username + "!", Toast.LENGTH_LONG).show();
 		}
 		catch (Exception e) {
 			Log.e("Settings.onNewIntent", e.getMessage());
