@@ -169,10 +169,11 @@ public class TweetActivity extends Activity {
                 @Override
                 public void run() {
                     Toast.makeText(getApplicationContext(),
-                            "Status tweeted successfully", Toast.LENGTH_SHORT)
+                            "#shouldbe tweeted successfully", Toast.LENGTH_SHORT)
                             .show();
                     // Clearing EditText field
-                    txtUpdate.setText("");
+//                    txtUpdate.setText("");
+                    TweetActivity.this.finish();
                 }
             });
         }
