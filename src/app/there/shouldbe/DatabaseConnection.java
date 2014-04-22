@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import android.util.Log;
+
 /**
  * This is a wrapper class for the Connection class using our database information
  * @author Alexis Emperador
@@ -16,6 +18,21 @@ public class DatabaseConnection {
 	private final static String DATABASE_URL = "ec2-54-225-101-199.compute-1.amazonaws.com";
 	private final static String DATABASE_NAME = "d5puq82aq6a28e";
 	private final static Integer DATABASE_PORT = 5432;
+	private static Connection conn;
+	
+	
+	/**
+	 * Constructor
+	 */
+	public void DataBaseConnection() {
+		try {
+			conn = getConnection();
+		}
+		catch (Exception e) {
+			Log.e("DATABASE CONNECTION", "Could not get connection");
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * Gets connection to ShouldBe's database
@@ -32,6 +49,7 @@ public class DatabaseConnection {
 		return DriverManager.getConnection(dbUrl, username, password);
 		
 	}
+	
 	
 	/**
 	 * Checks this connection to database
