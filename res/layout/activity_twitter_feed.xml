@@ -16,25 +16,14 @@
         android:layout_height="fill_parent" >
     </ListView>
 
-    <EditText
-        android:id="@+id/tweetText"
+    <ImageButton
+        android:id="@+id/tweetBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@android:id/list"
         android:layout_alignLeft="@android:id/list"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:text="@string/etGenPostPrompt"
-        android:background="#FFFFFF"
-        android:imeOptions="flagNoExtractUi"
-        android:maxLength="112" />
-
-    <Button
-        android:id="@+id/tweet_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="@string/tweetButton_text" />
+        android:layout_alignRight="@android:id/list"
+        android:src="@android:drawable/btn_star"
+        android:onClick="openTweetActivity" />
 
 </RelativeLayout>

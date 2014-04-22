@@ -1,15 +1,11 @@
 package app.there.shouldbe;
 
-import java.util.Calendar;
-
-import twitter4j.AsyncTwitter;
-import twitter4j.AsyncTwitterFactory;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
+import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -19,8 +15,6 @@ import android.os.StrictMode;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceScreen;
-import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -40,6 +34,7 @@ public class Settings extends PreferenceActivity {
     private final String URL_TWITTER_AUTH = "auth_url";
     private final String URL_TWITTER_OAUTH_VERIFIER = "oauth_verifier";
     private final String URL_TWITTER_OAUTH_TOKEN = "oauth_token";
+    private final String TWITTER_USER_ID = "twitter_user_id";
 	
     private Twitter twitter;
 	private static RequestToken requestToken;
@@ -60,7 +55,6 @@ public class Settings extends PreferenceActivity {
 		
 		getPreferenceManager().setSharedPreferencesName("shouldbe_prefs"); 
 		addPreferencesFromResource(R.xml.preferences);
-		final SharedPreferences prefs = getSharedPreferences("shouldbe_prefs", MODE_PRIVATE); 
 		
 		cd = new ConnectionDetector(this);
 
@@ -69,11 +63,12 @@ public class Settings extends PreferenceActivity {
 			return;
 		}
 		
-		mSharedPreferences = this.getSharedPreferences("shouldbe_prefs", 0); 
+		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE); 
 		
 		twitterPref = findPreference(TWITTER_PREF_KEY);
 		twitterLogOutPref = findPreference(TWITTER_LOGOUT_PREF_KEY);
-		
+		twitterPref.setEnabled(false);
+		twitterPref.setEnabled(false);
 		
 		twitterPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override
@@ -99,43 +94,35 @@ public class Settings extends PreferenceActivity {
 			}
 		});
 		
-		if (isTwitterAlreadyLoggedIn()) {
-			twitterPref.setEnabled(false);
-			twitterLogOutPref.setEnabled(true);
-		}
-		else  {
-			twitterLogOutPref.setEnabled(false);
-			ConfigurationBuilder cb = new ConfigurationBuilder();
-			cb.setOAuthConsumerKey(CONSUMER_KEY)
-            	.setOAuthConsumerSecret(CONSUMER_SECRET);
-			TwitterFactory tf = new TwitterFactory(cb.build());
-			twitter = tf.getInstance();
-			
+		if (!isTwitterAlreadyLoggedIn()) {
 			Uri uri = getIntent().getData();
 			if (uri != null && uri.toString().startsWith(TWITTER_CALLBACK_URL)) {
-				// oAuth Verifier
-				final String verifier = uri.getQueryParameter(URL_TWITTER_OAUTH_VERIFIER);
+				String verifier = uri.getQueryParameter(URL_TWITTER_OAUTH_VERIFIER);
+				
 				try {
-					Time now = new Time();
-					now.setToNow();
-					Log.d("TIME", now.toString());
 					AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier);
-					twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
-					twitter.setOAuthAccessToken(accessToken);
 					Editor e = mSharedPreferences.edit();
-					
 					e.putString(PREF_KEY_OAUTH_TOKEN, accessToken.getToken());
 					e.putString(PREF_KEY_OAUTH_SECRET, accessToken.getTokenSecret());
 					e.putBoolean(PREF_KEY_TWITTER_LOGIN, true);
-					e.remove(PREF_REQUEST_TOKEN);
-					e.commit(); // save changes
-					
+					e.commit();
 					Log.e("Twitter OAuth Token", "> " + accessToken.getToken());
+					
+					twitterPref.setEnabled(false);
+					twitterLogOutPref.setEnabled(true);
+					
+					long userID = accessToken.getUserId();
+					User user = twitter.showUser(userID);
+					String username = user.getName();
+					Toast.makeText(this, "Welcome " + username + "!", Toast.LENGTH_LONG).show();
+					
 				}
-				catch(Exception ex) {
-					ex.printStackTrace();
-					Log.e("Twitter Login Error", "> " + ex.getMessage());
+				catch (Exception e) {
+					Log.e("Twitter login error", e.getMessage());
 				}
+			}
+			else {
+				twitterPref.setEnabled(true);
 			}
 		}
 		

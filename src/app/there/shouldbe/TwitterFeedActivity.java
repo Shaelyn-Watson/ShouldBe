@@ -15,11 +15,13 @@ import twitter4j.TwitterListener;
 import twitter4j.TwitterMethod;
 import twitter4j.conf.ConfigurationBuilder;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -134,5 +136,10 @@ public class TwitterFeedActivity extends ListActivity {
 				setListAdapter(adapter);
 			}
 		});
+	}
+	
+	public void openTweetActivity(View view) {
+		Intent intent = new Intent(this, TweetActivity.class);
+		startActivity(intent);
 	}
 }

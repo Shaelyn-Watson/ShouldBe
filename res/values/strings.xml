@@ -21,5 +21,6 @@
     <string name="twitterLogout">Log out</string>
     <string name="twitterLogoutSummary">Log out of Twitter</string>
     <string name="tweetButton_text">Tweet</string>
+    <string name="title_activity_tweet">TweetActivity</string>
 
 </resources>
