@@ -52,9 +52,9 @@ public class TwitterFeedActivity extends ListActivity {
             // Show the Up button in the action bar.
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        getIntent().setAction("Already Created");
         view = getListView();
         setAdapter();
-        
 	}
 	
 	@Override
@@ -78,6 +78,24 @@ public class TwitterFeedActivity extends ListActivity {
 	    AsyncTwitterFactory tf = new AsyncTwitterFactory(cb.build());
 		twitter = tf.getInstance();
 		getTimeLine();
+	}
+	
+	/**
+	 * Force restart onResume() to refresh twitter feed
+	 */
+	@Override
+	protected void onResume() {
+		String action = getIntent().getAction();
+		if (action == null || !action.equals("Already Created")){
+			Intent intent = new Intent(this, TwitterFeedActivity.class);
+			startActivity(intent);
+			this.finish();
+		}
+		else {
+			getIntent().setAction(null);
+		}
+				
+		super.onResume();
 	}
 	
 	public void getTimeLine() {
@@ -110,7 +128,6 @@ public class TwitterFeedActivity extends ListActivity {
 			};
 			
 			twitter.addListener(listener);
-//			twitter.getUserTimeline(SHOULDBE_TWITTER_ID);
 			Paging paging = new Paging();
 			paging.setCount(20);
 			twitter.getMentions(paging);
@@ -140,6 +157,7 @@ public class TwitterFeedActivity extends ListActivity {
 	
 	public void openTweetActivity(View view) {
 		Intent intent = new Intent(this, TweetActivity.class);
+		intent.putExtra("sender", TwitterFeedActivity.class);
 		startActivity(intent);
 	}
 }

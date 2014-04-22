@@ -8,6 +8,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ public class TweetActivity extends Activity {
     private ProgressDialog pDialog;
     private SharedPreferences mSharedPreferences;
     private EditText txtUpdate;
+    private Bundle extras;
+    private Class<?> callingActivity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,12 @@ public class TweetActivity extends Activity {
 		Button tweetButton = (Button) findViewById(R.id.postTweetButton);
 		txtUpdate = (EditText) findViewById(R.id.tweetET);
 		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
+		extras = getIntent().getExtras();
+		callingActivity = (Class<?>)extras.get("sender");
+		if (callingActivity != null) {
+			Log.d("TweetActivity.onCreate", "Class Name = " + callingActivity.getName());
+			Log.d("TweetActivity.onCreate", "Simple Class Name = " + callingActivity.getSimpleName());
+		}
 	}
 
 	@Override
@@ -171,8 +180,10 @@ public class TweetActivity extends Activity {
                     Toast.makeText(getApplicationContext(),
                             "#shouldbe tweeted successfully", Toast.LENGTH_SHORT)
                             .show();
-                    // Clearing EditText field
-//                    txtUpdate.setText("");
+                    if (callingActivity != null && callingActivity.getSimpleName() == "TwitterFeedActivity") {
+                    	Intent intent = new Intent(TweetActivity.this, TwitterFeedActivity.class);
+                    	startActivity(intent);
+                    }
                     TweetActivity.this.finish();
                 }
             });
