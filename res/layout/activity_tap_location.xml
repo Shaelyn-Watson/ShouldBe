@@ -3,12 +3,37 @@
     android:id="@+id/map_relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true" >
 
     <fragment
           android:id="@+id/map"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:name="com.google.android.gms.maps.MapFragment"/>
+
+    <EditText
+        android:id="@+id/mapSearchBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/searchButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/searchButton"
+        android:background="#FFFF"
+        android:ems="10" >
+
+    </EditText>
+
+    <Button
+        android:id="@+id/searchButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#C0C0C0"
+        android:text="Search" />
 
 </app.there.shouldbe.MapWrapperLayout>

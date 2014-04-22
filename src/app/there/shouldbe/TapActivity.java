@@ -66,6 +66,8 @@ public class TapActivity extends MapActivity implements
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         
+        dbConn = new DatabaseConnection(); // this may take awhile
+        
         /* 
          * Load google map 
          * */
@@ -235,7 +237,7 @@ public class TapActivity extends MapActivity implements
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		// TODO Auto-generated method stub
+		Toast.makeText(this, "Connection Error!", Toast.LENGTH_LONG).show();
 		
 	}
 
