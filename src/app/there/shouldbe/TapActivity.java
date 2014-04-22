@@ -65,6 +65,7 @@ public class TapActivity extends MapActivity implements
     private OnInfoWindowElemTouchListener infoButtonListener;
     private DatabaseConnection dbConn;
     private EditText mapSearchBox; 
+    private Button whatShouldBe;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,7 @@ public class TapActivity extends MapActivity implements
         this.infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
         this.thereShouldBe = (TextView)infoWindow.findViewById(R.id.there_should_be);
         this.likeButton = (Button)infoWindow.findViewById(R.id.button);
+        this.whatShouldBe = (Button)infoWindow.findViewById(R.id.shouldBeButton);
         
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -164,6 +166,15 @@ public class TapActivity extends MapActivity implements
             }
         }; 
         this.likeButton.setOnTouchListener(infoButtonListener);
+        
+        whatShouldBe.setOnTouchListener(new OnInfoWindowElemTouchListener(whatShouldBe) {
+			
+			@Override
+			protected void onClickConfirmed(View v, Marker marker) {
+				Intent intent = new Intent(TapActivity.this, TweetActivity.class);
+				startActivity(intent);
+			}
+		});
 
         mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
             @Override

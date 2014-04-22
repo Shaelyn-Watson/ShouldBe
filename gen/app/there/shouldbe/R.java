@@ -229,7 +229,8 @@ containing a value of this type.
         public static final int like2=0x7f02001f;
         public static final int shouldbepin=0x7f020020;
         public static final int tweetbar=0x7f020021;
-        public static final int twitter=0x7f020022;
+        public static final int tweetbutton=0x7f020022;
+        public static final int twitter=0x7f020023;
     }
     public static final class id {
         public static final int action_settings=0x7f06001f;
@@ -240,7 +241,6 @@ containing a value of this type.
         public static final int container=0x7f060010;
         public static final int etGenPost=0x7f060006;
         public static final int hybrid=0x7f060004;
-        public static final int infoWindowTweetET=0x7f06001b;
         public static final int like_count=0x7f06001d;
         public static final int map=0x7f06000e;
         public static final int mapSearchBox=0x7f06000f;
@@ -251,6 +251,7 @@ containing a value of this type.
         public static final int prefScreen=0x7f06001e;
         public static final int satellite=0x7f060002;
         public static final int settings=0x7f060020;
+        public static final int shouldBeButton=0x7f06001b;
         public static final int tap_loc=0x7f060008;
         public static final int terrain=0x7f060003;
         public static final int textView1=0x7f06000a;
@@ -406,6 +407,7 @@ containing a value of this type.
         public static final int twitterLogoutSummary=0x7f07002d;
         public static final int twitterPasswordPrompt=0x7f070028;
         public static final int twitter_feed=0x7f070022;
+        public static final int whatShouldbe=0x7f070032;
     }
     public static final class style {
         /** 
