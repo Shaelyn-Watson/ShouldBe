@@ -64,7 +64,7 @@ int drawable like2 0x7f02001f
 int drawable shouldbepin 0x7f020020
 int drawable tweetbar 0x7f020021
 int drawable twitter 0x7f020022
-int id action_settings 0x7f06001c
+int id action_settings 0x7f06001d
 int id button 0x7f06001a
 int id button1 0x7f06000b
 int id button2 0x7f06000c
@@ -78,8 +78,9 @@ int id map_relative_layout 0x7f06000d
 int id none 0x7f060000
 int id normal 0x7f060001
 int id postTweetButton 0x7f060010
+int id prefScreen 0x7f06001c
 int id satellite 0x7f060002
-int id settings 0x7f06001d
+int id settings 0x7f06001e
 int id tap_loc 0x7f060008
 int id terrain 0x7f060003
 int id textView1 0x7f06000a

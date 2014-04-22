@@ -3,7 +3,6 @@ package app.there.shouldbe;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import android.content.Intent;
@@ -15,6 +14,7 @@ import android.os.StrictMode;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -43,6 +43,7 @@ public class Settings extends PreferenceActivity {
 	private ConnectionDetector cd;
 	private Preference twitterPref;
 	private Preference twitterLogOutPref;
+	private PreferenceScreen mPrefScreen;
 	private AlertDialogManager alert = new AlertDialogManager();
 	
     
@@ -65,10 +66,19 @@ public class Settings extends PreferenceActivity {
 		
 		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE); 
 		
+		mPrefScreen = getPreferenceScreen();
 		twitterPref = findPreference(TWITTER_PREF_KEY);
 		twitterLogOutPref = findPreference(TWITTER_LOGOUT_PREF_KEY);
-//		twitterPref.setEnabled(false);
-//		twitterPref.setEnabled(false);
+		
+		if (!isTwitterAlreadyLoggedIn()) {
+			mPrefScreen.removePreference(twitterLogOutPref);
+			mPrefScreen.addPreference(twitterPref);
+		}
+		else {
+			mPrefScreen.removePreference(twitterPref);
+			mPrefScreen.addPreference(twitterLogOutPref);
+		}
+		
 		
 		twitterPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override
@@ -137,6 +147,8 @@ public class Settings extends PreferenceActivity {
 					e.putBoolean(PREF_KEY_TWITTER_LOGIN, true);
 					e.commit();
 					Toast.makeText(this, "You are signed in!", Toast.LENGTH_LONG).show();
+					mPrefScreen.addPreference(twitterLogOutPref);
+					mPrefScreen.removePreference(twitterPref);
 				}
 				catch (Exception e) {
 					e.printStackTrace();
@@ -189,7 +201,7 @@ public class Settings extends PreferenceActivity {
 		e.remove(PREF_KEY_OAUTH_TOKEN);
 		e.remove(PREF_KEY_TWITTER_LOGIN);
 		e.commit();
-		twitterPref.setEnabled(true);
-		twitterLogOutPref.setEnabled(false);
+		mPrefScreen.removePreference(twitterLogOutPref);
+		mPrefScreen.addPreference(twitterPref);
 	}
 }

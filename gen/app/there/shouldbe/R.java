@@ -232,7 +232,7 @@ containing a value of this type.
         public static final int twitter=0x7f020022;
     }
     public static final class id {
-        public static final int action_settings=0x7f06001c;
+        public static final int action_settings=0x7f06001d;
         public static final int button=0x7f06001a;
         public static final int button1=0x7f06000b;
         public static final int button2=0x7f06000c;
@@ -246,8 +246,9 @@ containing a value of this type.
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
         public static final int postTweetButton=0x7f060010;
+        public static final int prefScreen=0x7f06001c;
         public static final int satellite=0x7f060002;
-        public static final int settings=0x7f06001d;
+        public static final int settings=0x7f06001e;
         public static final int tap_loc=0x7f060008;
         public static final int terrain=0x7f060003;
         public static final int textView1=0x7f06000a;

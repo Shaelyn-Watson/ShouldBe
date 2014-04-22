@@ -53,6 +53,7 @@ public class TapActivity extends MapActivity implements
     private Button likeButton;      //like the ShouldBe *TODO facebook
     //private TextView likeCount;     //display current number of likes
     private OnInfoWindowElemTouchListener infoButtonListener;
+    private DatabaseConnection dbConn;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
