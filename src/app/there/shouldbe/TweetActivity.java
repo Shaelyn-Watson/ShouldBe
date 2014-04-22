@@ -58,12 +58,6 @@ public class TweetActivity extends Activity {
 		Button tweetButton = (Button) findViewById(R.id.postTweetButton);
 		txtUpdate = (EditText) findViewById(R.id.tweetET);
 		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
-		extras = getIntent().getExtras();
-		callingActivity = (Class<?>)extras.get("sender");
-		if (callingActivity != null) {
-			Log.d("TweetActivity.onCreate", "Class Name = " + callingActivity.getName());
-			Log.d("TweetActivity.onCreate", "Simple Class Name = " + callingActivity.getSimpleName());
-		}
 	}
 
 	@Override
@@ -180,10 +174,6 @@ public class TweetActivity extends Activity {
                     Toast.makeText(getApplicationContext(),
                             "#shouldbe tweeted successfully", Toast.LENGTH_SHORT)
                             .show();
-                    if (callingActivity != null && callingActivity.getSimpleName() == "TwitterFeedActivity") {
-                    	Intent intent = new Intent(TweetActivity.this, TwitterFeedActivity.class);
-                    	startActivity(intent);
-                    }
                     TweetActivity.this.finish();
                 }
             });
