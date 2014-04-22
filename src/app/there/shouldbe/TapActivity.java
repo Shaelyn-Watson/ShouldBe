@@ -1,18 +1,28 @@
 package app.there.shouldbe;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +64,7 @@ public class TapActivity extends MapActivity implements
     //private TextView likeCount;     //display current number of likes
     private OnInfoWindowElemTouchListener infoButtonListener;
     private DatabaseConnection dbConn;
+    private EditText mapSearchBox; 
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +77,7 @@ public class TapActivity extends MapActivity implements
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         
-        dbConn = new DatabaseConnection(); // this may take awhile
+//        dbConn = new DatabaseConnection(); // this may take awhile
         
         /* 
          * Load google map 
@@ -76,7 +87,7 @@ public class TapActivity extends MapActivity implements
         final MapWrapperLayout mapWrapperLayout = (MapWrapperLayout)findViewById(R.id.map_relative_layout);
         mLocationClient = new LocationClient(this, this, this);
         setUpMapIfNeeded(); //ensure map loads
-        
+        mMap.getUiSettings().setZoomControlsEnabled(false); // remove +/- zoom controls since pinching is enabled
         /*
          *Click on map = show existing pin's info window or create new pin waiting for input 
          * */
@@ -104,6 +115,30 @@ public class TapActivity extends MapActivity implements
             }
         });
         
+        mapSearchBox = (EditText) findViewById(R.id.mapSearchBox);
+        mapSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				boolean result = false;
+				Log.d("TapActivity.mapSearchBox.onEditorAction", "actionId = " + actionId);
+				Log.d("TapActivity.mapSearchBox.onEditorAction", "eventAction = " + event.getAction());
+				Log.d("TapActivity.mapSearchBox.onEditorAction", "eventCode = " + event.getKeyCode());
+		    	if (actionId == EditorInfo.IME_NULL &&
+		    		event.getKeyCode() == KeyEvent.ACTION_DOWN) {
+		    		
+		    		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		    		imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
+		    		
+		    		new SearchClicked(mapSearchBox.getText().toString()).execute();
+		    		mapSearchBox.setText("", TextView.BufferType.EDITABLE);
+		    		result = true;
+		    	}
+		    	
+		    	return result;
+			}
+		});
+        
+        
         /*
          * Click on a marker's infowindow 
          * */
@@ -116,8 +151,7 @@ public class TapActivity extends MapActivity implements
         // Setting custom OnTouchListener which deals with the pressed state 
         this.infoButtonListener = new OnInfoWindowElemTouchListener(likeButton,
                 getResources().getDrawable(R.drawable.like1),
-                getResources().getDrawable(R.drawable.like2)) 
-        {
+                getResources().getDrawable(R.drawable.like2)) {
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 // *** TODO register click as a "like" counting towards the ShouldBe
@@ -160,6 +194,7 @@ public class TapActivity extends MapActivity implements
             NavUtils.navigateUpFromSameTask(this);
             return true;
         }
+        
         return super.onOptionsItemSelected(item);
     }
     
@@ -190,13 +225,24 @@ public class TapActivity extends MapActivity implements
     
     @Override 
     protected void onStop() {
+    	super.onStop();
     	if (mLocationClient != null)
     		mLocationClient.disconnect();
-    	super.onStop();
+//    	if (dbConn != null) {  // close database connection
+//			try {
+//				dbConn.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			} 
+//    	}
     }
 
     private void zoomToUserLocation() {
     	mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, 15));
+    }
+    
+    private void zoomToLatLngLocation(LatLng point) {
+    	mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15));
     }
 
 	@Override
@@ -247,5 +293,33 @@ public class TapActivity extends MapActivity implements
 		
 	}
 	
+	private class SearchClicked extends AsyncTask<Void, Void, Boolean> {
+		private String toSearch;
+		private Address address;
+		
+		public SearchClicked(String toSearch) {
+			this.toSearch = toSearch;
+		}
+		
+		@Override
+		protected Boolean doInBackground(Void... voids) {
+			Boolean result = false;
+			try {
+				Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.US); // search addresses in the US
+				List<Address> results = geocoder.getFromLocationName(toSearch, 1);
+				
+				if (results.size() > 0) {
+					address = results.get(0);
+					LatLng l = new LatLng((int) (address.getLatitude() * 1E6), (int) (address.getLongitude() * 1E6));
+					zoomToLatLngLocation(l);
+					result = true;
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+	}
 	
 }

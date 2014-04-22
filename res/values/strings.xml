@@ -18,9 +18,11 @@
     <string name="loginWithTwitter">Login with Twitter</string>
     <string name="twitterLoginSummary">Login with Twitter to post \#shouldbe\'s</string>
     <string name="settings">Settings</string>
-    <string name="twitterLogout">Log out</string>
-    <string name="twitterLogoutSummary">Log out of Twitter</string>
+    <string name="twitterLogout">Logout</string>
+    <string name="twitterLogoutSummary">Logout of Twitter</string>
     <string name="tweetButton_text">Tweet</string>
     <string name="title_activity_tweet">TweetActivity</string>
+    <string name="search">Search</string>
+    <string name="searchPrompt">Search...</string>
 
 </resources>

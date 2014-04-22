@@ -232,38 +232,37 @@ containing a value of this type.
         public static final int twitter=0x7f020022;
     }
     public static final class id {
-        public static final int action_settings=0x7f06001f;
-        public static final int button=0x7f06001c;
+        public static final int action_settings=0x7f06001e;
+        public static final int button=0x7f06001b;
         public static final int button1=0x7f06000b;
         public static final int button2=0x7f06000c;
         public static final int buttonGenPost=0x7f060007;
-        public static final int container=0x7f060011;
+        public static final int container=0x7f060010;
         public static final int etGenPost=0x7f060006;
         public static final int hybrid=0x7f060004;
-        public static final int like_count=0x7f06001d;
+        public static final int like_count=0x7f06001c;
         public static final int map=0x7f06000e;
         public static final int mapSearchBox=0x7f06000f;
         public static final int map_relative_layout=0x7f06000d;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
-        public static final int postTweetButton=0x7f060012;
-        public static final int prefScreen=0x7f06001e;
+        public static final int postTweetButton=0x7f060011;
+        public static final int prefScreen=0x7f06001d;
         public static final int satellite=0x7f060002;
-        public static final int searchButton=0x7f060010;
-        public static final int settings=0x7f060020;
+        public static final int settings=0x7f06001f;
         public static final int tap_loc=0x7f060008;
         public static final int terrain=0x7f060003;
         public static final int textView1=0x7f06000a;
-        public static final int there_should_be=0x7f06001b;
+        public static final int there_should_be=0x7f06001a;
         public static final int tvGenPost=0x7f060005;
-        public static final int tweetBar=0x7f060014;
-        public static final int tweetET=0x7f060013;
-        public static final int tweet_date=0x7f060018;
-        public static final int tweet_message=0x7f060019;
-        public static final int tweet_name=0x7f06001a;
-        public static final int twitterEmail=0x7f060015;
-        public static final int twitterLogin=0x7f060017;
-        public static final int twitterPassword=0x7f060016;
+        public static final int tweetBar=0x7f060013;
+        public static final int tweetET=0x7f060012;
+        public static final int tweet_date=0x7f060017;
+        public static final int tweet_message=0x7f060018;
+        public static final int tweet_name=0x7f060019;
+        public static final int twitterEmail=0x7f060014;
+        public static final int twitterLogin=0x7f060016;
+        public static final int twitterPassword=0x7f060015;
         public static final int twitterfeed=0x7f060009;
     }
     public static final class integer {
@@ -389,6 +388,8 @@ containing a value of this type.
         public static final int location_client_powered_by_google=0x7f07001a;
         public static final int loginWithTwitter=0x7f070029;
         public static final int post_wall=0x7f070020;
+        public static final int search=0x7f070030;
+        public static final int searchPrompt=0x7f070031;
         public static final int settings=0x7f07002b;
         public static final int tap_location=0x7f07001e;
         public static final int there_should_be=0x7f07001f;

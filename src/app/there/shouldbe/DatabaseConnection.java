@@ -3,6 +3,7 @@ package app.there.shouldbe;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,7 +19,7 @@ public class DatabaseConnection {
 	private final static String DATABASE_URL = "ec2-54-225-101-199.compute-1.amazonaws.com";
 	private final static String DATABASE_NAME = "d5puq82aq6a28e";
 	private final static Integer DATABASE_PORT = 5432;
-	private static Connection conn;
+	private Connection conn;
 	
 	
 	/**
@@ -56,37 +57,33 @@ public class DatabaseConnection {
 	 * @return false if connection is null, true otherwise
 	 */
 	public boolean checkConnection() {
-		return this != null ? true : false;
+		return this.conn != null ? true : false;
 	}
 	
 	/**
 	 * Returns connection metadata
 	 * @return String with connection metadata
+	 * @throws SQLException 
 	 */
-	public String getMetaData() {
-		return this.getMetaData();
+	public DatabaseMetaData getMetaData() throws SQLException {
+		return this.conn.getMetaData();
 	}
 	
 	/**
 	 * Returns statement to execute sql
 	 * @return Statement to execute sql
+	 * @throws SQLException 
 	 */
-	public Statement createStatement() {
-		return this.createStatement();
+	public Statement createStatement() throws SQLException {
+		return this.conn.createStatement();
 	}
 	
 	/**
 	 *  Closes this connection to the database
+	 * @throws SQLException 
 	 */
-	public void close() {
-		this.close();
+	public void close() throws SQLException {
+		this.conn.close();
 	}
-	
-	/**
-	 * Executes the passed in sql query
-	 * @param sql String of sql code to be executed on the database
-	 */
-	public void execute(String sql) {
-		this.execute(sql);
-	}
+
 }

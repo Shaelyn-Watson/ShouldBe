@@ -13,27 +13,22 @@
           android:layout_height="match_parent"
           android:name="com.google.android.gms.maps.MapFragment"/>
 
+	<RelativeLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="50dp" >
+
     <EditText
         android:id="@+id/mapSearchBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/searchButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/searchButton"
         android:background="#FFFF"
-        android:ems="10" >
+        android:ems="10"
+        android:hint="@string/searchPrompt" >
 
     </EditText>
-
-    <Button
-        android:id="@+id/searchButton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="#C0C0C0"
-        android:text="Search" />
+    
+    </RelativeLayout>
 
 </app.there.shouldbe.MapWrapperLayout>
