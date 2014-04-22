@@ -1,11 +1,11 @@
 package app.there.shouldbe;
 
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
-import twitter4j.conf.ConfigurationBuilder;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -30,7 +30,7 @@ public class Settings extends PreferenceActivity {
     private final String PREF_KEY_OAUTH_SECRET = "oauth_token_secret";
     private final String PREF_REQUEST_TOKEN = "request_token";
     private final String PREF_KEY_TWITTER_LOGIN = "isTwitterLoggedIn";
-    private final String TWITTER_CALLBACK_URL = "shouldbe://tweet";
+    private final String TWITTER_CALLBACK_URL = "shouldbe://callback_settings";
     private final String URL_TWITTER_AUTH = "auth_url";
     private final String URL_TWITTER_OAUTH_VERIFIER = "oauth_verifier";
     private final String URL_TWITTER_OAUTH_TOKEN = "oauth_token";
@@ -67,15 +67,15 @@ public class Settings extends PreferenceActivity {
 		
 		twitterPref = findPreference(TWITTER_PREF_KEY);
 		twitterLogOutPref = findPreference(TWITTER_LOGOUT_PREF_KEY);
-		twitterPref.setEnabled(false);
-		twitterPref.setEnabled(false);
+//		twitterPref.setEnabled(false);
+//		twitterPref.setEnabled(false);
 		
 		twitterPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				String key = preference.getKey();
 				if (key.equals(TWITTER_PREF_KEY)) {
-					loginWithTwitter();
+					OAuthLogin();
 					return true;
 				}
 				return false;
@@ -94,64 +94,84 @@ public class Settings extends PreferenceActivity {
 			}
 		});
 		
-		if (!isTwitterAlreadyLoggedIn()) {
-			Uri uri = getIntent().getData();
-			if (uri != null && uri.toString().startsWith(TWITTER_CALLBACK_URL)) {
-				String verifier = uri.getQueryParameter(URL_TWITTER_OAUTH_VERIFIER);
-				
-				try {
-					AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier);
-					Editor e = mSharedPreferences.edit();
-					e.putString(PREF_KEY_OAUTH_TOKEN, accessToken.getToken());
-					e.putString(PREF_KEY_OAUTH_SECRET, accessToken.getTokenSecret());
-					e.putBoolean(PREF_KEY_TWITTER_LOGIN, true);
-					e.commit();
-					Log.e("Twitter OAuth Token", "> " + accessToken.getToken());
-					
-					twitterPref.setEnabled(false);
-					twitterLogOutPref.setEnabled(true);
-					
-					long userID = accessToken.getUserId();
-					User user = twitter.showUser(userID);
-					String username = user.getName();
-					Toast.makeText(this, "Welcome " + username + "!", Toast.LENGTH_LONG).show();
-					
-				}
-				catch (Exception e) {
-					Log.e("Twitter login error", e.getMessage());
-				}
-			}
-			else {
-				twitterPref.setEnabled(true);
-			}
-		}
-		
-		
 	}
 	
-	/**
-	 *  Logs the user into their Twitter account
-	 *  <br> Redirects the user to use 3rd party Twitter authorization page
-	 */
-	public void loginWithTwitter() {
-		//check if already logged in
-		if (!isTwitterAlreadyLoggedIn()) {
-			ConfigurationBuilder cb = new ConfigurationBuilder();
-			cb.setOAuthConsumerKey(CONSUMER_KEY)
-            	.setOAuthConsumerSecret(CONSUMER_SECRET);
-			TwitterFactory tf = new TwitterFactory(cb.build());
-			twitter = tf.getInstance();
+	public void OAuthLogin() {
+		try {
+			twitter = new TwitterFactory().getInstance();
+			twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
+			requestToken = twitter.getOAuthRequestToken(TWITTER_CALLBACK_URL);
+			String authURL = requestToken.getAuthenticationURL();
+			this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(authURL)));
+		}
+		catch (TwitterException e) {
+			Toast.makeText(this,  "Login Failed", Toast.LENGTH_LONG).show();
+			Log.e("in Settings.OauthLogin", e.getMessage());
+		}
+	}
+	
+	@Override 
+	protected void onResume() {
+		super.onResume();
+		
+		if (this.getIntent() != null && this.getIntent().getData() != null) {
+			Uri uri = this.getIntent().getData();
 			
-			try {
-				requestToken = twitter.getOAuthRequestToken(TWITTER_CALLBACK_URL);
-				this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(requestToken.getAuthenticationURL())));
-			}
-			catch(Exception e) {
-				e.printStackTrace();
+			if (uri != null && uri.toString().startsWith(TWITTER_CALLBACK_URL)) {
+				String verifier = uri.getQueryParameter(URL_TWITTER_OAUTH_VERIFIER);
+				String token = uri.getQueryParameter(URL_TWITTER_OAUTH_TOKEN);
+				try {
+					Twitter t = new TwitterFactory().getInstance();
+					t.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
+					requestToken = new RequestToken(token, CONSUMER_SECRET);
+					AccessToken accessToken = t.getOAuthAccessToken(requestToken, verifier);
+					
+					String atoken = accessToken.getToken();
+					String secret = accessToken.getTokenSecret();
+					Log.d("Settings.onResume", "token = " + atoken);
+					Log.d("Settings.onResume", "secret = " + secret);
+					
+					Editor e = mSharedPreferences.edit();
+					e.putString(PREF_KEY_OAUTH_TOKEN, atoken);
+					e.putString(PREF_KEY_OAUTH_SECRET, secret);
+					e.putBoolean(PREF_KEY_TWITTER_LOGIN, true);
+					e.commit();
+					Toast.makeText(this, "You are signed in!", Toast.LENGTH_LONG).show();
+//					long userID = accessToken.getUserId();
+//					User user = twitter.showUser(userID);
+//					String username = user.getName();
+//					Toast.makeText(this, "Welcome " + username + "!", Toast.LENGTH_LONG).show();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
-		else {
-			Toast.makeText(getApplicationContext(), "Already logged into Twitter!", Toast.LENGTH_LONG).show();
+	}
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		Uri uri = intent.getData();
+		try {
+			String verifier = uri.getQueryParameter(URL_TWITTER_OAUTH_VERIFIER);
+			AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier);
+			String token = accessToken.getToken();
+			String secret = accessToken.getTokenSecret();
+			Log.d("Settings.onNewIntent", "token = " + token);
+			Log.d("Settings.onNewIntent", "secret = " + secret);
+			
+			Editor e = mSharedPreferences.edit();
+			e.putString(PREF_KEY_OAUTH_TOKEN, token);
+			e.putString(PREF_KEY_OAUTH_SECRET, secret);
+			e.commit();
+			long userID = accessToken.getUserId();
+			User user = twitter.showUser(userID);
+			String username = user.getName();
+			Toast.makeText(this, "Welcome " + username + "!", Toast.LENGTH_LONG).show();
+		}
+		catch (Exception e) {
+			Log.e("Settings.onNewIntent", e.getMessage());
 		}
 	}
 	

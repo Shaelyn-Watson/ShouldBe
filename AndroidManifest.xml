@@ -55,19 +55,6 @@
                 android:value="app.there.shouldbe.MainActivity" />
         </activity>
 
-        <!--
-        <activity
-            android:name="app.there.shouldbe.TwitterLoginActivity"
-            android:label="@string/title_activity_twitter_login"
-            android:parentActivityName="app.there.shouldbe.MainActivity"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="app.there.shouldbe.MainActivity" /> 
-        </activity>
-        -->
-
-
         <!-- Allow the Settings activity to be launched -->
         <activity
             android:name="app.there.shouldbe.Settings"
@@ -84,7 +71,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="tweet"
+                    android:host="callback_settings"
                     android:scheme="shouldbe" />
             </intent-filter>
         </activity>
