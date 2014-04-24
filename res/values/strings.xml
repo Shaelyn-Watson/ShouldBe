@@ -23,7 +23,7 @@
     <string name="tweetButton_text">Tweet</string>
     <string name="title_activity_tweet">TweetActivity</string>
     <string name="search">Search</string>
-    <string name="searchPrompt">Search...</string>
+    <string name="searchPrompt">Search</string>
     <string name="whatShouldbe">What #shouldbe?</string>
 
 </resources>

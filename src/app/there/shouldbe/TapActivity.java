@@ -66,7 +66,7 @@ public class TapActivity extends MapActivity implements
     
     private EditText mapSearchBox;
     
-    private DBConnection dbConn;
+    //private DBConnection dbConn;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +100,10 @@ public class TapActivity extends MapActivity implements
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng point) { 
+            	// hide virtual keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
+                
                 Marker marker = null;
                 marker = mMap.addMarker(new MarkerOptions().position(point) //**point has LatLng info ALEXIS
                 	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
@@ -121,26 +125,27 @@ public class TapActivity extends MapActivity implements
         
         // Search Box on map
         mapSearchBox = (EditText) findViewById(R.id.mapSearchBox);
+        //mapSearchBox.setImeActionLabel("Custom text", KeyEvent.KEYCODE_SEARCH);
+        //mapSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         mapSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				boolean result = false;
-				Log.d("TapActivity.mapSearchBox.onEditorAction", "actionId = " + actionId);
-				Log.d("TapActivity.mapSearchBox.onEditorAction", "eventAction = " + event.getAction());
-				Log.d("TapActivity.mapSearchBox.onEditorAction", "eventCode = " + event.getKeyCode());
-		    	if (actionId == EditorInfo.IME_NULL &&
-		    		event.getKeyCode() == KeyEvent.ACTION_DOWN) {
-		    		
-		    		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		    		imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
-		    		
-		    		new SearchClicked(mapSearchBox.getText().toString()).execute();
-		    		mapSearchBox.setText("", TextView.BufferType.EDITABLE);
-		    		result = true;
-		    	}
-		    	
-		    	return result;
-			}
+	             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+	                    //actionId == EditorInfo.IME_ACTION_DONE ||
+	                    //actionId == EditorInfo.IME_ACTION_GO ||
+	                    event.getAction() == KeyEvent.ACTION_DOWN &&
+	                    event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+
+	                // hide virtual keyboard
+	                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+	                imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
+
+	                new SearchClicked(mapSearchBox.getText().toString()).execute();
+	                mapSearchBox.setText("", TextView.BufferType.EDITABLE);
+	                return true;
+	            }
+	            return false;
+	        }
 		});
         
         

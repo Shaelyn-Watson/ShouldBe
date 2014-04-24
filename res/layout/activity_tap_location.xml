@@ -15,19 +15,32 @@
 
 	<RelativeLayout
 	    android:layout_width="wrap_content"
-	    android:layout_height="50dp" >
+	    android:layout_height="50dp"
+	    android:orientation="vertical" >
+	    
+	    <ImageView
+                android:id="@+id/searchIcon"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:paddingTop="10dp"
+                android:layout_toRightOf="@+id/mapSearchBox"
+                android:layout_alignParentLeft="true"
+                
+                android:src="@drawable/shouldbepin" />
 
-    <EditText
-        android:id="@+id/mapSearchBox"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="#FFFF"
-        android:ems="10"
-        android:hint="@string/searchPrompt" >
+	    <EditText
+	        android:id="@+id/mapSearchBox"
+	        android:layout_width="300dp"
+	        android:layout_height="50dp"
 
-    </EditText>
+			android:layout_alignParentTop="true"
+	        android:layout_alignParentRight="true" 
+	        android:background="#FFFF"
+	        android:ems="10"
+	        android:hint="@string/searchPrompt"
+	        android:imeOptions="actionSearch" >
+	    </EditText>
     
     </RelativeLayout>
 
