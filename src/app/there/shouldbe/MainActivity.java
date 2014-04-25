@@ -1,61 +1,78 @@
 package app.there.shouldbe;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends Activity {
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+
+public class MainActivity extends FragmentActivity {
+	
+	  public static final int WALL_ACTIVITY = 0;
+	  public static final int MAP_ACTIVITY = 1;
+	  public static final int TWEET_ACTIVITY = 2;
+	  private static final int NUM_PAGES = 2;
+	  private PagerAdapter mPagerAdapter;   //The adapter definition of the fragments
+	  private ViewPager mPager;  //The ViewPager that hosts the section contents
+	 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
-	}
+		setContentView(R.layout.activity_screen_slide);
+	 
+//	    // Instantiate a ViewPager and a PagerAdapter.
+      mPager = (ViewPager) findViewById(R.id.pager);
+      mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+      mPager.setAdapter(mPagerAdapter);
+      mPager.setCurrentItem(0);
+  }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		super.onCreateOptionsMenu(menu);
-		
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.options_menu, menu);
-		
-		return true;
-	}
 	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if(item.getItemId() == R.id.settings){
-			startActivity(new Intent(this, Settings.class)); 
-			return true;
-		}
-		
-		return false;
-	}
-	
-	/** Called when the user clicks the Tap Location button */
-	public void tapLocation(View view) {
-	    // Do something in response to button
-		Intent intent = new Intent(this, TapActivity.class);
-		startActivity(intent);
-	}
-	
-	/** Called when the user clicks the General Post button */
-	public void postWall(View view) {
-	    // Do something in response to button
-		Intent intent = new Intent(this, GeneralPostActivity.class);
-		startActivity(intent);
-	}
-	
-	/** Called when the user clicks the Twitter Feed button */
-	public void openTwitterFeed(View view) {
-	    // Do something in response to button
-		Intent intent = new Intent(this, TwitterFeedActivity.class);
-		startActivity(intent);
-	}
+  @Override
+  public void onBackPressed() {
+      if (mPager.getCurrentItem() == 0) {
+          // If the user is currently looking at the first step, allow the system to handle the
+          // Back button. This calls finish() on this activity and pops the back stack.
+          super.onBackPressed();
+      } else {
+          // Otherwise, select the previous step.
+      	//Toast.makeText(MainActivity.this, " back to old frag " + String.valueOf(mPager.getCurrentItem() - 1), Toast.LENGTH_SHORT).show();
+          mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+      }
+  }
+
+  /**
+   * A simple pager adapter that represents ScreenSlidePageFragment objects, in
+   * sequence.
+   */
+  private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+      public ScreenSlidePagerAdapter(FragmentManager fm) {
+          super(fm);
+      }
+
+      @Override
+      public Fragment getItem(int position) {
+      	if(position == 0){
+      		//wall activity
+      		return new WallFragment();
+      	}
+      	else{
+      		return new MapFragment();
+      	}
+      }
+
+      @Override
+      public int getCount() {
+          return NUM_PAGES;
+      }
+  }
+
 
 }
