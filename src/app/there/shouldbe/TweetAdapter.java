@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class TweetAdapter<T> extends BaseAdapter {
@@ -16,8 +17,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 	private Activity activity;
 	private ArrayList<T> data;
 	private static LayoutInflater inflater = null;
-	Tweet tempValues = null;
-	int i = 0;
+	private Tweet tempValues = null;
 
 	public TweetAdapter(Activity a, ArrayList<T> d) {
 		activity = a;
@@ -50,7 +50,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 		public TextView date;
 		public TextView message;
 		public TextView name;
-		public Button likeButton;
+		public ImageButton likeButton;
 		public TextView likeCount;
 
 	}
@@ -71,6 +71,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.message = (TextView) vi.findViewById(R.id.tweet_message);
 			holder.name = (TextView) vi.findViewById(R.id.tweet_name);
 			holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count);
+			holder.likeButton = (ImageButton) vi.findViewById(R.id.wall_like_button);
 
 			/************ Set holder with LayoutInflater ************/
 			vi.setTag(holder);
@@ -89,7 +90,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.date.setText(tempValues.getDate());
 			holder.message.setText(tempValues.getMessage());
 			holder.name.setText("@" + tempValues.getName());
-			holder.likeCount.setText("like count");
+			holder.likeCount.setText(String.valueOf(tempValues.getLikeCount()));
 		}
 		return vi;
 	}

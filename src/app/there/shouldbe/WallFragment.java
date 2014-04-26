@@ -21,9 +21,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.Marker;
 
 public class WallFragment extends ListFragment implements OnClickListener{ 	  
 
@@ -35,9 +36,9 @@ public class WallFragment extends ListFragment implements OnClickListener{
 			private final long SHOULDBE_TWITTER_ID = 2360041674L; // L is required for long value - not a part of ID
 			private ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
 			
-			private View view;
 			private Button likeButton;
 			private TweetAdapter<Tweet> adapter;
+			private OnInfoWindowElemTouchListener infoButtonListener;
 			
 		  @Override
 			public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,6 @@ public class WallFragment extends ListFragment implements OnClickListener{
 		    Bundle savedInstanceState) {  
 			  
 			  adapter = new TweetAdapter<Tweet>(getActivity(), tweetList);
-				   
 				   
 				   
 		   return super.onCreateView(inflater, container, savedInstanceState);  
