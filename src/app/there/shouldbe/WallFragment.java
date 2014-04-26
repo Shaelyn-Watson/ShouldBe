@@ -37,7 +37,7 @@ public class WallFragment extends ListFragment {
 			private final long SHOULDBE_TWITTER_ID = 2360041674L; // L is required for long value - not a part of ID
 			ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
 		  
-		  @Override
+			@Override
 			public void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
 				StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

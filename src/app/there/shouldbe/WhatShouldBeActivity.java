@@ -5,21 +5,25 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
+import android.app.Activity;
+import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ShouldBeFragment extends Fragment implements OnClickListener{
+
+public class WhatShouldBeActivity extends Activity {
 	
 	private final String TWITTER_PREF_KEY = "twitter_login";
 	private final String TWITTER_LOGOUT_PREF_KEY = "twitter_logout";
@@ -40,33 +44,57 @@ public class ShouldBeFragment extends Fragment implements OnClickListener{
     private EditText txtUpdate;
     private Bundle extras;
     private Class<?> callingActivity;
-    private Button button;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 
-//		if (savedInstanceState == null) {
-//			getFragmentManager().beginTransaction()
-//					.add(R.id.container, new PlaceholderFragment()).commit();
-//		}
-		
-	}
-	
-	@Override  
-	  public View onCreateView(LayoutInflater inflater, ViewGroup container,  
-	    Bundle savedInstanceState) {
-		
-		button = (Button) container.findViewById(R.id.postTweetButton);
-		txtUpdate = (EditText) container.findViewById(R.id.tweetET);
-		//mSharedPreferences = getActivity().getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
-		
-		return inflater.inflate(R.layout.activity_tweet, container, false);
-	}
-	
 	@Override
-	public void onResume() {						
-		super.onResume();
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_tweet);
+
+		if (savedInstanceState == null) {
+			getFragmentManager().beginTransaction()
+					.add(R.id.container, new PlaceholderFragment()).commit();
+		}
+		
+		Button tweetButton = (Button) findViewById(R.id.postTweetButton);
+		txtUpdate = (EditText) findViewById(R.id.tweetET);
+		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.tweet, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * A placeholder fragment containing a simple view.
+	 */
+	public static class PlaceholderFragment extends Fragment {
+
+		public PlaceholderFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_tweet,
+					container, false);
+			return rootView;
+		}
 	}
 	
 	public void postTweet(View view) {
@@ -77,11 +105,11 @@ public class ShouldBeFragment extends Fragment implements OnClickListener{
 				new updateTwitterStatus().execute(status);
 			}
 			else {
-				Toast.makeText(getActivity(), "Please enter a status", Toast.LENGTH_LONG);
+				Toast.makeText(this, "Please enter a status", Toast.LENGTH_LONG);
 			}
 		}
 		else {
-			Toast.makeText(getActivity(),  "Please Login to Twitter using settings", Toast.LENGTH_LONG).show();
+			Toast.makeText(this,  "Please Login to Twitter using settings", Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -94,7 +122,7 @@ public class ShouldBeFragment extends Fragment implements OnClickListener{
 		@Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //pDialog = new ProgressDialog(TweetActivity.class);
+            pDialog = new ProgressDialog(WhatShouldBeActivity.this);
             pDialog.setMessage("Updating to twitter...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
@@ -140,22 +168,17 @@ public class ShouldBeFragment extends Fragment implements OnClickListener{
             // dismiss the dialog after getting all products
             pDialog.dismiss();
             // updating UI from Background Thread
-            getActivity().runOnUiThread(new Runnable() {
+            runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getActivity().getApplicationContext(),
+                    Toast.makeText(getApplicationContext(),
                             "#shouldbe tweeted successfully", Toast.LENGTH_SHORT)
                             .show();
+                    WhatShouldBeActivity.this.finish();
                 }
             });
         }
+		
 	}
-
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		postTweet(v);
-	}
-
 
 }

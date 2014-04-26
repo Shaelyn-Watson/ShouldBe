@@ -25,5 +25,6 @@
     <string name="search">Search</string>
     <string name="searchPrompt">Search</string>
     <string name="whatShouldbe">What #shouldbe?</string>
+    <string name="title_activity_what_should_be">WhatShouldBe</string>
 
 </resources>
