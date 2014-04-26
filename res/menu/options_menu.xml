@@ -7,7 +7,7 @@
 	<item 
 	    android:id="@+id/mapActionButton" 
 	    android:title="mapActionButton"
-	    android:icon="@drawable/ic_action_settings"
+	    android:icon="@android:drawable/ic_menu_mapmode"
 	    android:showAsAction="always"
 	    />
 

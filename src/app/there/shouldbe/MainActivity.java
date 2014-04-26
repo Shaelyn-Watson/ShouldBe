@@ -107,15 +107,12 @@ public class MainActivity extends FragmentActivity {
 			startActivity(new Intent(this, Settings.class)); 
 			return true;
 		}
+		if(item.getItemId() == R.id.mapActionButton){
+			startActivity(new Intent(this, TapActivity.class)); 
+			return true;
+		}
 
 		return false;
-	}
-
-	/** Called when the user clicks the Tap Location button */
-	public void tapLocation(View view) {
-	    // Do something in response to button
-		Intent intent = new Intent(this, TapActivity.class);
-		startActivity(intent);
 	}
 	
 	@Override
