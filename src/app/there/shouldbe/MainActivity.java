@@ -2,19 +2,25 @@ package app.there.shouldbe;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity {
 
 	  private static final int NUM_PAGES = 2;
-	  private PagerAdapter mPagerAdapter;   //The adapter definition of the fragments
 	  private ViewPager mPager;  //The ViewPager that hosts the section contents
 
 	  private ScreenSlidePagerAdapter pagerAdapter;
@@ -39,8 +45,6 @@ public class MainActivity extends FragmentActivity {
 	                    getActionBar().setSelectedNavigationItem(position);
 	                }
 	            });
-	    //mPager.setAdapter(mPagerAdapter);
-	    //mPager.setCurrentItem(0);
 	    
 	    // Specify that tabs should be displayed in the action bar.
 	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -70,16 +74,49 @@ public class MainActivity extends FragmentActivity {
 				
 			}
 	    };
-
-	    // Add 3 tabs, specifying the tab's text and TabListener
-	    for (int i = 0; i < 2; i++) {
-	        actionBar.addTab(
-	                actionBar.newTab()
-	                        .setText("Tab " + (i + 1))
-	                        .setTabListener(tabListener));
-	    }
+	    
+	    actionBar.addTab(actionBar.newTab()
+                .setText("Wall")
+                .setTabListener(tabListener));
+//	    Button mapButton = (Button) findViewById(R.id.actionMapButton);
+//	    mapButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                // Perform action on click
+//            	tapLocation(v);
+//            }
+//        });
+	    actionBar.addTab(actionBar.newTab()
+                .setText("Post")
+                .setTabListener(tabListener));
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		super.onCreateOptionsMenu(menu);
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.options_menu, menu);
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.settings){
+			startActivity(new Intent(this, Settings.class)); 
+			return true;
+		}
+
+		return false;
+	}
+
+	/** Called when the user clicks the Tap Location button */
+	public void tapLocation(View view) {
+	    // Do something in response to button
+		Intent intent = new Intent(this, TapActivity.class);
+		startActivity(intent);
+	}
 	
 	@Override
 	public void onBackPressed() {

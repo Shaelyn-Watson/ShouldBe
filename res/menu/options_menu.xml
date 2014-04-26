@@ -4,4 +4,11 @@
 	    android:title="@string/settings"
 	    android:icon="@drawable/ic_action_settings"
 	    android:showAsAction="always" />
+	<item 
+	    android:id="@+id/mapActionButton" 
+	    android:title="mapActionButton"
+	    android:icon="@drawable/ic_action_settings"
+	    android:showAsAction="always"
+	    />
+
 </menu>
