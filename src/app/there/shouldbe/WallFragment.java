@@ -14,18 +14,14 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterListener;
 import twitter4j.TwitterMethod;
 import twitter4j.conf.ConfigurationBuilder;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ListFragment;
-import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 public class WallFragment extends ListFragment { 	  
 
@@ -126,6 +122,7 @@ public class WallFragment extends ListFragment {
 				//TODO not sorting by date correctly in list fragment feed view
 				Collections.sort(tweetList, new Comparator<Tweet>() {
 					public int compare(Tweet t1, Tweet t2) {
+						Log.d("DATE", t1.getDate());
 						return t1.getDate().compareTo(t2.getDate());
 					}
 				});
