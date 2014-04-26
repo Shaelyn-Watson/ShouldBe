@@ -176,8 +176,8 @@ public class TapActivity extends MapActivity implements
 			
 			@Override
 			protected void onClickConfirmed(View v, Marker marker) {
-				Intent intent = new Intent(TapActivity.this, TweetActivity.class);
-				startActivity(intent);
+//				Intent intent = new Intent(TapActivity.this, TweetActivity.class);
+//				startActivity(intent);
 			}
 		});
 

@@ -40,20 +40,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.there.shouldbe.MainActivity" />
         </activity>
-        <activity
-            android:name="app.there.shouldbe.GeneralPostActivity"
-            android:label="@string/post_wall" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="app.there.shouldbe.MainActivity" />
-        </activity>
-        <activity
-            android:name="app.there.shouldbe.TwitterFeedActivity"
-            android:label="@string/title_activity_twitter_feed" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="app.there.shouldbe.MainActivity" />
-        </activity>
 
         <!-- Allow the Settings activity to be launched -->
         <activity
@@ -80,11 +66,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <!-- Shaelyn's Key -->
-        <!--
-             <meta-data
+        
+            <!-- <meta-data
 		   		android:name="com.google.android.maps.v2.API_KEY"
-		   		android:value="AIzaSyCOl8qrlZX_1mjQ3ntAXaigvVe20pQQIF8"/>
-        -->
+		   		android:value="AIzaSyCOl8qrlZX_1mjQ3ntAXaigvVe20pQQIF8"/>-->
+        
         <!-- Alexis's Debug Key -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -92,14 +78,7 @@
 
         <uses-library android:name="com.google.android.maps" />
 
-        <activity
-            android:name="app.there.shouldbe.TweetActivity"
-            android:label="@string/title_activity_tweet"
-            android:parentActivityName="app.there.shouldbe.TwitterFeedActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="app.there.shouldbe.TwitterFeedActivity" />
-        </activity>
+
     </application>
 
 </manifest>
