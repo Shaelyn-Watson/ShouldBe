@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.google.android.gms.maps.MapFragment;
 
 public class MainActivity extends FragmentActivity {
 
@@ -25,11 +24,11 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_screen_slide);
 
-//	    // Instantiate a ViewPager and a PagerAdapter.
-    mPager = (ViewPager) findViewById(R.id.pager);
-    mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-    mPager.setAdapter(mPagerAdapter);
-    mPager.setCurrentItem(0);
+	    // Instantiate a ViewPager and a PagerAdapter.
+	    mPager = (ViewPager) findViewById(R.id.pager);
+	    mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+	    mPager.setAdapter(mPagerAdapter);
+	    mPager.setCurrentItem(0);
 }
 
 
@@ -62,7 +61,7 @@ private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     		return new WallFragment();
     	}
     	else{
-    		return new WallFragment();
+    		return new ShouldBeFragment();
     	}
     }
 

@@ -40,24 +40,15 @@ public class WallFragment extends ListFragment {
 		  @Override
 			public void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
-				//setContentView(R.layout.activity_twitter_feed);
 				StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 				StrictMode.setThreadPolicy(policy);
 				
-				// Make sure we're running on Honeycomb or higher to use ActionBar APIs
-		        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-		            // Show the Up button in the action bar.
-		            //getActionBar().setDisplayHomeAsUpEnabled(true);
-		        }
-		        //getIntent().setAction("Already Created");
-		        //view = getListView();
 		        setAdapter();
 			}
 		  
-		  @Override  
-		  public void onListItemClick(ListView l, View v, int position, long id) {  
-		   //new CustomToast(getActivity(), numbers_digits[(int) id]);     
-		  }  
+//		  @Override  
+//		  public void onListItemClick(ListView l, View v, int position, long id) {     
+//		  }  
 		  
 		  @Override  
 		  public View onCreateView(LayoutInflater inflater, ViewGroup container,  
@@ -83,20 +74,10 @@ public class WallFragment extends ListFragment {
 			}
 			
 			/**
-			 * Force restart onResume() to refresh twitter feed
+			 * Force refresh twitter feed TODO
 			 */
 			@Override
-			public void onResume() {
-//				String action = getIntent().getAction();
-//				if (action == null || !action.equals("Already Created")){
-//					Intent intent = new Intent(this, TwitterFeedActivity.class);
-//					startActivity(intent);
-//					this.finish();
-//				}
-//				else {
-//					getIntent().setAction(null);
-//				}
-						
+			public void onResume() {						
 				super.onResume();
 			}
 			
@@ -141,6 +122,8 @@ public class WallFragment extends ListFragment {
 			}
 			
 			private void displayTwitter(final ArrayList<Tweet> tweetList) {
+				
+				//TODO not sorting by date correctly in list fragment feed view
 				Collections.sort(tweetList, new Comparator<Tweet>() {
 					public int compare(Tweet t1, Tweet t2) {
 						return t1.getDate().compareTo(t2.getDate());
@@ -156,4 +139,10 @@ public class WallFragment extends ListFragment {
 					}
 				});
 			}
+			
+//			public void openTweetActivity(View view) {
+//				Intent intent = new Intent(getActivity(), TweetActivity.class);
+//				intent.putExtra("sender", TwitterFeedActivity.class);
+//				startActivity(intent);
+//			}
 }
