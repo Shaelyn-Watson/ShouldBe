@@ -1,14 +1,15 @@
 package app.there.shouldbe;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class TweetAdapter<T> extends BaseAdapter {
 
@@ -49,6 +50,8 @@ public class TweetAdapter<T> extends BaseAdapter {
 		public TextView date;
 		public TextView message;
 		public TextView name;
+		public Button likeButton;
+		public TextView likeCount;
 
 	}
 
@@ -61,12 +64,13 @@ public class TweetAdapter<T> extends BaseAdapter {
 		if(convertView == null) {
 
 			/****** Inflate file for each row *******/
-			vi = inflater.inflate(R.layout.list_item, null);
+			vi = inflater.inflate(R.layout.wall_list_item, null);
 
 			holder = new ViewHolder();
 			holder.date = (TextView) vi.findViewById(R.id.tweet_date);
 			holder.message = (TextView) vi.findViewById(R.id.tweet_message);
 			holder.name = (TextView) vi.findViewById(R.id.tweet_name);
+			holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count);
 
 			/************ Set holder with LayoutInflater ************/
 			vi.setTag(holder);
@@ -85,6 +89,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.date.setText(tempValues.getDate());
 			holder.message.setText(tempValues.getMessage());
 			holder.name.setText("@" + tempValues.getName());
+			holder.likeCount.setText("like count");
 		}
 		return vi;
 	}
