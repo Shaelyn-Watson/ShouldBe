@@ -19,11 +19,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -63,7 +60,8 @@ public class TapActivity extends MapActivity implements
 	//Marker mapped to positions
 	private HashMap<Marker, LatLng> markerPositions = new HashMap<Marker, LatLng>();
 	//Marker mapped to infoWindow view instances
-	private HashMap<Marker, ViewGroup> markerWindows = new HashMap<Marker, ViewGroup>();
+	private HashMap<Marker, ViewGroup> markers2Windows = new HashMap<Marker, ViewGroup>();
+	private HashMap<ViewGroup, Marker> windows2Markers = new HashMap<ViewGroup, Marker>();
 	
 	//info window global elements
     private Button likeButton;      //like the ShouldBe *TODO facebook
@@ -111,7 +109,7 @@ public class TapActivity extends MapActivity implements
                 	.title("There should be:")  //not used
                 	);
                 //new marker is presented with simple add ShouldBe window
-                markerWindows.put(marker, emptyInfoWindow);
+                markers2Windows.put(marker, emptyInfoWindow);
                 // Move camera to position of new marker
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); 
                 pins.put(marker, 0);  //Init like count
@@ -155,14 +153,15 @@ public class TapActivity extends MapActivity implements
         mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
             @Override
             public View getInfoWindow(Marker marker) {
+            	Log.d("setInfoWindowAdapter", "setInfoWindowAdapter");
                 return null;
             }
 
             @Override
             public View getInfoContents(Marker marker) {
                 // We must call this to set the current marker and infoWindow references
-                mapWrapperLayout.setMarkerWithInfoWindow(marker, markerWindows.get(marker));
-                return markerWindows.get(marker);
+                mapWrapperLayout.setMarkerWithInfoWindow(marker, markers2Windows.get(marker));
+                return markers2Windows.get(marker);
             }
         });  
 
