@@ -97,7 +97,7 @@ public class ShouldBeFragment extends Fragment {
 	class updateTwitterStatus extends AsyncTask<String, String, String> {
 
 		@Override
-        protected void onPreExecute() {
+        protected void onPreExecute() { 
             super.onPreExecute();
             pDialog = new ProgressDialog(getActivity());
             pDialog.setMessage("Updating to twitter...");

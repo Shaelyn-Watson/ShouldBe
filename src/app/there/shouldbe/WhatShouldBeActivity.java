@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -60,6 +61,7 @@ public class WhatShouldBeActivity extends Activity {
 		}
 		 
 		ImageButton tweetButton = (ImageButton) findViewById(R.id.postTweetButton);
+		tweetButton.setOnClickListener(new postShouldBe());
 		txtUpdate = (EditText) findViewById(R.id.tweetET);
 		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
 	} 
@@ -181,6 +183,16 @@ public class WhatShouldBeActivity extends Activity {
                 }
             });
         }
+		
+	}
+	
+	private class postShouldBe implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			postTweet(v);
+			
+		}
 		
 	}
 
