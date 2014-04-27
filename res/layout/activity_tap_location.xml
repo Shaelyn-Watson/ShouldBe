@@ -18,7 +18,7 @@
 	    android:layout_height="50dp"
 	    android:orientation="vertical" >
 
-	     <ImageButton
+<!-- 	     <ImageButton
 	         android:id="@+id/searchButton"
 	         android:layout_width="50dp"
 	         android:layout_height="50dp"
@@ -39,10 +39,10 @@
 	         android:background="@drawable/official_background"
 	         android:ems="10"
 	         android:singleLine="true"
-	         android:hint="@string/searchPrompt" >
+	         android:hint="@string/searchPrompt" > 
 
 	         <requestFocus />
-	     </EditText>
+	     </EditText> -->
     
     </RelativeLayout>
 

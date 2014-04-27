@@ -176,7 +176,13 @@ public class WhatShouldBeActivity extends Activity {
          * **/
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting all products
-            pDialog.dismiss();
+        	try {
+        		pDialog.dismiss();
+        		pDialog = null;
+        	}
+        	catch (Exception e) {
+        		// nothing
+        	}
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 @Override

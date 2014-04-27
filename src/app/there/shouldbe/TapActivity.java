@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -72,6 +73,7 @@ public class TapActivity extends MapActivity implements
     private EditText mapSearchBox;
     private ImageButton searchButton;
     private String searchString;
+    private ProgressDialog pDialog;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,6 +287,17 @@ public class TapActivity extends MapActivity implements
 		}
 		
 		@Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(TapActivity.this);
+            pDialog.setMessage("Searching...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+		
+		
+		@Override
 		protected Boolean doInBackground(Void... voids) {
 			Boolean result = false;
 			try {
@@ -294,8 +307,7 @@ public class TapActivity extends MapActivity implements
 				
 				if (results.size() > 0) {
 					address = results.get(0);
-					LatLng l = new LatLng((int) (address.getLatitude() * 1E6), (int) (address.getLongitude() * 1E6));
-					zoomToLatLngLocation(l);
+					
 					result = true;
 				}
 			}
@@ -303,6 +315,15 @@ public class TapActivity extends MapActivity implements
 				e.printStackTrace();
 			}
 			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean b) {
+			if (b) {
+				LatLng l = new LatLng((int) (address.getLatitude() * 1E6), (int) (address.getLongitude() * 1E6));
+				zoomToLatLngLocation(l);
+			}
+			pDialog.dismiss();
 		}
 	}
 	
