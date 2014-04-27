@@ -121,19 +121,19 @@ public class TapActivity extends MapActivity implements
 
         });
         
-        // Setup map search bar
-        mapSearchBox = (EditText) findViewById(R.id.mapSearchBox);
-        mapSearchBox.addTextChangedListener(new EditTextChanged());
-        searchButton = (ImageButton) findViewById(R.id.searchButton);
-        searchButton.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (!searchString.isEmpty()) {
-					new SearchClicked(mapSearchBox.getText().toString()).execute();
-				}
-				return false;
-			}
-		});
+        // Setup map search bar  (hidden for now)
+//        mapSearchBox = (EditText) findViewById(R.id.mapSearchBox);
+//        mapSearchBox.addTextChangedListener(new EditTextChanged());
+//        searchButton = (ImageButton) findViewById(R.id.searchButton);
+//        searchButton.setOnTouchListener(new OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				if (!searchString.isEmpty()) {
+//					new SearchClicked(mapSearchBox.getText().toString()).execute();
+//				}
+//				return false;
+//			}
+//		});
         
         
         /* 
