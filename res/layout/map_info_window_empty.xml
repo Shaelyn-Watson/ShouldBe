@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
         android:layout_marginTop="9dp"
         android:layout_marginBottom="9dp" >
 	 	
@@ -17,7 +18,7 @@
 	        android:id="@+id/shouldBeButton"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:background="@drawable/official_background1"
+		    android:background="@drawable/official_background"
 		    android:gravity="center_vertical"
 		    android:textColor="@android:color/black"
 		    android:text="@string/whatShouldbe"
@@ -28,28 +29,4 @@
 
     </LinearLayout>
     
-     
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginRight="9dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginBottom="9dp">
-
-	    <Button
-	        android:id="@+id/button" 
-	        android:layout_width="wrap_content"
-        	android:layout_height="wrap_content" />
-	    
-	    <TextView
-	            android:id="@+id/like_count"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textSize="12sp" />
-	    
-    </LinearLayout>
-    
-
-
 </LinearLayout>

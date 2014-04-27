@@ -50,18 +50,20 @@ public class TapActivity extends MapActivity implements
 	private Location mCurrentLocation;
 	private LatLng mCurrentLatLng;
 	
+	/* 
+	 * TODO: replace hashmaps with database information
+	 */
 	//Marker mapped to number of likes
 	private HashMap<Marker, Integer> pins = new HashMap<Marker, Integer>();
 	private HashMap<Marker, TextView> likeCounts = new HashMap<Marker, TextView>();
-	
 	//Marker mapped to positions
 	private HashMap<Marker, LatLng> markerPositions = new HashMap<Marker, LatLng>();
+	//Marker mapped to infoWindow view instances
+	private HashMap<Marker, ViewGroup> markerWindows = new HashMap<Marker, ViewGroup>();
 	
 	//info window global elements
-	private ViewGroup infoWindow;
-    private TextView thereShouldBe;    //"There should be:"
     private Button likeButton;      //like the ShouldBe *TODO facebook
-    private OnInfoWindowElemTouchListener infoButtonListener; 
+    private OnInfoWindowElemTouchListener likeButtonListener; 
     private Button whatShouldBe;
     
     private EditText mapSearchBox;
@@ -78,24 +80,20 @@ public class TapActivity extends MapActivity implements
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         
-        
-       // Load Google Map
+        /* 
+         * Setup Google Map
+         */
         mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         mMap.setMyLocationEnabled(true);
         final MapWrapperLayout mapWrapperLayout = (MapWrapperLayout)findViewById(R.id.map_relative_layout);
         mLocationClient = new LocationClient(this, this, this);
-
-        // Check to make sure map loads
-        setUpMapIfNeeded(); 
+        setUpMapIfNeeded();  // Check to make sure map loads
+        mMap.getUiSettings().setZoomControlsEnabled(false);   // Remove +/- zoom controls since pinching is enabled
         
-        // Remove +/- zoom controls since pinching is enabled
-        mMap.getUiSettings().setZoomControlsEnabled(false); 
-        
-        // Click on map = show existing pin's info window or create new pin waiting for input 
-        this.infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
-       // this.thereShouldBe = (TextView)infoWindow.findViewById(R.id.there_should_be);
-        this.likeButton = (Button)infoWindow.findViewById(R.id.button);
-        this.whatShouldBe = (Button)infoWindow.findViewById(R.id.shouldBeButton);
+        //pin info window
+        final ViewGroup emptyInfoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window_empty, null);
+        //this.likeButton = (Button)infoWindow.findViewById(R.id.button);
+        this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
         
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -105,24 +103,24 @@ public class TapActivity extends MapActivity implements
                 imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
                 
                 Marker marker = null;
-                marker = mMap.addMarker(new MarkerOptions().position(point) //**point has LatLng info ALEXIS
+                marker = mMap.addMarker(new MarkerOptions().position(point)
                 	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
-                	.title("There should be:")
+                	.title("There should be:")  //not used
                 	);
-                
+                //new marker is presented with simple add ShouldBe window
+                markerWindows.put(marker, emptyInfoWindow);
                 // Move camera to position of new marker
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); 
-                TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+                pins.put(marker, 0);  //Init like count
                 
-                // Add pin to hashmap 
-                pins.put(marker, 0);
-                likeCount.setText(String.valueOf(pins.get(marker)));
-                likeCounts.put(marker, likeCount);
                 marker.showInfoWindow(); 
                 }
+
         });
         
-        // Search Box on map
+        /* 
+         * Setup map search bar
+         */
         mapSearchBox = (EditText) findViewById(R.id.mapSearchBox);
         //mapSearchBox.setImeActionLabel("Custom text", KeyEvent.KEYCODE_SEARCH);
         //mapSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
@@ -148,27 +146,30 @@ public class TapActivity extends MapActivity implements
 		});
         
         
-        // Click on a marker's infowindow 
+        /* 
+         * Setup pin infowindow
+         */
         // MapWrapperLayout initialization
         // 39 - default marker height
         // 20 - offset between the default InfoWindow bottom edge and it's content bottom edge 
         mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20)); 
         
-        // Setting custom OnTouchListener which deals with the pressed state 
-        this.infoButtonListener = new OnInfoWindowElemTouchListener(likeButton,
-                getResources().getDrawable(R.drawable.like1),
-                getResources().getDrawable(R.drawable.like2)) {
-            @Override
-            protected void onClickConfirmed(View v, Marker marker) {
-                // *** TODO register click as a "like" counting towards the ShouldBe
-            	int pastLikes = (Integer) pins.get(marker);
-            	pins.put(marker, pastLikes+1);
-            	TextView likeCount = likeCounts.get(marker);
-            	likeCount.setText(String.valueOf(pins.get(marker)));
-            	marker.showInfoWindow();
-           }
-        }; 
-        this.likeButton.setOnTouchListener(infoButtonListener);
+//        // Setting custom OnTouchListener which deals with the pressed state 
+//        this.infoButtonListener = new OnInfoWindowElemTouchListener(likeButton,
+//                getResources().getDrawable(R.drawable.like1),
+//                getResources().getDrawable(R.drawable.like2)) {
+//            @Override
+//            protected void onClickConfirmed(View v, Marker marker) {
+//                // *** TODO register click as a "like" counting towards the ShouldBe
+//            	int pastLikes = (Integer) pins.get(marker);
+//            	pins.put(marker, pastLikes+1);
+//            	//if ( marker exists)
+////            	TextView likeCount = likeCounts.get(marker);
+////            	likeCount.setText(String.valueOf(pins.get(marker)));
+//            	marker.showInfoWindow();
+//           }
+//        }; 
+//        this.likeButton.setOnTouchListener(infoButtonListener);
         
         whatShouldBe.setOnTouchListener(new OnInfoWindowElemTouchListener(whatShouldBe) {
 			
@@ -188,19 +189,20 @@ public class TapActivity extends MapActivity implements
             @Override
             public View getInfoContents(Marker marker) {
                 // Setting up the infoWindow with current's marker info
-                infoButtonListener.setMarker(marker);
-                TextView likeCount = likeCounts.get(marker);
-            	likeCount.setText(String.valueOf(pins.get(marker)));
+                //likeButtonListener.setMarker(marker);
+//                TextView likeCount = likeCounts.get(marker);
+//            	likeCount.setText(String.valueOf(pins.get(marker)));
 
                 // We must call this to set the current marker and infoWindow references
-                mapWrapperLayout.setMarkerWithInfoWindow(marker, infoWindow);
-                return infoWindow;
+                mapWrapperLayout.setMarkerWithInfoWindow(marker, markerWindows.get(marker));
+                return markerWindows.get(marker);
             }
         });  
 
     }
     
-    @Override
+
+	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case android.R.id.home:
