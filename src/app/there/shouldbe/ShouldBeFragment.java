@@ -163,9 +163,9 @@ public class ShouldBeFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			postTweet(v);
-			Intent i = new Intent(getActivity(), MainActivity.class);  //your class
-		    startActivity(i);
-		    getActivity().finish();
+//			Intent i = new Intent(getActivity(), MainActivity.class);  //your class
+//		    startActivity(i);
+//		    getActivity().finish();
 		}
 		
 	}

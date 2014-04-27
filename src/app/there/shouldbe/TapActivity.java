@@ -102,8 +102,8 @@ public class TapActivity extends MapActivity implements
             @Override
             public void onMapClick(LatLng point) { 
             	// hide virtual keyboard
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
+                //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                //imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
                 
                 Marker marker = null;
                 marker = mMap.addMarker(new MarkerOptions().position(point)
