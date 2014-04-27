@@ -9,10 +9,13 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -46,6 +49,7 @@ public class WhatShouldBeActivity extends Activity {
     private EditText txtUpdate;
     private Bundle extras;
     private Class<?> callingActivity;
+    private String txtUpdateText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class WhatShouldBeActivity extends Activity {
 		ImageButton tweetButton = (ImageButton) findViewById(R.id.postTweetButton);
 		tweetButton.setOnClickListener(new postShouldBe());
 		txtUpdate = (EditText) findViewById(R.id.tweetET);
+		txtUpdate.addTextChangedListener(new EditTextChanged());
 		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
 	} 
 
@@ -179,6 +184,12 @@ public class WhatShouldBeActivity extends Activity {
                     Toast.makeText(getApplicationContext(),
                             "#shouldbe tweeted successfully", Toast.LENGTH_SHORT)
                             .show();
+                    
+                    if (!txtUpdateText.isEmpty()) {
+                    	Intent returnIntent = new Intent();
+                    	returnIntent.putExtra("status", txtUpdateText);
+                    	setResult(RESULT_OK, returnIntent);
+                    }
                     WhatShouldBeActivity.this.finish();
                 }
             });
@@ -192,6 +203,31 @@ public class WhatShouldBeActivity extends Activity {
 		public void onClick(View v) {
 			postTweet(v);
 			
+		}
+		
+	}
+	
+	private class EditTextChanged implements TextWatcher {
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// do nothing
+			
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			// do nothing
+			
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			// save string
+			txtUpdateText = s.toString();
+			Log.d("TapActivity.EditTextChanged.afterTextChanged", "s.toString() = " + s.toString());
 		}
 		
 	}

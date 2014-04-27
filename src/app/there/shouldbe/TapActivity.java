@@ -14,15 +14,18 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,9 +70,9 @@ public class TapActivity extends MapActivity implements
     private Button whatShouldBe;
     
     private EditText mapSearchBox;
+    private ImageButton searchButton;
+    private String searchString;
     
-    //private DBConnection dbConn;
-	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +83,7 @@ public class TapActivity extends MapActivity implements
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         
-        /* 
-         * Setup Google Map
-         */
+        // Setup Google Map
         mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         mMap.setMyLocationEnabled(true);
         final MapWrapperLayout mapWrapperLayout = (MapWrapperLayout)findViewById(R.id.map_relative_layout);
@@ -114,35 +115,22 @@ public class TapActivity extends MapActivity implements
                 pins.put(marker, 0);  //Init like count
                 
                 marker.showInfoWindow(); 
-                }
+            }
 
         });
         
-        /* 
-         * Setup map search bar
-         */
+        // Setup map search bar
         mapSearchBox = (EditText) findViewById(R.id.mapSearchBox);
-        //mapSearchBox.setImeActionLabel("Custom text", KeyEvent.KEYCODE_SEARCH);
-        //mapSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        mapSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mapSearchBox.addTextChangedListener(new EditTextChanged());
+        searchButton = (ImageButton) findViewById(R.id.searchButton);
+        searchButton.setOnTouchListener(new OnTouchListener() {
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-	             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-	                    //actionId == EditorInfo.IME_ACTION_DONE ||
-	                    //actionId == EditorInfo.IME_ACTION_GO ||
-	                    event.getAction() == KeyEvent.ACTION_DOWN &&
-	                    event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-
-	                // hide virtual keyboard
-	                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-	                imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
-
-	                new SearchClicked(mapSearchBox.getText().toString()).execute();
-	                mapSearchBox.setText("", TextView.BufferType.EDITABLE);
-	                return true;
-	            }
-	            return false;
-	        }
+			public boolean onTouch(View v, MotionEvent event) {
+				if (!searchString.isEmpty()) {
+					new SearchClicked(mapSearchBox.getText().toString()).execute();
+				}
+				return false;
+			}
 		});
         
         
@@ -152,31 +140,13 @@ public class TapActivity extends MapActivity implements
         // MapWrapperLayout initialization
         // 39 - default marker height
         // 20 - offset between the default InfoWindow bottom edge and it's content bottom edge 
-        mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20)); 
-        
-//        // Setting custom OnTouchListener which deals with the pressed state 
-//        this.infoButtonListener = new OnInfoWindowElemTouchListener(likeButton,
-//                getResources().getDrawable(R.drawable.like1),
-//                getResources().getDrawable(R.drawable.like2)) {
-//            @Override
-//            protected void onClickConfirmed(View v, Marker marker) {
-//                // *** TODO register click as a "like" counting towards the ShouldBe
-//            	int pastLikes = (Integer) pins.get(marker);
-//            	pins.put(marker, pastLikes+1);
-//            	//if ( marker exists)
-////            	TextView likeCount = likeCounts.get(marker);
-////            	likeCount.setText(String.valueOf(pins.get(marker)));
-//            	marker.showInfoWindow();
-//           }
-//        }; 
-//        this.likeButton.setOnTouchListener(infoButtonListener);
+        mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20));    
         
         whatShouldBe.setOnTouchListener(new OnInfoWindowElemTouchListener(whatShouldBe) {
-			
 			@Override
 			protected void onClickConfirmed(View v, Marker marker) {
 				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, 1);
 			}
 		});
 
@@ -188,11 +158,6 @@ public class TapActivity extends MapActivity implements
 
             @Override
             public View getInfoContents(Marker marker) {
-                // Setting up the infoWindow with current's marker info
-                //likeButtonListener.setMarker(marker);
-//                TextView likeCount = likeCounts.get(marker);
-//            	likeCount.setText(String.valueOf(pins.get(marker)));
-
                 // We must call this to set the current marker and infoWindow references
                 mapWrapperLayout.setMarkerWithInfoWindow(marker, markerWindows.get(marker));
                 return markerWindows.get(marker);
@@ -273,7 +238,11 @@ public class TapActivity extends MapActivity implements
             case CONNECTION_FAILURE_RESOLUTION_REQUEST :
                 switch (resultCode) {
                     case Activity.RESULT_OK :
-                    // Try request again TODO
+                    	if (!data.getStringExtra("status").isEmpty()) {
+	                    	String shouldBeText = data.getStringExtra("status");
+	                    	Log.d("TapActivity.onActivityResult", "status text = " + shouldBeText);
+	                    	shouldBeUpdate(shouldBeText);
+                    	}
                     break;
                     default:
                     	break;
@@ -300,6 +269,10 @@ public class TapActivity extends MapActivity implements
 	@Override
 	public void onDisconnected() {
 		Toast.makeText(this, "Disconnected", Toast.LENGTH_SHORT).show();
+		
+	}
+	
+	public void shouldBeUpdate (String status) {
 		
 	}
 	
@@ -331,6 +304,28 @@ public class TapActivity extends MapActivity implements
 			}
 			return result;
 		}
+	}
+	
+	private class EditTextChanged implements TextWatcher {
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// do nothing
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			// do nothing
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			// save string
+			searchString = s.toString();
+			Log.d("TapActivity.EditTextChanged.afterTextChanged", "s.toString() = " + s.toString());
+		}
+		
 	}
 	
 }
