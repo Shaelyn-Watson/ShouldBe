@@ -8,7 +8,6 @@ import twitter4j.conf.ConfigurationBuilder;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,8 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -55,7 +54,7 @@ public class WhatShouldBeActivity extends Activity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
-		Button tweetButton = (Button) findViewById(R.id.postTweetButton);
+		ImageButton tweetButton = (ImageButton) findViewById(R.id.postTweetButton);
 		txtUpdate = (EditText) findViewById(R.id.tweetET);
 		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
 	}

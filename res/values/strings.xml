@@ -24,7 +24,7 @@
     <string name="title_activity_tweet">TweetActivity</string>
     <string name="search">Search</string>
     <string name="searchPrompt">Search</string>
-    <string name="whatShouldbe">What #shouldbe?</string>
+    <string name="whatShouldbe">What #shouldbe here?</string>
     <string name="title_activity_what_should_be">WhatShouldBe</string>
 
 </resources>

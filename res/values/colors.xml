@@ -1,3 +1,5 @@
 <resources>
  <color name="White">#FFFFFF</color>
+ <color name="Lavender">#E6E6FA</color>
+ <color name="LightGrey">#D3D3D3</color>
 </resources>

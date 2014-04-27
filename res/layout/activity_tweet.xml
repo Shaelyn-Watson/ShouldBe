@@ -6,16 +6,16 @@
     tools:context="app.there.shouldbe.TweetActivity"
     tools:ignore="MergeRootFrame" >
 
-    <Button
+    <ImageButton
         android:id="@+id/postTweetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tweetET"
-        android:layout_marginRight="82dp"
-        android:layout_marginTop="25dp"
-        android:text="@string/tweetButton_text"
-        android:onClick="postTweet" />
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="18.5dp"
+        android:src="@android:drawable/ic_input_add"
+        android:background="@drawable/official_background" />
 
     <EditText
         android:id="@+id/tweetET"
