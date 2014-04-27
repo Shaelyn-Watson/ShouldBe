@@ -4,7 +4,7 @@
     <string name="app_name">ShouldBe</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello ShouldBe!</string>
-    <string name="tap_location">ShouldBe Locations</string>
+    <string name="tap_location">ShouldBe</string>
     <string name="there_should_be">There Should Be:</string>
     <string name="post_wall">General Post</string>
     <string name="title_activity_twitter_feed">TwitterFeedActivity</string>

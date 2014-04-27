@@ -93,7 +93,7 @@ public class TapActivity extends MapActivity implements
         
         // Click on map = show existing pin's info window or create new pin waiting for input 
         this.infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
-        this.thereShouldBe = (TextView)infoWindow.findViewById(R.id.there_should_be);
+       // this.thereShouldBe = (TextView)infoWindow.findViewById(R.id.there_should_be);
         this.likeButton = (Button)infoWindow.findViewById(R.id.button);
         this.whatShouldBe = (Button)infoWindow.findViewById(R.id.shouldBeButton);
         
@@ -119,8 +119,7 @@ public class TapActivity extends MapActivity implements
                 likeCount.setText(String.valueOf(pins.get(marker)));
                 likeCounts.put(marker, likeCount);
                 marker.showInfoWindow(); 
-                Toast.makeText(TapActivity.this, marker.getTitle() + " is created " + pins.get(marker), Toast.LENGTH_SHORT).show();
-            }
+                }
         });
         
         // Search Box on map
@@ -167,8 +166,7 @@ public class TapActivity extends MapActivity implements
             	TextView likeCount = likeCounts.get(marker);
             	likeCount.setText(String.valueOf(pins.get(marker)));
             	marker.showInfoWindow();
-                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
-            }
+           }
         }; 
         this.likeButton.setOnTouchListener(infoButtonListener);
         
@@ -190,7 +188,6 @@ public class TapActivity extends MapActivity implements
             @Override
             public View getInfoContents(Marker marker) {
                 // Setting up the infoWindow with current's marker info
-                thereShouldBe.setText(marker.getTitle());
                 infoButtonListener.setMarker(marker);
                 TextView likeCount = likeCounts.get(marker);
             	likeCount.setText(String.valueOf(pins.get(marker)));
