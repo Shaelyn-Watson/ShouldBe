@@ -7,6 +7,7 @@ import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -156,12 +156,16 @@ public class ShouldBeFragment extends Fragment {
         }
 	}
 	
+
+	
 	private class postShouldBe implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
 			postTweet(v);
-			
+			Intent i = new Intent(getActivity(), MainActivity.class);  //your class
+		    startActivity(i);
+		    getActivity().finish();
 		}
 		
 	}
