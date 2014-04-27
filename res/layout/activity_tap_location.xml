@@ -26,17 +26,16 @@
                 android:paddingTop="10dp"
                 android:layout_toRightOf="@+id/mapSearchBox"
                 android:layout_alignParentLeft="true"
-                
-                android:src="@drawable/shouldbepin" />
+                android:background="@drawable/official_background"
+                android:src="@android:drawable/ic_menu_search" />
 
 	    <EditText
 	        android:id="@+id/mapSearchBox"
 	        android:layout_width="300dp"
 	        android:layout_height="50dp"
-
+			android:background="@drawable/blank_background"
 			android:layout_alignParentTop="true"
 	        android:layout_alignParentRight="true" 
-	        android:background="#FFFF"
 	        android:ems="10"
 	        android:hint="@string/searchPrompt"
 	        android:imeOptions="actionSearch" >
