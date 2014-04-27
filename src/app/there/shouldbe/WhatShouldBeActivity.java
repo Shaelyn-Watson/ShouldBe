@@ -53,11 +53,11 @@ public class WhatShouldBeActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		
+		 
 		ImageButton tweetButton = (ImageButton) findViewById(R.id.postTweetButton);
 		txtUpdate = (EditText) findViewById(R.id.tweetET);
 		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
-	}
+	} 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

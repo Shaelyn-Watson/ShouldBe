@@ -6,6 +6,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,9 +18,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class ShouldBeFragment extends Fragment implements OnClickListener{
+public class ShouldBeFragment extends Fragment {
 	
 	private final String TWITTER_PREF_KEY = "twitter_login";
 	private final String TWITTER_LOGOUT_PREF_KEY = "twitter_logout";
@@ -40,7 +42,7 @@ public class ShouldBeFragment extends Fragment implements OnClickListener{
     private EditText txtUpdate;
     private Bundle extras;
     private Class<?> callingActivity;
-    private Button button;
+    private ImageButton shouldBeButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,11 +59,14 @@ public class ShouldBeFragment extends Fragment implements OnClickListener{
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,  
 	    Bundle savedInstanceState) {
 		
-		button = (Button) container.findViewById(R.id.postTweetButton);
-		txtUpdate = (EditText) container.findViewById(R.id.tweetET);
-		//mSharedPreferences = getActivity().getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
+		View view = inflater.inflate(R.layout.activity_tweet, container, false);
+		shouldBeButton = (ImageButton) view.findViewById(R.id.postTweetButton);
+		shouldBeButton.setOnClickListener(new postShouldBe());
 		
-		return inflater.inflate(R.layout.activity_tweet, container, false);
+		txtUpdate = (EditText) view.findViewById(R.id.tweetET);
+		mSharedPreferences = this.getActivity().getSharedPreferences("shouldbe_prefs", Context.MODE_PRIVATE);
+		
+		return view;
 	}
 	
 	@Override
@@ -94,7 +99,7 @@ public class ShouldBeFragment extends Fragment implements OnClickListener{
 		@Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //pDialog = new ProgressDialog(TweetActivity.class);
+            pDialog = new ProgressDialog(getActivity());
             pDialog.setMessage("Updating to twitter...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
@@ -150,11 +155,15 @@ public class ShouldBeFragment extends Fragment implements OnClickListener{
             });
         }
 	}
+	
+	private class postShouldBe implements OnClickListener {
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		postTweet(v);
+		@Override
+		public void onClick(View v) {
+			postTweet(v);
+			
+		}
+		
 	}
 
 
