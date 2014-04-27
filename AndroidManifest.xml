@@ -46,6 +46,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.there.shouldbe.MainActivity" />
         </activity>
+        
 
         <!-- Allow the Settings activity to be launched -->
         <activity
@@ -91,6 +92,9 @@
         <activity 
             android:name="app.there.shouldbe.WhatShouldBeActivity"
             android:label="@string/title_activity_what_should_be" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.there.shouldbe.MainActivity" />
         </activity>
     </application>
 
