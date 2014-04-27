@@ -63,8 +63,11 @@ public class TapActivity extends MapActivity implements
 	private HashMap<Marker, ViewGroup> markers2Windows = new HashMap<Marker, ViewGroup>();
 	private HashMap<ViewGroup, Marker> windows2Markers = new HashMap<ViewGroup, Marker>();
 	
+	//marker to statuses
+	private HashMap<Marker, String> markers2Statuses = new HashMap<Marker, String>();
+	
 	//info window global elements
-    private Button likeButton;      //like the ShouldBe *TODO facebook
+    //private Button likeButton;      //like the ShouldBe *TODO facebook
     private OnInfoWindowElemTouchListener likeButtonListener; 
     private Button whatShouldBe;
     
@@ -93,7 +96,6 @@ public class TapActivity extends MapActivity implements
         
         //pin info window
         final ViewGroup emptyInfoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window_empty, null);
-        //this.likeButton = (Button)infoWindow.findViewById(R.id.button);
         this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
         
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -153,6 +155,32 @@ public class TapActivity extends MapActivity implements
         mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
             @Override
             public View getInfoWindow(Marker marker) {
+            	markers2Statuses.put(marker, "test tweet");
+            	if(markers2Statuses.get(marker) != null){
+	            	ViewGroup infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
+	            	Button likeButton = (Button)infoWindow.findViewById(R.id.button);
+	            	TextView postedTweet = (TextView)infoWindow.findViewById(R.id.posted_tweet);
+	            	postedTweet.setText(String.valueOf(markers2Statuses.get(marker)));
+	            	TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+	            	//likeCount.setText(String.valueOf(pins.get(marker)));
+	            	// Setting custom OnTouchListener which deals with the pressed state 
+	            	OnInfoWindowElemTouchListener infoButtonListener;
+	            	infoButtonListener = new OnInfoWindowElemTouchListener(likeButton,
+	                        getResources().getDrawable(R.drawable.like1),
+	                        getResources().getDrawable(R.drawable.like2)) {
+	                    @Override
+	                    protected void onClickConfirmed(View v, Marker marker) {
+	                        // *** TODO register click as a "like" counting towards the ShouldBe
+	                    	int pastLikes = (Integer) pins.get(marker);
+	                    	pins.put(marker, pastLikes+1);
+	                    	marker.showInfoWindow();
+	                        Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
+	                    }
+	                }; 
+	                infoButtonListener.setMarker(marker);
+	                likeButton.setOnTouchListener(infoButtonListener);
+	            	markers2Windows.put(marker, infoWindow);
+            	}
             	Log.d("setInfoWindowAdapter", "setInfoWindowAdapter");
                 return null;
             }
