@@ -40,7 +40,7 @@
 	    android:layout_below="@+id/tweet_message">
 	</TextView>
 
-    <ImageButton
+<!--     <ImageButton
         android:id="@+id/wall_like_button" 
         android:layout_width="wrap_content"
        	android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
        	android:paddingRight="10dp"
     	android:paddingLeft="10dp"
     	android:paddingTop="0dp"
-    	android:paddingBottom="0dp"/>
+    	android:paddingBottom="0dp"/> -->
 	    
     <!--  <TextView
             android:id="@+id/wall_like_count"

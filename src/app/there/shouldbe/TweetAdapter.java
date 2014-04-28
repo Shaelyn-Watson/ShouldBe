@@ -71,7 +71,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.message = (TextView) vi.findViewById(R.id.tweet_message);
 			holder.name = (TextView) vi.findViewById(R.id.tweet_name);
 			//holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count);
-			holder.likeButton = (ImageButton) vi.findViewById(R.id.wall_like_button);
+//			holder.likeButton = (ImageButton) vi.findViewById(R.id.wall_like_button);
 
 			/************ Set holder with LayoutInflater ************/
 			vi.setTag(holder);

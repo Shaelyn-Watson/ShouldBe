@@ -116,21 +116,21 @@ public class TapActivity extends MapActivity implements
         final ViewGroup emptyInfoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window_empty, null);
         infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
         this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
-        likeButton = (Button)infoWindow.findViewById(R.id.button);
-    	likeButtonListener = new OnInfoWindowElemTouchListener(likeButton,
-                getResources().getDrawable(R.drawable.like1),
-                getResources().getDrawable(R.drawable.like2)) {
-            @Override
-            protected void onClickConfirmed(View v, Marker marker) {
-                // *** TODO register click as a "like" counting towards the ShouldBe
-            	Log.d("likebutton", "clicked!");
-            	int pastLikes = (Integer) pins.get(marker);
-            	pins.put(marker, pastLikes+1);
-            	Log.d("likebutton", String.valueOf(pins.get(marker)));
-            	marker.showInfoWindow();
-                //Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
-            }
-        }; 
+//        likeButton = (Button)infoWindow.findViewById(R.id.button);
+//    	likeButtonListener = new OnInfoWindowElemTouchListener(likeButton,
+//                getResources().getDrawable(R.drawable.checkmark1),
+//                getResources().getDrawable(R.drawable.checkmark2)) {
+//            @Override
+//            protected void onClickConfirmed(View v, Marker marker) {
+//                // *** TODO register click as a "like" counting towards the ShouldBe
+//            	Log.d("likebutton", "clicked!");
+//            	int pastLikes = (Integer) pins.get(marker);
+//            	pins.put(marker, pastLikes+1);
+//            	Log.d("likebutton", String.valueOf(pins.get(marker)));
+//            	marker.showInfoWindow();
+//                //Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
+//            }
+//        }; 
         
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -197,8 +197,8 @@ public class TapActivity extends MapActivity implements
             	//likeCount.setText(String.valueOf(pins.get(marker)));
             	// Setting custom OnTouchListener which deals with the pressed state 
             	
-                likeButtonListener.setMarker(marker);
-                likeButton.setOnTouchListener(likeButtonListener);
+//                likeButtonListener.setMarker(marker);
+//                likeButton.setOnTouchListener(likeButtonListener);
                 
             	markers2Windows.put(marker, infoWindow);
 			}

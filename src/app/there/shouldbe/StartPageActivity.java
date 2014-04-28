@@ -124,7 +124,7 @@ public class StartPageActivity extends Activity{
 	class LoginWithTwitter extends AsyncTask<String, Void, String> {
 		Intent twitterIntent = null;
 		Context twitterContext = null;
-		
+		 
 		@Override 
 		protected void onPreExecute() {
 			super.onPreExecute();
