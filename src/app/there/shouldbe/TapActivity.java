@@ -1,5 +1,6 @@
 package app.there.shouldbe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -67,6 +68,9 @@ public class TapActivity extends MapActivity implements
 	//marker to statuses
 	private HashMap<Marker, String> markers2Statuses = new HashMap<Marker, String>();
 	
+	//super temp struct to keep our most recently used marker
+	private ArrayList<Marker> markerArray = new ArrayList<Marker>();
+	
 	//info window global elements
 	private ViewGroup infoWindow;
     private Button likeButton;      //like the ShouldBe *TODO facebook
@@ -106,8 +110,7 @@ public class TapActivity extends MapActivity implements
         infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
         this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
         likeButton = (Button)infoWindow.findViewById(R.id.button);
-        //OnInfoWindowElemTouchListener infoButtonListener;
-    	infoButtonListener = new OnInfoWindowElemTouchListener(likeButton,
+    	likeButtonListener = new OnInfoWindowElemTouchListener(likeButton,
                 getResources().getDrawable(R.drawable.like1),
                 getResources().getDrawable(R.drawable.like2)) {
             @Override
@@ -139,7 +142,7 @@ public class TapActivity extends MapActivity implements
                 // Move camera to position of new marker
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); 
                 pins.put(marker, 0);  //Init like count
-                
+                markerArray.add(marker);
                 marker.showInfoWindow(); 
             }
 
@@ -167,18 +170,11 @@ public class TapActivity extends MapActivity implements
         // 39 - default marker height
         // 20 - offset between the default InfoWindow bottom edge and it's content bottom edge 
         mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20)); 
-        
-        //shared preferences that hold the most recent marker clicked to open WhatShouldBeActivity
-        SharedPreferences mostRecentMarkerPrefs = getSharedPreferences("MyPrefFile", 0);
-        SharedPreferences.Editor mostRecentMarkerEditor = mostRecentMarkerPrefs.edit();
+
         
         whatShouldBe.setOnTouchListener(new OnInfoWindowElemTouchListener(whatShouldBe) {
 			@Override
 			protected void onClickConfirmed(View v, Marker marker) {
-				if(marker!=null){
-					mostRecentMarkerPosition = marker.getPosition();
-				}
-				//mostRecentMarkerEditor.put
 				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
 				startActivityForResult(intent, 1);
 			}
@@ -198,8 +194,8 @@ public class TapActivity extends MapActivity implements
             	likeCount.setText(String.valueOf(pins.get(marker)));
             	// Setting custom OnTouchListener which deals with the pressed state 
             	
-                infoButtonListener.setMarker(marker);
-                likeButton.setOnTouchListener(infoButtonListener);
+                likeButtonListener.setMarker(marker);
+                likeButton.setOnTouchListener(likeButtonListener);
                 
             	markers2Windows.put(marker, infoWindow);
 			}
@@ -219,6 +215,28 @@ public class TapActivity extends MapActivity implements
         });  
 
     }
+    
+    public void shouldBeUpdate (String status) {
+		//TODO
+		if (markerArray.get(markerArray.size()-1) != null){
+			//Make new marker and display updated infowindow
+//            Marker marker = null;
+//            marker = mMap.addMarker(new MarkerOptions().position(marker)
+//            	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
+//            	.title("There should be:")  //not used
+//            	);
+            
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerArray.get(markerArray.size()-1).getPosition(), 15)); 
+            
+            markers2Statuses.put(markerArray.get(markerArray.size()-1), status);
+            markerArray.get(markerArray.size()-1).showInfoWindow();
+            Log.d("**sbUpdate", "showInfoWindow called");
+		}
+//		zoomToLatLngLocation(mostRecentMarker.getPosition());
+//		markers2Statuses.put(mostRecentMarker, status);
+//		mostRecentMarker.showInfoWindow();
+		Log.d("**sbUpdate", "trying to imp infowindow");
+	}
     
 
 	@Override
@@ -332,28 +350,6 @@ public class TapActivity extends MapActivity implements
 	public void onDisconnected() {
 		Toast.makeText(this, "Disconnected", Toast.LENGTH_SHORT).show();
 		
-	}
-	
-	public void shouldBeUpdate (String status) {
-		//TODO
-		if (mostRecentMarkerPosition != null){
-			//Make new marker and display updated infowindow
-            Marker marker = null;
-            marker = mMap.addMarker(new MarkerOptions().position(mostRecentMarkerPosition)
-            	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
-            	.title("There should be:")  //not used
-            	);
-            
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mostRecentMarkerPosition, 15)); 
-            
-            markers2Statuses.put(marker, status);
-            marker.showInfoWindow();
-            Log.d("**sbUpdate", "showInfoWindow called");
-		}
-//		zoomToLatLngLocation(mostRecentMarker.getPosition());
-//		markers2Statuses.put(mostRecentMarker, status);
-//		mostRecentMarker.showInfoWindow();
-		Log.d("**sbUpdate", "**updated infowindow");
 	}
 	
 	private class SearchClicked extends AsyncTask<Void, Void, Boolean> {
