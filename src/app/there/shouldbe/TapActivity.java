@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -76,7 +77,7 @@ public class TapActivity extends MapActivity implements
     private ImageButton searchButton;
     private String searchString;
     private ProgressDialog pDialog;
-    private Marker mostRecentMarker;
+    private LatLng mostRecentMarkerPosition;
     
     private OnInfoWindowElemTouchListener infoButtonListener;
     
@@ -89,6 +90,8 @@ public class TapActivity extends MapActivity implements
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        
+        //Log.d("**TaponCreate", "new tap activity");
         
         // Setup Google Map
         mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -115,7 +118,7 @@ public class TapActivity extends MapActivity implements
             	pins.put(marker, pastLikes+1);
             	Log.d("likebutton", String.valueOf(pins.get(marker)));
             	marker.showInfoWindow();
-                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
             }
         }; 
         
@@ -163,12 +166,19 @@ public class TapActivity extends MapActivity implements
         // MapWrapperLayout initialization
         // 39 - default marker height
         // 20 - offset between the default InfoWindow bottom edge and it's content bottom edge 
-        mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20));    
+        mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20)); 
+        
+        //shared preferences that hold the most recent marker clicked to open WhatShouldBeActivity
+        SharedPreferences mostRecentMarkerPrefs = getSharedPreferences("MyPrefFile", 0);
+        SharedPreferences.Editor mostRecentMarkerEditor = mostRecentMarkerPrefs.edit();
         
         whatShouldBe.setOnTouchListener(new OnInfoWindowElemTouchListener(whatShouldBe) {
 			@Override
 			protected void onClickConfirmed(View v, Marker marker) {
-				mostRecentMarker = marker;
+				if(marker!=null){
+					mostRecentMarkerPosition = marker.getPosition();
+				}
+				//mostRecentMarkerEditor.put
 				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
 				startActivityForResult(intent, 1);
 			}
@@ -292,7 +302,7 @@ public class TapActivity extends MapActivity implements
             		if (!data.getStringExtra("status").isEmpty()) {
                     	String shouldBeText = data.getStringExtra("status");
                     	Log.d("**onActivityResult", "**status text = " + shouldBeText);
-//                    	shouldBeUpdate(shouldBeText);
+                    	shouldBeUpdate(shouldBeText);
                 	}
             		break;
             	default: 
@@ -325,9 +335,25 @@ public class TapActivity extends MapActivity implements
 	}
 	
 	public void shouldBeUpdate (String status) {
-		zoomToLatLngLocation(mostRecentMarker.getPosition());
-		markers2Statuses.put(mostRecentMarker, status);
-		Log.d("sbUpdate", "updated infowindow");
+		//TODO
+		if (mostRecentMarkerPosition != null){
+			//Make new marker and display updated infowindow
+            Marker marker = null;
+            marker = mMap.addMarker(new MarkerOptions().position(mostRecentMarkerPosition)
+            	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
+            	.title("There should be:")  //not used
+            	);
+            
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mostRecentMarkerPosition, 15)); 
+            
+            markers2Statuses.put(marker, status);
+            marker.showInfoWindow();
+            Log.d("**sbUpdate", "showInfoWindow called");
+		}
+//		zoomToLatLngLocation(mostRecentMarker.getPosition());
+//		markers2Statuses.put(mostRecentMarker, status);
+//		mostRecentMarker.showInfoWindow();
+		Log.d("**sbUpdate", "**updated infowindow");
 	}
 	
 	private class SearchClicked extends AsyncTask<Void, Void, Boolean> {

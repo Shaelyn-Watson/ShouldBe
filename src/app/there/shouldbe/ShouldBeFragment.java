@@ -163,9 +163,24 @@ public class ShouldBeFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			postTweet(v);
-//			Intent i = new Intent(getActivity(), MainActivity.class);  //your class
-//		    startActivity(i);
-//		    getActivity().finish();
+			//refresh fragments TODO
+//			Fragment f = new ShouldBeFragment();
+//            //Bundle data = new Bundle();  
+//            //data.putInt("id", nid);
+//            //f.setArguments(data);
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//
+//            ft.replace(R.id.container,f);
+//            //ft.detach(f);
+//            //ft.attach(f);
+//
+//            ft.addToBackStack(null); 
+//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE); 
+//            ft.commit();
+			
+			Intent i = new Intent(getActivity(), MainActivity.class);  //your class
+			startActivity(i);
+			
 		}
 		
 	}

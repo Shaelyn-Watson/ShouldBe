@@ -9,13 +9,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity {
@@ -29,6 +26,8 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_screen_slide);
+		
+		Log.d("**MAINonCreate", "new main activity");
 
 		final ActionBar actionBar = getActionBar();
 	    // Instantiate a ViewPager and a PagerAdapter.
