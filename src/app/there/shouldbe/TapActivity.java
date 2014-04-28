@@ -76,6 +76,7 @@ public class TapActivity extends MapActivity implements
     private ImageButton searchButton;
     private String searchString;
     private ProgressDialog pDialog;
+    private Marker mostRecentMarker;
     
     private OnInfoWindowElemTouchListener infoButtonListener;
     
@@ -167,6 +168,7 @@ public class TapActivity extends MapActivity implements
         whatShouldBe.setOnTouchListener(new OnInfoWindowElemTouchListener(whatShouldBe) {
 			@Override
 			protected void onClickConfirmed(View v, Marker marker) {
+				mostRecentMarker = marker;
 				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
 				startActivityForResult(intent, 1);
 			}
@@ -201,7 +203,7 @@ public class TapActivity extends MapActivity implements
 			@Override
             public View getInfoContents(Marker marker) {
                 // We must call this to set the current marker and infoWindow references
-				markers2Statuses.put(marker, "test tweet");
+				//markers2Statuses.put(marker, "test tweet");
             	if(markers2Statuses.get(marker) != null){
             		giveInfoWindowTweet(marker);
 	            	
@@ -288,7 +290,7 @@ public class TapActivity extends MapActivity implements
                     case Activity.RESULT_OK :
                     	if (!data.getStringExtra("status").isEmpty()) {
 	                    	String shouldBeText = data.getStringExtra("status");
-	                    	Log.d("TapActivity.onActivityResult", "status text = " + shouldBeText);
+	                    	Log.d("onActivityResult", "status text = " + shouldBeText);
 	                    	shouldBeUpdate(shouldBeText);
                     	}
                     break;
@@ -321,7 +323,9 @@ public class TapActivity extends MapActivity implements
 	}
 	
 	public void shouldBeUpdate (String status) {
-		
+		zoomToLatLngLocation(mostRecentMarker.getPosition());
+		markers2Statuses.put(mostRecentMarker, "random markertweet from shouldBeUpdate");
+		Log.d("sbUpdate", "updated infowindow");
 	}
 	
 	private class SearchClicked extends AsyncTask<Void, Void, Boolean> {
