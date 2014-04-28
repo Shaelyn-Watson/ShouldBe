@@ -6,6 +6,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,6 +41,7 @@ public class StartPageActivity extends Activity{
 	private AlertDialogManager alert = new AlertDialogManager();
 	private Twitter twitter;
 	private static RequestToken requestToken;
+	private ProgressDialog pDialog;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +125,16 @@ public class StartPageActivity extends Activity{
 		Intent twitterIntent = null;
 		Context twitterContext = null;
 		
+		@Override 
+		protected void onPreExecute() {
+			super.onPreExecute();
+            pDialog = new ProgressDialog(StartPageActivity.this);
+            pDialog.setMessage("Redirecting to Twitter Login...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+		}
+		
 		@Override
 		protected String doInBackground(String... params) {
 			String result = params[0]; 
@@ -172,6 +184,7 @@ public class StartPageActivity extends Activity{
 						// start MainActivity
 			        	Intent in = new Intent(StartPageActivity.this, MainActivity.class);
 			        	startActivity(in);
+			        	pDialog.dismiss();
 			        	StartPageActivity.this.finish();
 						
 					}
