@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -41,6 +40,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.maps.MapActivity;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class TapActivity extends MapActivity implements 
 	GooglePlayServicesClient.ConnectionCallbacks,
@@ -213,29 +214,24 @@ public class TapActivity extends MapActivity implements
                 return markers2Windows.get(marker);
             }
         });  
+        
+        // ========================
+        // ======== Parse =========
+        // ========================
+        Parse.initialize(this, "3wJJsTSZovcJZreXDjYVeJi3e1AOqAZEA8e2S860", "y1SZ9RtY8wuv9sOaXTIHrapLK5uk6LrehEEYylZd");
 
     }
     
     public void shouldBeUpdate (String status) {
-		//TODO
 		if (markerArray.get(markerArray.size()-1) != null){
-			//Make new marker and display updated infowindow
-//            Marker marker = null;
-//            marker = mMap.addMarker(new MarkerOptions().position(marker)
-//            	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
-//            	.title("There should be:")  //not used
-//            	);
+			Marker lastMarker = markerArray.get(markerArray.size()-1);
+			LatLng latlng =  lastMarker.getPosition();
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15)); 
             
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerArray.get(markerArray.size()-1).getPosition(), 15)); 
-            
-            markers2Statuses.put(markerArray.get(markerArray.size()-1), status);
-            markerArray.get(markerArray.size()-1).showInfoWindow();
+            markers2Statuses.put(lastMarker, status);
+            lastMarker.showInfoWindow();
             Log.d("**sbUpdate", "showInfoWindow called");
 		}
-//		zoomToLatLngLocation(mostRecentMarker.getPosition());
-//		markers2Statuses.put(mostRecentMarker, status);
-//		mostRecentMarker.showInfoWindow();
-		Log.d("**sbUpdate", "trying to imp infowindow");
 	}
     
 
