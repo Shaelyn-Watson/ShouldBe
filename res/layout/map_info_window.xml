@@ -17,7 +17,7 @@
 	        android:id="@+id/shouldBeButton"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:background="@drawable/official_background1"
+		    android:background="@drawable/official_background"
 		    android:gravity="center_vertical"
 		    android:textColor="@android:color/black"
 		    android:text="@string/whatShouldbe"

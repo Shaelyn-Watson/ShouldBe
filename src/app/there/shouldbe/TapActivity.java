@@ -54,6 +54,8 @@ public class TapActivity extends MapActivity implements
 	private Location mCurrentLocation;
 	private LatLng mCurrentLatLng;
 	
+	private boolean posted;
+	
 	/* 
 	 * TODO: replace hashmaps with database information
 	 */
@@ -97,6 +99,7 @@ public class TapActivity extends MapActivity implements
         }
         
         //Log.d("**TaponCreate", "new tap activity");
+        posted = false;
         
         // Setup Google Map
         mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -223,13 +226,16 @@ public class TapActivity extends MapActivity implements
     }
     
     public void shouldBeUpdate (String status) {
+    	posted = true;
 		if (markerArray.get(markerArray.size()-1) != null){
-			Marker lastMarker = markerArray.get(markerArray.size()-1);
-			LatLng latlng =  lastMarker.getPosition();
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15)); 
+			//Make new marker and display updated infowindow
+            Marker marker = markerArray.get(markerArray.size()-1);
             
-            markers2Statuses.put(lastMarker, status);
-            lastMarker.showInfoWindow();
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 15)); 
+            
+            markers2Statuses.put(markerArray.get(markerArray.size()-1), status);
+            marker.showInfoWindow();
+            zoomToLatLngLocation(marker.getPosition());
             Log.d("**sbUpdate", "showInfoWindow called");
 		}
 	}
@@ -331,9 +337,12 @@ public class TapActivity extends MapActivity implements
         // Display the connection status
         Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         
-        mCurrentLocation = mLocationClient.getLastLocation();
-        mCurrentLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-        zoomToUserLocation();
+        if (!posted){
+	        mCurrentLocation = mLocationClient.getLastLocation();
+	        mCurrentLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+	        zoomToUserLocation();
+        }
+
     }
 
 	@Override
