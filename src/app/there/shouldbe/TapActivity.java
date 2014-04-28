@@ -282,15 +282,23 @@ public class TapActivity extends MapActivity implements
             case CONNECTION_FAILURE_RESOLUTION_REQUEST :
                 switch (resultCode) {
                     case Activity.RESULT_OK :
-                    	if (!data.getStringExtra("status").isEmpty()) {
-	                    	String shouldBeText = data.getStringExtra("status");
-	                    	Log.d("**onActivityResult", "**status text = " + shouldBeText);
-	                    	shouldBeUpdate(shouldBeText);
-                    	}
                     break;
                     default:
                     	break;
                 }
+            case 1:
+            	switch (resultCode) {
+            	case Activity.RESULT_OK:
+            		if (!data.getStringExtra("status").isEmpty()) {
+                    	String shouldBeText = data.getStringExtra("status");
+                    	Log.d("**onActivityResult", "**status text = " + shouldBeText);
+//                    	shouldBeUpdate(shouldBeText);
+                	}
+            		break;
+            	default: 
+            		break;
+            	}
+            	
         }
      }
 	

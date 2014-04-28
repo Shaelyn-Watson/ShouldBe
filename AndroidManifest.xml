@@ -25,11 +25,17 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="app.there.shouldbe.SplashActivity"
+            android:name="app.there.shouldbe.StartPageActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                
+                <data
+                    android:host="callback_startPage"
+                    android:scheme="shouldbe" />
             </intent-filter>
         </activity>
         <activity

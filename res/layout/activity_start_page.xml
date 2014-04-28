@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blank_background" >
+	android:background="@drawable/official_background" >
     
     <RelativeLayout
 		android:layout_width="match_parent"
@@ -33,14 +33,15 @@
 	        android:textColor="#454545"
 	        android:textSize="50dp" />
 	
-	    <Button
-	        android:id="@+id/button1"
+	    <ImageButton
+	        android:id="@+id/login"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/imgLogo"
 	        android:layout_centerHorizontal="true"
 	        android:layout_marginTop="34dp"
-	        android:text="*Twitter Login" />
+	        android:src="@drawable/loginwithtwitter"
+	        android:background="@drawable/official_background" />
 
     </RelativeLayout>
 </RelativeLayout>
