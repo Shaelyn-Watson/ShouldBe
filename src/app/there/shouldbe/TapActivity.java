@@ -40,8 +40,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.maps.MapActivity;
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 public class TapActivity extends MapActivity implements 
 	GooglePlayServicesClient.ConnectionCallbacks,
@@ -109,7 +112,7 @@ public class TapActivity extends MapActivity implements
         setUpMapIfNeeded();  // Check to make sure map loads
         mMap.getUiSettings().setZoomControlsEnabled(false);   // Remove +/- zoom controls since pinching is enabled
         
-        //pin info window
+        // Marker info window
         final ViewGroup emptyInfoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window_empty, null);
         infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
         this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
@@ -132,10 +135,6 @@ public class TapActivity extends MapActivity implements
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng point) { 
-            	// hide virtual keyboard
-                //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                //imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
-                
                 Marker marker = null;
                 marker = mMap.addMarker(new MarkerOptions().position(point)
                 	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
@@ -207,7 +206,6 @@ public class TapActivity extends MapActivity implements
 			@Override
             public View getInfoContents(Marker marker) {
                 // We must call this to set the current marker and infoWindow references
-				//markers2Statuses.put(marker, "test tweet");
             	if(markers2Statuses.get(marker) != null){
             		giveInfoWindowTweet(marker);
 	            	
@@ -222,6 +220,7 @@ public class TapActivity extends MapActivity implements
         // ======== Parse =========
         // ========================
         Parse.initialize(this, "3wJJsTSZovcJZreXDjYVeJi3e1AOqAZEA8e2S860", "y1SZ9RtY8wuv9sOaXTIHrapLK5uk6LrehEEYylZd");
+        populateMarkersFromDatabase();
 
     }
     
@@ -230,10 +229,17 @@ public class TapActivity extends MapActivity implements
 		if (markerArray.get(markerArray.size()-1) != null){
 			//Make new marker and display updated infowindow
             Marker marker = markerArray.get(markerArray.size()-1);
+            LatLng markerPos = marker.getPosition();
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerPos, 15)); 
             
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 15)); 
+            // save marker object, eventually to server
+            ParseObject saveMarker = new ParseObject("Marker");
+            saveMarker.put("lat", markerPos.latitude);
+            saveMarker.put("long", markerPos.longitude);
+            saveMarker.put("shouldbeText", status);
+            saveMarker.saveEventually();
             
-            markers2Statuses.put(markerArray.get(markerArray.size()-1), status);
+            markers2Statuses.put(marker, status);
             marker.showInfoWindow();
             zoomToLatLngLocation(marker.getPosition());
             Log.d("**sbUpdate", "showInfoWindow called");
@@ -355,6 +361,36 @@ public class TapActivity extends MapActivity implements
 	public void onDisconnected() {
 		Toast.makeText(this, "Disconnected", Toast.LENGTH_SHORT).show();
 		
+	}
+	
+	public void populateMarkersFromDatabase() {
+		// check if map is null since called from onCreate
+		if (mMap != null) {
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("Marker");
+			query.findInBackground(new FindCallback<ParseObject>() {
+
+				@Override
+				public void done(List<ParseObject> parseObjects, ParseException e) {
+					if (e == null) {
+						for (ParseObject p : parseObjects) {
+							Marker m = null;
+							LatLng pos = new LatLng((Double) p.get("lat"), (Double) p.get("long"));
+							m = mMap.addMarker(new MarkerOptions().position(pos)
+				                	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
+				                	.title((String)p.get("shouldbeText"))  //not used
+				                	);
+							markers2Statuses.put(m, (String)p.get("shouldbeText"));
+							pins.put(m, 0);  //Init like count
+			                markerArray.add(m);
+						}
+					}
+					else {
+						e.printStackTrace();
+					}
+				}
+				
+			});
+		}
 	}
 	
 	private class SearchClicked extends AsyncTask<Void, Void, Boolean> {
