@@ -70,7 +70,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.date = (TextView) vi.findViewById(R.id.tweet_date);
 			holder.message = (TextView) vi.findViewById(R.id.tweet_message);
 			holder.name = (TextView) vi.findViewById(R.id.tweet_name);
-			holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count);
+			//holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count);
 			holder.likeButton = (ImageButton) vi.findViewById(R.id.wall_like_button);
 
 			/************ Set holder with LayoutInflater ************/
@@ -90,7 +90,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.date.setText(tempValues.getDate());
 			holder.message.setText(tempValues.getMessage());
 			holder.name.setText("@" + tempValues.getName());
-			holder.likeCount.setText(String.valueOf(tempValues.getLikeCount()));
+			//holder.likeCount.setText(String.valueOf(tempValues.getLikeCount()));
 		}
 		return vi;
 	}

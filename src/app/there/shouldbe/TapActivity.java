@@ -193,8 +193,8 @@ public class TapActivity extends MapActivity implements
             	
             	TextView postedTweet = (TextView)infoWindow.findViewById(R.id.posted_tweet);
             	postedTweet.setText(String.valueOf(markers2Statuses.get(marker)));
-            	TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
-            	likeCount.setText(String.valueOf(pins.get(marker)));
+            	//TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+            	//likeCount.setText(String.valueOf(pins.get(marker)));
             	// Setting custom OnTouchListener which deals with the pressed state 
             	
                 likeButtonListener.setMarker(marker);
