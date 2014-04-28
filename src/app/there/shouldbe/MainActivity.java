@@ -3,6 +3,8 @@ package app.there.shouldbe;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +15,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 
 public class MainActivity extends FragmentActivity {
@@ -21,6 +26,7 @@ public class MainActivity extends FragmentActivity {
 	  private ViewPager mPager;  //The ViewPager that hosts the section contents
 
 	  private ScreenSlidePagerAdapter pagerAdapter;
+	  private RelativeLayout topLevelLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +93,14 @@ public class MainActivity extends FragmentActivity {
 	    actionBar.addTab(actionBar.newTab()
                 .setText("Post")
                 .setTabListener(tabListener));
+	    
+	    topLevelLayout = (RelativeLayout) findViewById(R.id.top_layout);
+         
+        
+        
+	       if (isFirstTime()) {
+	        	topLevelLayout.setVisibility(View.INVISIBLE);
+	        }
 	}
 	
 	@Override
@@ -151,6 +165,31 @@ public class MainActivity extends FragmentActivity {
 	    public int getCount() {
 	        return NUM_PAGES;
 	    }
+	}
+	
+	 private boolean isFirstTime() {
+	     SharedPreferences preferences = getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
+	     boolean ranBefore = preferences.getBoolean("FirstTime", false);
+	     if (!ranBefore) {
+	     
+	         Editor editor = preferences.edit();
+	         editor.putBoolean("FirstTime", true); // set to false if twitter not logged in
+	         editor.commit();
+	         topLevelLayout.setVisibility(View.VISIBLE);
+	         topLevelLayout.setOnTouchListener(new View.OnTouchListener(){
+	
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				topLevelLayout.setVisibility(View.INVISIBLE);
+				return false;
+			}
+		            
+         });
+     
+
+		}
+		return ranBefore;
+		    
 	}
 
 

@@ -199,7 +199,7 @@ public class Settings extends PreferenceActivity {
 		Editor e = mSharedPreferences.edit();
 		e.remove(PREF_KEY_OAUTH_SECRET);
 		e.remove(PREF_KEY_OAUTH_TOKEN);
-		e.putBoolean(PREF_KEY_TWITTER_LOGIN, false);
+		e.putBoolean(PREF_KEY_TWITTER_LOGIN, false); 
 		e.commit();
 		mPrefScreen.removePreference(twitterLogOutPref);
 		mPrefScreen.addPreference(twitterPref);

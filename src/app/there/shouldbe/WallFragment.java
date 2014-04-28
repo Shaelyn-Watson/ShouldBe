@@ -17,14 +17,13 @@ import twitter4j.conf.ConfigurationBuilder;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.google.android.gms.maps.model.Marker;
 
 public class WallFragment extends ListFragment implements OnClickListener{ 	  
 
@@ -39,6 +38,10 @@ public class WallFragment extends ListFragment implements OnClickListener{
 			private Button likeButton;
 			private TweetAdapter<Tweet> adapter;
 			private OnInfoWindowElemTouchListener infoButtonListener;
+			
+			private enum Month {
+				Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
+			}
 			
 		  @Override
 			public void onCreate(Bundle savedInstanceState) {
@@ -116,7 +119,7 @@ public class WallFragment extends ListFragment implements OnClickListener{
 					
 					twitter.addListener(listener);
 					Paging paging = new Paging();
-					paging.setCount(20);
+					paging.setCount(50);
 					twitter.getMentions(paging);
 				}
 				catch(Exception ex) {
@@ -130,7 +133,8 @@ public class WallFragment extends ListFragment implements OnClickListener{
 				//TODO not sorting by date correctly in list fragment feed view
 				Collections.sort(tweetList, new Comparator<Tweet>() {
 					public int compare(Tweet t1, Tweet t2) {
-						return t1.getDate().compareTo(t2.getDate());
+						// t1.getDate() in format Mon Apr 28
+						return t1.getDate().compareTo(t2.getDate());				
 					}
 				});
 	
