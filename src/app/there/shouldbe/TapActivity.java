@@ -67,7 +67,8 @@ public class TapActivity extends MapActivity implements
 	private HashMap<Marker, String> markers2Statuses = new HashMap<Marker, String>();
 	
 	//info window global elements
-    //private Button likeButton;      //like the ShouldBe *TODO facebook
+	private ViewGroup infoWindow;
+    private Button likeButton;      //like the ShouldBe *TODO facebook
     private OnInfoWindowElemTouchListener likeButtonListener; 
     private Button whatShouldBe;
     
@@ -75,6 +76,8 @@ public class TapActivity extends MapActivity implements
     private ImageButton searchButton;
     private String searchString;
     private ProgressDialog pDialog;
+    
+    private OnInfoWindowElemTouchListener infoButtonListener;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +99,24 @@ public class TapActivity extends MapActivity implements
         
         //pin info window
         final ViewGroup emptyInfoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window_empty, null);
+        infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
         this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
+        likeButton = (Button)infoWindow.findViewById(R.id.button);
+        //OnInfoWindowElemTouchListener infoButtonListener;
+    	infoButtonListener = new OnInfoWindowElemTouchListener(likeButton,
+                getResources().getDrawable(R.drawable.like1),
+                getResources().getDrawable(R.drawable.like2)) {
+            @Override
+            protected void onClickConfirmed(View v, Marker marker) {
+                // *** TODO register click as a "like" counting towards the ShouldBe
+            	Log.d("likebutton", "clicked!");
+            	int pastLikes = (Integer) pins.get(marker);
+            	pins.put(marker, pastLikes+1);
+            	Log.d("likebutton", String.valueOf(pins.get(marker)));
+            	marker.showInfoWindow();
+                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
+            }
+        }; 
         
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -155,39 +175,38 @@ public class TapActivity extends MapActivity implements
         mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
             @Override
             public View getInfoWindow(Marker marker) {
-            	markers2Statuses.put(marker, "test tweet");
-            	if(markers2Statuses.get(marker) != null){
-	            	ViewGroup infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
-	            	Button likeButton = (Button)infoWindow.findViewById(R.id.button);
-	            	TextView postedTweet = (TextView)infoWindow.findViewById(R.id.posted_tweet);
-	            	postedTweet.setText(String.valueOf(markers2Statuses.get(marker)));
-	            	TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
-	            	//likeCount.setText(String.valueOf(pins.get(marker)));
-	            	// Setting custom OnTouchListener which deals with the pressed state 
-	            	OnInfoWindowElemTouchListener infoButtonListener;
-	            	infoButtonListener = new OnInfoWindowElemTouchListener(likeButton,
-	                        getResources().getDrawable(R.drawable.like1),
-	                        getResources().getDrawable(R.drawable.like2)) {
-	                    @Override
-	                    protected void onClickConfirmed(View v, Marker marker) {
-	                        // *** TODO register click as a "like" counting towards the ShouldBe
-	                    	int pastLikes = (Integer) pins.get(marker);
-	                    	pins.put(marker, pastLikes+1);
-	                    	marker.showInfoWindow();
-	                        Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
-	                    }
-	                }; 
-	                infoButtonListener.setMarker(marker);
-	                likeButton.setOnTouchListener(infoButtonListener);
-	            	markers2Windows.put(marker, infoWindow);
-            	}
-            	Log.d("setInfoWindowAdapter", "setInfoWindowAdapter");
+//            	markers2Statuses.put(marker, "test tweet");
+//            	if(markers2Statuses.get(marker) != null){
+//            		giveInfoWindowTweet(marker);
+//	            	
+//            	}
+//            	Log.d("setInfoWindowAdapter", "setInfoWindowAdapter");
                 return null;
             }
 
-            @Override
+            private void giveInfoWindowTweet(Marker marker) {
+            	
+            	TextView postedTweet = (TextView)infoWindow.findViewById(R.id.posted_tweet);
+            	postedTweet.setText(String.valueOf(markers2Statuses.get(marker)));
+            	TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+            	likeCount.setText(String.valueOf(pins.get(marker)));
+            	// Setting custom OnTouchListener which deals with the pressed state 
+            	
+                infoButtonListener.setMarker(marker);
+                likeButton.setOnTouchListener(infoButtonListener);
+                
+            	markers2Windows.put(marker, infoWindow);
+			}
+
+			@Override
             public View getInfoContents(Marker marker) {
                 // We must call this to set the current marker and infoWindow references
+				markers2Statuses.put(marker, "test tweet");
+            	if(markers2Statuses.get(marker) != null){
+            		giveInfoWindowTweet(marker);
+	            	
+            	}
+            	Log.d("getInfoContents", "getInfoContents");
                 mapWrapperLayout.setMarkerWithInfoWindow(marker, markers2Windows.get(marker));
                 return markers2Windows.get(marker);
             }
@@ -371,7 +390,7 @@ public class TapActivity extends MapActivity implements
 		public void afterTextChanged(Editable s) {
 			// save string
 			searchString = s.toString();
-			Log.d("TapActivity.EditTextChanged.afterTextChanged", "s.toString() = " + s.toString());
+			//Log.d("TapActivity.EditTextChanged.afterTextChanged", "s.toString() = " + s.toString());
 		}
 		
 	}
