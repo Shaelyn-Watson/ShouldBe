@@ -177,12 +177,6 @@ public class TapActivity extends MapActivity implements
         mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
             @Override
             public View getInfoWindow(Marker marker) {
-//            	markers2Statuses.put(marker, "test tweet");
-//            	if(markers2Statuses.get(marker) != null){
-//            		giveInfoWindowTweet(marker);
-//	            	
-//            	}
-//            	Log.d("setInfoWindowAdapter", "setInfoWindowAdapter");
                 return null;
             }
 
@@ -290,7 +284,7 @@ public class TapActivity extends MapActivity implements
                     case Activity.RESULT_OK :
                     	if (!data.getStringExtra("status").isEmpty()) {
 	                    	String shouldBeText = data.getStringExtra("status");
-	                    	Log.d("onActivityResult", "status text = " + shouldBeText);
+	                    	Log.d("**onActivityResult", "**status text = " + shouldBeText);
 	                    	shouldBeUpdate(shouldBeText);
                     	}
                     break;
@@ -324,7 +318,7 @@ public class TapActivity extends MapActivity implements
 	
 	public void shouldBeUpdate (String status) {
 		zoomToLatLngLocation(mostRecentMarker.getPosition());
-		markers2Statuses.put(mostRecentMarker, "random markertweet from shouldBeUpdate");
+		markers2Statuses.put(mostRecentMarker, status);
 		Log.d("sbUpdate", "updated infowindow");
 	}
 	
