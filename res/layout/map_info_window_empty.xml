@@ -20,6 +20,7 @@
 		    android:layout_height="wrap_content"
 		    android:gravity="center_vertical"
 		    android:textColor="@android:color/black"
+		    android:background="@drawable/official_background"
 		    android:text="@string/whatShouldbe"
 		    android:textSize="20sp"
 		    android:paddingRight="10dp"

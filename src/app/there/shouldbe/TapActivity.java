@@ -68,8 +68,8 @@ public class TapActivity extends MapActivity implements
 	private ViewGroup infoWindow;
 //    private Button likeButton;      //like the ShouldBe *TODO connect to facebook
 //    private OnInfoWindowElemTouchListener likeButtonListener; 
-    private Button whatShouldBe;
-    private OnInfoWindowElemTouchListener infoButtonListener;
+    //private Button whatShouldBe;
+    //private OnInfoWindowElemTouchListener infoButtonListener;
     
     //Search bar implementation to come
     private EditText mapSearchBox;
@@ -106,7 +106,7 @@ public class TapActivity extends MapActivity implements
         
         
         
-        // Marker info window
+        // Marker info windows = empty and post
         final ViewGroup emptyInfoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window_empty, null);
         infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null); //initiate infowindow for after pos
         
@@ -124,6 +124,14 @@ public class TapActivity extends MapActivity implements
                 // Move camera to position of new marker
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); 
                 likeCounts.put(marker, 0);  //Init like count
+                
+                //check to see if should remove empty marker
+                if (!markerArray.isEmpty()){
+                	if(markers2Statuses.get(markerArray.get(markerArray.size()-1)) == null){
+                		markerArray.get(markerArray.size()-1).remove();
+                	}
+                }
+                
                 markerArray.add(marker);
                 Log.d("**markerCreated", "new marker on map click");
                 marker.showInfoWindow(); 
@@ -173,17 +181,17 @@ public class TapActivity extends MapActivity implements
         /*
          * what ShouldBe map_empty button click listener
          */
-        this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
-        infoButtonListener = new OnInfoWindowElemTouchListener(whatShouldBe,
-              getResources().getDrawable(R.drawable.official_background),
-              getResources().getDrawable(R.drawable.official_background1)) {
-			@Override
-			protected void onClickConfirmed(View v, Marker marker) {
-				Log.d("*infoButtonListener", "onClickConfirmed");
-				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
-				startActivityForResult(intent, 1);
-			}
-		};
+//        this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
+//        infoButtonListener = new OnInfoWindowElemTouchListener(whatShouldBe,
+//              getResources().getDrawable(R.drawable.official_background),
+//              getResources().getDrawable(R.drawable.official_background1)) {
+//			@Override
+//			protected void onClickConfirmed(View v, Marker marker) {
+//				Log.d("*infoButtonListener", "onClickConfirmed");
+//				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
+//				startActivityForResult(intent, 1);
+//			}
+//		};
 		
 		mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
                     public void onInfoWindowClick(Marker marker){
@@ -219,12 +227,12 @@ public class TapActivity extends MapActivity implements
             public View getInfoContents(Marker marker) {
                 //Called when a marker's infowindow is displayed
             	if(markers2Statuses.get(marker) == null){
-            		infoButtonListener.setMarker(marker);
+            		//infoButtonListener.setMarker(marker);
             		if (markerArray.get(markerArray.size()-1) != marker){
             			markerArray.add(marker);
             			Log.d("**infoWindow", "added this marker");
             		}
-            		Log.d("**infoWindow", ".get(marker) == null");
+            		Log.d("**infoWindow", "sans status");
             	}
             	else{
             		//if the marker has been assigned a tweet
