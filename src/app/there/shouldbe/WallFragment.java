@@ -131,12 +131,12 @@ public class WallFragment extends ListFragment implements OnClickListener{
 			private void displayTwitter(final ArrayList<Tweet> tweetList) {
 				
 				//TODO not sorting by date correctly in list fragment feed view
-				Collections.sort(tweetList, new Comparator<Tweet>() {
-					public int compare(Tweet t1, Tweet t2) {
-						// t1.getDate() in format Mon Apr 28
-						return t1.getDate().compareTo(t2.getDate());				
-					}
-				});
+//				Collections.sort(tweetList, new Comparator<Tweet>() {
+//					public int compare(Tweet t1, Tweet t2) {
+//						// t1.getDate() in format Mon Apr 28
+//						return t1.getDate().compareTo(t2.getDate());				
+//					}
+//				});
 	
 		      
 				getActivity().runOnUiThread(new Runnable() {
