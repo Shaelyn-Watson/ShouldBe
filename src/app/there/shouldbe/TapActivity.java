@@ -56,40 +56,31 @@ public class TapActivity extends MapActivity implements
 	private LocationClient mLocationClient;
 	private Location mCurrentLocation;
 	private LatLng mCurrentLatLng;
+	private ProgressDialog pDialog;
 	
-	private boolean posted;
 	
-	/* 
-	 * TODO: replace hashmaps with database information
-	 */
-	//Marker mapped to number of likes
-	private HashMap<Marker, Integer> pins = new HashMap<Marker, Integer>();
-	private HashMap<Marker, TextView> likeCounts = new HashMap<Marker, TextView>();
-	//Marker mapped to positions
-	private HashMap<Marker, LatLng> markerPositions = new HashMap<Marker, LatLng>();
-	//Marker mapped to infoWindow view instances
+	private HashMap<Marker, Integer> likeCounts = new HashMap<Marker, Integer>();
 	private HashMap<Marker, ViewGroup> markers2Windows = new HashMap<Marker, ViewGroup>();
-	private HashMap<ViewGroup, Marker> windows2Markers = new HashMap<ViewGroup, Marker>();
-	
-	//marker to statuses
 	private HashMap<Marker, String> markers2Statuses = new HashMap<Marker, String>();
-	
-	//super temp struct to keep our most recently used marker
-	private ArrayList<Marker> markerArray = new ArrayList<Marker>();
 	
 	//info window global elements
 	private ViewGroup infoWindow;
-    private Button likeButton;      //like the ShouldBe *TODO facebook
-    private OnInfoWindowElemTouchListener likeButtonListener; 
+//    private Button likeButton;      //like the ShouldBe *TODO connect to facebook
+//    private OnInfoWindowElemTouchListener likeButtonListener; 
     private Button whatShouldBe;
+    private OnInfoWindowElemTouchListener infoButtonListener;
     
+    //Search bar implementation to come
     private EditText mapSearchBox;
     private ImageButton searchButton;
     private String searchString;
-    private ProgressDialog pDialog;
-    private LatLng mostRecentMarkerPosition;
     
-    private OnInfoWindowElemTouchListener infoButtonListener;
+	/*
+	 * TODO = reimplement marker retention
+	 */
+	private ArrayList<Marker> markerArray = new ArrayList<Marker>();
+	private boolean posted;
+    
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +92,7 @@ public class TapActivity extends MapActivity implements
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         
-        //Log.d("**TaponCreate", "new tap activity");
+        Log.d("TapOnCreate", "new tap activity");
         posted = false;
         
         // Setup Google Map
@@ -112,10 +103,33 @@ public class TapActivity extends MapActivity implements
         setUpMapIfNeeded();  // Check to make sure map loads
         mMap.getUiSettings().setZoomControlsEnabled(false);   // Remove +/- zoom controls since pinching is enabled
         
+        
+        
         // Marker info window
         final ViewGroup emptyInfoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window_empty, null);
-        infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null);
-        this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
+        infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null); //initiate infowindow for after post
+        
+        //Create new marker on map click
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng point) { 
+                Marker marker = null;
+                marker = mMap.addMarker(new MarkerOptions().position(point)
+                	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
+                	.title("There should be:")  //not used
+                	);
+                //new marker is presented with simple add ShouldBe window
+                markers2Windows.put(marker, emptyInfoWindow);
+                // Move camera to position of new marker
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); 
+                likeCounts.put(marker, 0);  //Init like count
+                markerArray.add(marker);
+                Log.d("**markerCreated", "new marker on map click");
+                marker.showInfoWindow(); 
+            }
+
+        });
+        
 //        likeButton = (Button)infoWindow.findViewById(R.id.button);
 //    	likeButtonListener = new OnInfoWindowElemTouchListener(likeButton,
 //                getResources().getDrawable(R.drawable.checkmark1),
@@ -131,25 +145,6 @@ public class TapActivity extends MapActivity implements
 //                //Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
 //            }
 //        }; 
-        
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng point) { 
-                Marker marker = null;
-                marker = mMap.addMarker(new MarkerOptions().position(point)
-                	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
-                	.title("There should be:")  //not used
-                	);
-                //new marker is presented with simple add ShouldBe window
-                markers2Windows.put(marker, emptyInfoWindow);
-                // Move camera to position of new marker
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); 
-                pins.put(marker, 0);  //Init like count
-                markerArray.add(marker);
-                marker.showInfoWindow(); 
-            }
-
-        });
         
         // Setup map search bar  (hidden for now)
 //        mapSearchBox = (EditText) findViewById(R.id.mapSearchBox);
@@ -174,15 +169,25 @@ public class TapActivity extends MapActivity implements
         // 20 - offset between the default InfoWindow bottom edge and it's content bottom edge 
         mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20)); 
 
-        
-        whatShouldBe.setOnTouchListener(new OnInfoWindowElemTouchListener(whatShouldBe) {
+        /*
+         * what ShouldBe map_empty button click listener
+         */
+        this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
+        infoButtonListener = new OnInfoWindowElemTouchListener(whatShouldBe,
+              getResources().getDrawable(R.drawable.official_background),
+              getResources().getDrawable(R.drawable.official_background1)) {
 			@Override
 			protected void onClickConfirmed(View v, Marker marker) {
+				Log.d("**infoButtonListener", "onClickConfirmed");
 				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
 				startActivityForResult(intent, 1);
 			}
-		});
-
+		};
+		
+		
+		/*
+		 * called on .showInfoWindow()
+		 */
         mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
             @Override
             public View getInfoWindow(Marker marker) {
@@ -193,26 +198,31 @@ public class TapActivity extends MapActivity implements
             	
             	TextView postedTweet = (TextView)infoWindow.findViewById(R.id.posted_tweet);
             	postedTweet.setText(String.valueOf(markers2Statuses.get(marker)));
-            	//TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
-            	//likeCount.setText(String.valueOf(pins.get(marker)));
-            	// Setting custom OnTouchListener which deals with the pressed state 
-            	
 //                likeButtonListener.setMarker(marker);
 //                likeButton.setOnTouchListener(likeButtonListener);
                 
-            	markers2Windows.put(marker, infoWindow);
+            	markers2Windows.put(marker, infoWindow);  //update to new layout
 			}
 
 			@Override
             public View getInfoContents(Marker marker) {
-                // We must call this to set the current marker and infoWindow references
-            	if(markers2Statuses.get(marker) != null){
-            		giveInfoWindowTweet(marker);
-	            	
+                //Called when a marker's infowindow is displayed
+            	if(markers2Statuses.get(marker) == null){
+            		infoButtonListener.setMarker(marker);
+            		if (markerArray.get(markerArray.size()-1) != marker){
+            			markerArray.add(marker);
+            			Log.d("**infoWindow", "added this marker");
+            		}
+            		Log.d("**infoWindow", ".get(marker) == null");
             	}
-            	Log.d("getInfoContents", "getInfoContents");
+            	else{
+            		//if the marker has been assigned a tweet
+            		giveInfoWindowTweet(marker);
+            		Log.d("**infoWindow", "giveInfoWindowTweet");
+            	}
+            	Log.d("**infoWindow", "getInfoContents");
                 mapWrapperLayout.setMarkerWithInfoWindow(marker, markers2Windows.get(marker));
-                return markers2Windows.get(marker);
+                return markers2Windows.get(marker); //return infowindow associated with this marker
             }
         });  
         
@@ -225,10 +235,14 @@ public class TapActivity extends MapActivity implements
     }
     
     public void shouldBeUpdate (String status) {
-    	posted = true;
+    	
+    	posted = true; //if the user has go to tweet activity
+    	
+    	//if last struct og the temp marker array != null
 		if (markerArray.get(markerArray.size()-1) != null){
 			//Make new marker and display updated infowindow
             Marker marker = markerArray.get(markerArray.size()-1);
+            Log.d("**sbUpdate", "marker not null");
             LatLng markerPos = marker.getPosition();
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerPos, 15)); 
             
@@ -327,7 +341,7 @@ public class TapActivity extends MapActivity implements
             	case Activity.RESULT_OK:
             		if (!data.getStringExtra("status").isEmpty()) {
                     	String shouldBeText = data.getStringExtra("status");
-                    	Log.d("**onActivityResult", "**status text = " + shouldBeText);
+                    	//Log.d("**onActivityResult", "**status text = " + shouldBeText);
                     	shouldBeUpdate(shouldBeText);
                 	}
             		break;
@@ -380,8 +394,7 @@ public class TapActivity extends MapActivity implements
 				                	.title((String)p.get("shouldbeText"))  //not used
 				                	);
 							markers2Statuses.put(m, (String)p.get("shouldbeText"));
-							pins.put(m, 0);  //Init like count
-			                markerArray.add(m);
+							//likeCounts.put(m, 0);  //Init like count		               
 						}
 					}
 					else {

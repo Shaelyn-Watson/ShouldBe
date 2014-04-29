@@ -33,7 +33,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_screen_slide);
 		
-		Log.d("**MAINonCreate", "new main activity");
+		Log.d("mainOnCreate", "new main activity");
 
 		final ActionBar actionBar = getActionBar();
 	    // Instantiate a ViewPager and a PagerAdapter.
@@ -83,13 +83,6 @@ public class MainActivity extends FragmentActivity {
 	    actionBar.addTab(actionBar.newTab()
                 .setText("Wall")
                 .setTabListener(tabListener));
-//	    Button mapButton = (Button) findViewById(R.id.actionMapButton);
-//	    mapButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                // Perform action on click
-//            	tapLocation(v);
-//            }
-//        });
 	    actionBar.addTab(actionBar.newTab()
                 .setText("Post")
                 .setTabListener(tabListener));
