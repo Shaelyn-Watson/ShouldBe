@@ -34,6 +34,7 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -107,7 +108,7 @@ public class TapActivity extends MapActivity implements
         
         // Marker info window
         final ViewGroup emptyInfoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window_empty, null);
-        infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null); //initiate infowindow for after post
+        infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null); //initiate infowindow for after pos
         
         //Create new marker on map click
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -178,11 +179,21 @@ public class TapActivity extends MapActivity implements
               getResources().getDrawable(R.drawable.official_background1)) {
 			@Override
 			protected void onClickConfirmed(View v, Marker marker) {
-				Log.d("**infoButtonListener", "onClickConfirmed");
+				Log.d("*infoButtonListener", "onClickConfirmed");
 				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
 				startActivityForResult(intent, 1);
 			}
 		};
+		
+		mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+                    public void onInfoWindowClick(Marker marker){
+                    	if(markers2Statuses.get(marker) == null){
+	                    	Log.d("**infoWINDOWListener", "onInfoWindowClick");
+	        				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
+	        				startActivityForResult(intent, 1);
+                    	}
+                    }
+                  });
 		
 		
 		/*
@@ -233,6 +244,8 @@ public class TapActivity extends MapActivity implements
         populateMarkersFromDatabase();
 
     }
+
+
     
     public void shouldBeUpdate (String status) {
     	
