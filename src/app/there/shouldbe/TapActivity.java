@@ -323,6 +323,7 @@ public class TapActivity extends MapActivity implements
     protected void onResume() {
     	super.onResume();
     	mLocationClient.connect();
+    	markerArray.clear();
     }
     
     
