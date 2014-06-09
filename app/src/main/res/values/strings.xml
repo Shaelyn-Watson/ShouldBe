@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ShouldBe</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello ShouldBe!</string>
+    <string name="tap_location">ShouldBe</string>
+    <string name="there_should_be">There Should Be:</string>
+    <string name="post_wall">General Post</string>
+    <string name="title_activity_twitter_feed">TwitterFeedActivity</string>
+    <string name="twitter_feed">Twitter Feed</string>
+    <string name="tvGenPostText">What #shouldbe?</string>
+    <string name="etGenPostPrompt">\@shouldbeApp There #shouldbe</string>
+    <string name="title_activity_twitter_login">TwitterLoginActivity</string>
+    <string name="twitterLogin">Login</string>
+    <string name="twitterEmailPrompt">e-mail</string>
+    <string name="twitterPasswordPrompt">password</string>
+    <string name="loginWithTwitter">Login with Twitter</string>
+    <string name="twitterLoginSummary">Login with Twitter to post \#shouldbe\'s</string>
+    <string name="settings">Settings</string>
+    <string name="twitterLogout">Logout</string>
+    <string name="twitterLogoutSummary">Logout of Twitter</string>
+    <string name="tweetButton_text">Tweet</string>
+    <string name="title_activity_tweet">TweetActivity</string>
+    <string name="search">Search</string>
+    <string name="searchPrompt">Search</string>
+    <string name="whatShouldbe">What #shouldbe here?</string>
+    <string name="title_activity_what_should_be">ShouldBe</string>
+
+</resources>

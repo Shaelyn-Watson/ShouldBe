@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/blank_background">
+	 
+     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="9dp" >
+	 	
+	    <Button
+	        android:id="@+id/shouldBeButton"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:gravity="center_vertical"
+		    android:textColor="@android:color/black"
+		    android:background="@drawable/official_background"
+		    android:text="@string/whatShouldbe"
+		    android:textSize="20sp"
+		    android:paddingRight="10dp"
+    	android:paddingLeft="10dp" >
+	    </Button>
+
+    </LinearLayout>
+    
+</LinearLayout>
