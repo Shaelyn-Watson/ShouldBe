@@ -59,15 +59,16 @@ public class TapActivity extends MapActivity implements
 	private LatLng mCurrentLatLng;
 	private ProgressDialog pDialog;
 	
-	
-	private HashMap<Marker, Integer> likeCounts = new HashMap<Marker, Integer>();
+	//Marker mapped to number of likes
+	private HashMap<Marker, Integer> pins = new HashMap<Marker, Integer>();
+	private HashMap<Marker, TextView> likeCounts = new HashMap<Marker, TextView>();
 	private HashMap<Marker, ViewGroup> markers2Windows = new HashMap<Marker, ViewGroup>();
 	private HashMap<Marker, String> markers2Statuses = new HashMap<Marker, String>();
 	
 	//info window global elements
 	private ViewGroup infoWindow;
-//    private Button likeButton;      //like the ShouldBe *TODO connect to facebook
-//    private OnInfoWindowElemTouchListener likeButtonListener; 
+    private Button likeButton;      //like the ShouldBe *TODO connect to facebook
+    private OnInfoWindowElemTouchListener likeButtonListener; 
     //private Button whatShouldBe;
     //private OnInfoWindowElemTouchListener infoButtonListener;
     
@@ -123,7 +124,8 @@ public class TapActivity extends MapActivity implements
                 markers2Windows.put(marker, emptyInfoWindow);
                 // Move camera to position of new marker
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); 
-                likeCounts.put(marker, 0);  //Init like count
+                pins.put(marker, 0);  //Init like count
+                TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
                 
                 //check to see if should remove empty marker
                 if (!markerArray.isEmpty()){
@@ -134,26 +136,28 @@ public class TapActivity extends MapActivity implements
                 
                 markerArray.add(marker);
                 Log.d("**markerCreated", "new marker on map click");
+                likeCount.setText(String.valueOf(pins.get(marker)));
+                likeCounts.put(marker, likeCount);
                 marker.showInfoWindow(); 
             }
 
         });
         
-//        likeButton = (Button)infoWindow.findViewById(R.id.button);
-//    	likeButtonListener = new OnInfoWindowElemTouchListener(likeButton,
-//                getResources().getDrawable(R.drawable.checkmark1),
-//                getResources().getDrawable(R.drawable.checkmark2)) {
-//            @Override
-//            protected void onClickConfirmed(View v, Marker marker) {
-//                // *** TODO register click as a "like" counting towards the ShouldBe
-//            	Log.d("likebutton", "clicked!");
-//            	int pastLikes = (Integer) pins.get(marker);
-//            	pins.put(marker, pastLikes+1);
-//            	Log.d("likebutton", String.valueOf(pins.get(marker)));
-//            	marker.showInfoWindow();
-//                //Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
-//            }
-//        }; 
+        likeButton = (Button)infoWindow.findViewById(R.id.button);
+    	likeButtonListener = new OnInfoWindowElemTouchListener(likeButton,
+                getResources().getDrawable(R.drawable.like),
+                getResources().getDrawable(R.drawable.like2)) {
+            @Override
+            protected void onClickConfirmed(View v, Marker marker) {
+                // *** TODO register click as a "like" counting towards the ShouldBe
+            	Log.d("likebutton", "clicked!");
+            	int pastLikes = (Integer) pins.get(marker);
+            	pins.put(marker, pastLikes+1);
+            	Log.d("likebutton", String.valueOf(pins.get(marker)));
+            	marker.showInfoWindow();
+                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
+            }
+        }; 
         
         // Setup map search bar  (hidden for now)
 //        mapSearchBox = (EditText) findViewById(R.id.mapSearchBox);
