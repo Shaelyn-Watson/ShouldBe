@@ -1,30 +1,60 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context="app.there.shouldbe.TweetActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame" 
+    android:background="@drawable/blank_background"  >
 
-    <ImageButton
-        android:id="@+id/postTweetButton"
+
+    
+    <!-- <TextView
+        android:id="@+id/whatSB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tweetET"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="18.5dp"
-        android:src="@android:drawable/ic_input_add"
-        android:background="@drawable/official_background" />
+        android:text="@string/tvGenPostText" 
+        android:layout_above="@+id/sbAccount"
+        android:background="@drawable/official_background"/>  -->
 
-    <EditText
-        android:id="@+id/tweetET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/postTweetButton"
-        android:layout_marginTop="74dp"
-        android:ems="10"
-        android:text="@string/etGenPostPrompt" />
+   <TextView
+       android:id="@+id/sbAccount"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentTop="true"
+       android:layout_alignRight="@+id/tweetET"
+       android:background="@drawable/official_background"
+       android:text="@string/account" />
+
+   <ImageButton
+       android:id="@+id/postTweetButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignRight="@+id/tweetET"
+       android:layout_below="@+id/tweetET"
+       android:layout_marginRight="22dp"
+       android:layout_marginTop="28dp"
+       android:background="@drawable/official_background"
+       android:src="@android:drawable/ic_input_add" />
+
+   <EditText
+       android:id="@+id/tweetET"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/thereSB"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="40dp"
+       android:ems="10"
+       android:paddingLeft="16dp"
+       android:paddingRight="16dp" />
+
+   <TextView
+       android:id="@+id/thereSB"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_below="@+id/sbAccount"
+       android:background="@drawable/official_background1"
+       android:text="@string/there_sb" />
 
 </RelativeLayout>

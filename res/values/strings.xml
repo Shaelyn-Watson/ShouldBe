@@ -11,6 +11,10 @@
     <string name="twitter_feed">Twitter Feed</string>
     <string name="tvGenPostText">What #shouldbe?</string>
     <string name="etGenPostPrompt">\@shouldbeApp There #shouldbe</string>
+    
+    <string name="account">\@shouldbeApp</string>
+    <string name="there_sb">There #shouldbe:</string>
+    
     <string name="title_activity_twitter_login">TwitterLoginActivity</string>
     <string name="twitterLogin">Login</string>
     <string name="twitterEmailPrompt">e-mail</string>
