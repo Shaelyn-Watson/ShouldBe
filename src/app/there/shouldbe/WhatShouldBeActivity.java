@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -64,7 +65,7 @@ public class WhatShouldBeActivity extends Activity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		 
-		ImageButton tweetButton = (ImageButton) findViewById(R.id.postTweetButton);
+		Button tweetButton = (Button) findViewById(R.id.postButton);
 		tweetButton.setOnClickListener(new postShouldBe());
 		txtUpdate = (EditText) findViewById(R.id.tweetET);
 		txtUpdate.addTextChangedListener(new EditTextChanged());

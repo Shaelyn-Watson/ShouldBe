@@ -24,7 +24,7 @@
 		    android:text="@string/whatShouldbe"
 		    android:textSize="20sp"
 		    android:paddingRight="10dp"
-    	android:paddingLeft="10dp" >
+    		android:paddingLeft="10dp" >
 	    </Button>
 
     </LinearLayout>

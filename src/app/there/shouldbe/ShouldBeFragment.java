@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ public class ShouldBeFragment extends Fragment {
     private EditText txtUpdate;
     private Bundle extras;
     private Class<?> callingActivity;
-    private ImageButton shouldBeButton;
+    private Button shouldBeButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class ShouldBeFragment extends Fragment {
 	    Bundle savedInstanceState) {
 		
 		View view = inflater.inflate(R.layout.activity_tweet, container, false);
-		shouldBeButton = (ImageButton) view.findViewById(R.id.postTweetButton);
+		shouldBeButton = (Button) view.findViewById(R.id.postButton);
 		shouldBeButton.setOnClickListener(new postShouldBe());
 		
 		txtUpdate = (EditText) view.findViewById(R.id.tweetET);

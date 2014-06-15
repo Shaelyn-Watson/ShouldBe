@@ -17,16 +17,20 @@
         android:layout_above="@+id/sbAccount"
         android:background="@drawable/official_background"/>  -->
 
-   <TextView
+   <!-- <TextView
        android:id="@+id/sbAccount"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_alignParentTop="true"
        android:layout_alignRight="@+id/tweetET"
+       android:paddingLeft="9.89dp"
+	   android:paddingRight="9.89dp"
+	   android:paddingTop="9.89dp"
+	   android:paddingBottom="9.89dp"
        android:background="@drawable/official_background"
-       android:text="@string/account" />
+       android:text="@string/account" />   -->
 
-   <ImageButton
+   <!-- <ImageButton
        android:id="@+id/postTweetButton"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
@@ -35,9 +39,24 @@
        android:layout_marginRight="22dp"
        android:layout_marginTop="28dp"
        android:background="@drawable/official_background"
-       android:src="@android:drawable/ic_input_add" />
+       android:src="@android:drawable/ic_input_add" />   -->
 
-   <EditText
+
+   <TextView
+       android:id="@+id/thereSB"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:textSize="16sp"
+       android:paddingLeft="9.89dp"
+	   android:paddingRight="9.89dp"
+	   android:paddingTop="9.89dp"
+	   android:paddingBottom="9.89dp"
+       android:background="@drawable/official_background1"
+       android:text="@string/there_sb" />
+   
+   
+      <EditText
        android:id="@+id/tweetET"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
@@ -47,14 +66,20 @@
        android:ems="10"
        android:paddingLeft="16dp"
        android:paddingRight="16dp" />
+   
 
-   <TextView
-       android:id="@+id/thereSB"
+   <Button
+       android:id="@+id/postButton"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_alignParentLeft="true"
-       android:layout_below="@+id/sbAccount"
-       android:background="@drawable/official_background1"
-       android:text="@string/there_sb" />
+       android:layout_alignParentRight="true"
+       android:layout_below="@+id/tweetET"
+       android:layout_marginTop="15dp"
+       android:background="@drawable/official_background"
+       android:paddingBottom="9.89dp"
+       android:paddingLeft="9.89dp"
+       android:paddingRight="9.89dp"
+       android:paddingTop="9.89dp"
+       android:text="@string/account" />
 
 </RelativeLayout>
