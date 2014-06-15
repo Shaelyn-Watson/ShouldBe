@@ -143,17 +143,17 @@ public class TapActivity extends MapActivity implements
 
         });
         
-        likeButton = (Button)infoWindow.findViewById(R.id.button);
+        likeButton = (Button)infoWindow.findViewById(R.id.likeButton);
     	likeButtonListener = new OnInfoWindowElemTouchListener(likeButton,
                 getResources().getDrawable(R.drawable.like),
                 getResources().getDrawable(R.drawable.like2)) {
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 // *** TODO register click as a "like" counting towards the ShouldBe
-            	Log.d("likebutton", "clicked!");
             	int pastLikes = (Integer) pins.get(marker);
             	pins.put(marker, pastLikes+1);
-            	Log.d("likebutton", String.valueOf(pins.get(marker)));
+            	TextView likeCount = likeCounts.get(marker);
+            	likeCount.setText(String.valueOf(pins.get(marker)));
             	marker.showInfoWindow();
                 Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
             }
