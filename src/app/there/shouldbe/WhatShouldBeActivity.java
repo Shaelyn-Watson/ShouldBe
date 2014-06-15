@@ -109,7 +109,7 @@ public class WhatShouldBeActivity extends Activity {
 	
 	public void postTweet(View view) {
 		if (isTwitterLoggedIn()) {
-			String status = txtUpdate.getText().toString();
+			String status = "@shouldBeApp There #shouldbe " + txtUpdate.getText().toString();
 			Log.d("STATUS", status);
 			if (status.trim().length() > 0) {
 				new updateTwitterStatus().execute(status);

@@ -16,8 +16,6 @@
         android:layout_height="wrap_content"
         android:textSize="17sp" />
 
-
-
     <Button
         android:id="@+id/likeButton" 
         android:layout_width="50dp"
@@ -29,7 +27,6 @@
          android:id="@+id/like_count"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="likes"
          android:paddingLeft="4.58dp"
          android:textSize="12sp"
          android:layout_alignRight="@+id/likeButton"
