@@ -11,10 +11,8 @@
     <string name="twitter_feed">Twitter Feed</string>
     <string name="tvGenPostText">What #shouldbe?</string>
     <string name="etGenPostPrompt">\@shouldbeApp There #shouldbe</string>
-    
     <string name="account">\@shouldbeApp</string>
     <string name="there_sb">There #shouldbe:</string>
-    
     <string name="title_activity_twitter_login">TwitterLoginActivity</string>
     <string name="twitterLogin">Login</string>
     <string name="twitterEmailPrompt">e-mail</string>
@@ -30,5 +28,13 @@
     <string name="searchPrompt">Search</string>
     <string name="whatShouldbe">What #shouldbe here?</string>
     <string name="title_activity_what_should_be">ShouldBe</string>
+    <string name="title_activity_user_login">UserLogin</string>
+    <string name="username">E-mail: </string>
+    <string name="password">Password: </string>
+    <string name="exampleUsername">me\@example.com</string>
+    <string name="examplePassword">************</string>
+    <string name="loginButtonText">Login</string>
+    <string name="newuser">New User?</string>
+    <string name="signup">Sign Up</string>
 
 </resources>
