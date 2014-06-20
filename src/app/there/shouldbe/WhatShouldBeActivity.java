@@ -51,6 +51,8 @@ public class WhatShouldBeActivity extends Activity {
     private Bundle extras;
     private Class<?> callingActivity;
     private String txtUpdateText;
+    private Double shouldbeLat;
+    private Double shouldbeLong;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,11 @@ public class WhatShouldBeActivity extends Activity {
 		txtUpdate = (EditText) findViewById(R.id.tweetET);
 		txtUpdate.addTextChangedListener(new EditTextChanged());
 		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
+		
+		// Will be used for adding GeoLocation to shouldbe post
+		Intent intent = getIntent();
+		shouldbeLat = intent.getDoubleExtra("lat", 0.0);
+		shouldbeLong = intent.getDoubleExtra("long", 0.0);
 	} 
 
 	@Override
