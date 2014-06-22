@@ -11,9 +11,24 @@
     android:background="@drawable/blank_background" >
 
     <TextView
+       android:id="@+id/thereSB"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:textSize="16sp"
+       android:paddingLeft="9.89dp"
+	   android:paddingRight="9.89dp"
+	   android:paddingTop="9.89dp"
+	   android:paddingBottom="9.89dp"
+       android:background="@drawable/official_background1"
+       android:text="@string/there_sb" />
+       
+    <TextView
         android:id="@+id/posted_tweet"
         android:layout_width="258dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/thereSB"
+        android:paddingLeft="11dp"
         android:textSize="17sp" />
 
     <Button
