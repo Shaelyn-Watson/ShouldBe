@@ -59,9 +59,9 @@ public class TapActivity extends MapActivity implements
 	private LatLng mCurrentLatLng;
 	private ProgressDialog pDialog;
 	
-	//Marker mapped to number of likes
-	private HashMap<Marker, Integer> pins = new HashMap<Marker, Integer>();
+	private HashMap<Marker, Integer> markerLikes = new HashMap<Marker, Integer>(); //TODO replace with server queries
 	private HashMap<Marker, TextView> likeCounts = new HashMap<Marker, TextView>();
+	
 	private HashMap<Marker, ViewGroup> markers2Windows = new HashMap<Marker, ViewGroup>();
 	private HashMap<Marker, String> markers2Statuses = new HashMap<Marker, String>();
 	
@@ -124,8 +124,8 @@ public class TapActivity extends MapActivity implements
                 markers2Windows.put(marker, emptyInfoWindow);
                 // Move camera to position of new marker
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); 
-                pins.put(marker, 0);  //Init like count
-                TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+                markerLikes.put(marker, 0);  //Init like count
+                //TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
                 
                 //check to see if should remove empty marker
                 if (!markerArray.isEmpty()){
@@ -136,8 +136,8 @@ public class TapActivity extends MapActivity implements
                 
                 markerArray.add(marker);
                 Log.d("**markerCreated", "new marker on map click");
-                likeCount.setText(String.valueOf(pins.get(marker)));
-                likeCounts.put(marker, likeCount);
+                TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+                likeCount.setText(String.valueOf(markerLikes.get(marker)));
                 marker.showInfoWindow(); 
             }
 
@@ -150,12 +150,12 @@ public class TapActivity extends MapActivity implements
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 // *** TODO register click as a "like" counting towards the ShouldBe
-            	int pastLikes = (Integer) pins.get(marker);
-            	pins.put(marker, pastLikes+1);
-            	TextView likeCount = likeCounts.get(marker);
-            	likeCount.setText(String.valueOf(pins.get(marker)));
+            	int pastLikes = (Integer) markerLikes.get(marker);
+            	markerLikes.put(marker, pastLikes+1);
+            	TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+            	likeCount.setText(String.valueOf(markerLikes.get(marker)));
             	marker.showInfoWindow();
-                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + pins.get(marker), Toast.LENGTH_SHORT).show();
+                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + markerLikes.get(marker), Toast.LENGTH_SHORT).show();
             }
         }; 
         
@@ -420,7 +420,8 @@ public class TapActivity extends MapActivity implements
 				                	.title((String)p.get("shouldbeText"))  //not used
 				                	);
 							markers2Statuses.put(m, (String)p.get("shouldbeText"));
-							//likeCounts.put(m, 0);  //Init like count		               
+					        TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+					        likeCount.setText(String.valueOf(markerLikes.get(m)));
 						}
 					}
 					else {
