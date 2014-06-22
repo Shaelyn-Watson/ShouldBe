@@ -48,7 +48,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 public class TapActivity extends MapActivity implements 
-	GooglePlayServicesClient.ConnectionCallbacks,
+	GooglePlayServicesClient.ConnectionCallbacks, 
 	GooglePlayServicesClient.OnConnectionFailedListener {
 	
 	private GoogleMap mMap;
@@ -201,7 +201,10 @@ public class TapActivity extends MapActivity implements
                     public void onInfoWindowClick(Marker marker){
                     	if(markers2Statuses.get(marker) == null){
 	                    	Log.d("**infoWINDOWListener", "onInfoWindowClick");
+	                    	LatLng markerPos = marker.getPosition();
 	        				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
+	        				intent.putExtra("lat", markerPos.latitude);
+	        				intent.putExtra("long", markerPos.longitude);
 	        				startActivityForResult(intent, 1);
                     	}
                     }
@@ -243,7 +246,7 @@ public class TapActivity extends MapActivity implements
             		giveInfoWindowTweet(marker);
             		Log.d("**infoWindow", "giveInfoWindowTweet");
             	}
-            	Log.d("**infoWindow", "getInfoContents");
+            	Log.d("**infoWindow", "getInfoContents"); 
                 mapWrapperLayout.setMarkerWithInfoWindow(marker, markers2Windows.get(marker));
                 return markers2Windows.get(marker); //return infowindow associated with this marker
             }

@@ -29,27 +29,27 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
-             <intent-filter>
-                 <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                
+
                 <data
                     android:host="callback_startpage"
                     android:scheme="shouldbe" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="app.there.shouldbe.MainActivity"
             android:label="@string/tap_location" >
-             <meta-data
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.there.shouldbe.SplashActivity" />
         </activity>
-        
         <activity
             android:name="app.there.shouldbe.TapActivity"
             android:label="@string/tap_location" >
@@ -57,7 +57,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.there.shouldbe.MainActivity" />
         </activity>
-        
 
         <!-- Allow the Settings activity to be launched -->
         <activity
@@ -100,12 +99,16 @@
 
         <uses-library android:name="com.google.android.maps" />
 
-        <activity 
+        <activity
             android:name="app.there.shouldbe.WhatShouldBeActivity"
             android:label="@string/title_activity_what_should_be" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.there.shouldbe.MainActivity" />
+        </activity>
+        <activity
+            android:name="app.there.shouldbe.UserLogin"
+            android:label="@string/title_activity_user_login" >
         </activity>
     </application>
 
