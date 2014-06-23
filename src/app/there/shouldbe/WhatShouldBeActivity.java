@@ -76,7 +76,9 @@ public class WhatShouldBeActivity extends Activity {
 		// Will be used for adding GeoLocation to shouldbe post
 		Intent intent = getIntent();
 		shouldbeLat = intent.getDoubleExtra("lat", 0.0);
+		Log.d("WHATSHOULDBEACTIVITY", shouldbeLat+"");
 		shouldbeLong = intent.getDoubleExtra("long", 0.0);
+		Log.d("WHATSHOULDBEACTIVITY", shouldbeLong+"");
 	} 
 
 	@Override
@@ -153,6 +155,10 @@ public class WhatShouldBeActivity extends Activity {
         protected String doInBackground(String... args) {
             Log.d("Tweet Text", "> " + args[0]);
             String status = args[0];
+            if (shouldbeLat != 0.0 && shouldbeLong != 0.0) {
+            	status += " \n " + shouldbeLat + "," + shouldbeLong;
+            	Log.d("Status", status);
+            }
             try {
                 ConfigurationBuilder builder = new ConfigurationBuilder();
                 builder.setOAuthConsumerKey(CONSUMER_KEY);
