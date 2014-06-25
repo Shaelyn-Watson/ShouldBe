@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TweetAdapter<T> extends BaseAdapter {
 
@@ -70,8 +71,15 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.date = (TextView) vi.findViewById(R.id.tweet_date);
 			holder.message = (TextView) vi.findViewById(R.id.tweet_message);
 			holder.name = (TextView) vi.findViewById(R.id.tweet_name);
-			//holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count);
-//			holder.likeButton = (ImageButton) vi.findViewById(R.id.wall_like_button);
+			
+			holder.likeButton = (ImageButton) vi.findViewById(R.id.wall_like_button);
+			holder.likeButton.setOnClickListener(new View.OnClickListener() {
+	             public void onClick(View v) {
+	                 // Perform action on click
+	            	 Log.d("LIKEBUTTON~~", "wall like button clicked");
+	             }
+	         });
+			holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count);
 
 			/************ Set holder with LayoutInflater ************/
 			vi.setTag(holder);
