@@ -1,8 +1,6 @@
 package app.there.shouldbe;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
@@ -17,13 +15,11 @@ import twitter4j.conf.ConfigurationBuilder;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class WallFragment extends ListFragment implements OnClickListener{ 	  
 
@@ -49,18 +45,14 @@ public class WallFragment extends ListFragment implements OnClickListener{
 	        setAdapter();
 		}
 	  
-	//		  @Override  
-	//		  public void onListItemClick(ListView l, View v, int position, long id) {     
-	//		  }  
+ 
 	  
 	  @Override  
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,  
 	    Bundle savedInstanceState) {  
-		  
 		  adapter = new TweetAdapter<Tweet>(getActivity(), tweetList);
-			   
-			   
-	   return super.onCreateView(inflater, container, savedInstanceState);  
+			   	   
+		  return super.onCreateView(inflater, container, savedInstanceState);  
 	  }
 	  
 	  
