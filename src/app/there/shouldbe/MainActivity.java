@@ -33,31 +33,71 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_screen_slide);
 
-		final ActionBar actionBar = getActionBar();
+		Log.d("mainOnCreate", "new main activity");
+
+		//final ActionBar actionBar = getActionBar();
 	    // Instantiate a ViewPager and a PagerAdapter.
 		pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(pagerAdapter);
-	    
+
 	    mPager.setOnPageChangeListener(
 	            new ViewPager.SimpleOnPageChangeListener() {
 	                @Override
 	                public void onPageSelected(int position) {
 	                    // When swiping between pages, select the
 	                    // corresponding tab.
-	                    getActionBar().setSelectedNavigationItem(position);
+	                	if(position==0)
+	                		getActionBar().setSelectedNavigationItem(0);
+	                	else
+	                		getActionBar().setSelectedNavigationItem(1);
 	                }
 	            });
-	    
+
+	    // Specify that tabs should be displayed in the action bar.
+	    //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+	    // Create a tab listener that is called when the user changes tabs.
+//	    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+//
+//			@Override
+//			public void onTabReselected(Tab arg0,
+//					android.app.FragmentTransaction arg1) {
+//				// probably ignore this event
+//
+//			}
+//
+//			@Override
+//			public void onTabSelected(Tab tab,
+//					android.app.FragmentTransaction arg1) {
+//				// show the given tab
+//	        	mPager.setCurrentItem(tab.getPosition());
+//
+//			}
+//
+//			@Override
+//			public void onTabUnselected(Tab arg0,
+//					android.app.FragmentTransaction arg1) {
+//				// hide the given tab
+//
+//			}
+//	    };
+
+//	    actionBar.addTab(actionBar.newTab()
+//                .setTabListener(tabListener));
+//	    actionBar.addTab(actionBar.newTab()
+//                .setTabListener(tabListener));
+
 	    topLevelLayout = (RelativeLayout) findViewById(R.id.top_layout);
         
        if (isFirstTime()) {
         	topLevelLayout.setVisibility(View.INVISIBLE);
         }
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
 		super.onCreateOptionsMenu(menu);
 
 		MenuInflater inflater = getMenuInflater();
@@ -79,7 +119,7 @@ public class MainActivity extends FragmentActivity {
 
 		return false;
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 	    if (mPager.getCurrentItem() == 0) {
@@ -92,7 +132,7 @@ public class MainActivity extends FragmentActivity {
 	        mPager.setCurrentItem(mPager.getCurrentItem() - 1);
 	    }
 	}
-	
+
 	/**
 	 * A simple pager adapter that represents ScreenSlidePageFragment objects, in
 	 * sequence.
@@ -101,7 +141,7 @@ public class MainActivity extends FragmentActivity {
 	    public ScreenSlidePagerAdapter(FragmentManager fm) {
 	        super(fm);
 	    }
-	
+
 	    @Override
 	    public Fragment getItem(int position) {
 	    	if(position == 0){
@@ -112,36 +152,36 @@ public class MainActivity extends FragmentActivity {
 	    		return new ShouldBeFragment();
 	    	}
 	    }
-	
+
 	    @Override
 	    public int getCount() {
 	        return NUM_PAGES;
 	    }
 	}
-	
+
 	 private boolean isFirstTime() {
 	     SharedPreferences preferences = getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
 	     boolean ranBefore = preferences.getBoolean("FirstTime", false);
 	     if (!ranBefore) {
-	     
+
 	         Editor editor = preferences.edit();
 	         editor.putBoolean("FirstTime", true); // set to false if twitter not logged in
 	         editor.commit();
 	         topLevelLayout.setVisibility(View.VISIBLE);
 	         topLevelLayout.setOnTouchListener(new View.OnTouchListener(){
-	
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				topLevelLayout.setVisibility(View.INVISIBLE);
 				return false;
 			}
-		            
+
          });
      
 
 		}
 		return ranBefore;
-		    
+
 	}
 
 
