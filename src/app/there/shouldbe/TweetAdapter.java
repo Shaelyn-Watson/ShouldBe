@@ -4,10 +4,9 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -74,28 +73,11 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.likeButton = (ImageButton) vi.findViewById(R.id.wall_like_button);
 			holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count);
 			
-			holder.likeCount.setOnTouchListener(new OnTouchListener() {
-	            @Override
-	            public boolean onTouch(View arg0, MotionEvent arg1) {
-	                switch (arg1.getAction()) {
-	                case MotionEvent.ACTION_DOWN: {
-	                	holder.likeButton.setImageDrawable(getResources().getDrawable(R.drawable.like));
-	                    break;
-	                }
-	                case MotionEvent.ACTION_CANCEL:{
-	                    holder.likeButton.setImageBitmap(getResources().getDrawable(R.drawable.like));
-	                    break;
-	                }
-	                }
-	                return true;
-	            }
-	        });
-			
-//			holder.likeButton.setOnClickListener(new View.OnClickListener() {
-//	             public void onClick(View v) {
-//	                 // Perform action on click
-//	            	 Log.d("LIKEBUTTON~~", "wall like button clicked");
-//	            	 holder.likeCount.setText("like");
+			holder.likeButton.setOnClickListener(new View.OnClickListener() {
+	             public void onClick(View v) {
+	                 // Perform action on click
+	            	 Log.d("LIKEBUTTON~~", "wall like button clicked");
+	            	 holder.likeCount.setText("You like this");
 //	            	 switch (arg1.getAction()) {
 //	                 case MotionEvent.ACTION_DOWN: {
 //	                     v.setImageBitmap(res.getDrawable(R.drawable.img_down));
@@ -106,8 +88,8 @@ public class TweetAdapter<T> extends BaseAdapter {
 //	                     break;
 //	                 }
 //	                 }
-//	             }
-//	         });
+	             }
+	         });
 			
 
 			/************ Set holder with LayoutInflater ************/

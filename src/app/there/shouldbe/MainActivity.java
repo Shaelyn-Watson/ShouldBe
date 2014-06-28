@@ -32,8 +32,6 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_screen_slide);
-		
-		Log.d("mainOnCreate", "new main activity");
 
 		final ActionBar actionBar = getActionBar();
 	    // Instantiate a ViewPager and a PagerAdapter.
@@ -51,54 +49,15 @@ public class MainActivity extends FragmentActivity {
 	                }
 	            });
 	    
-	    // Specify that tabs should be displayed in the action bar.
-	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-	    // Create a tab listener that is called when the user changes tabs.
-	    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-
-			@Override
-			public void onTabReselected(Tab arg0,
-					android.app.FragmentTransaction arg1) {
-				// probably ignore this event
-				
-			}
-
-			@Override
-			public void onTabSelected(Tab tab,
-					android.app.FragmentTransaction arg1) {
-				// show the given tab
-	        	mPager.setCurrentItem(tab.getPosition());
-				
-			}
-
-			@Override
-			public void onTabUnselected(Tab arg0,
-					android.app.FragmentTransaction arg1) {
-				// hide the given tab
-				
-			}
-	    };
-	    
-	    actionBar.addTab(actionBar.newTab()
-                .setText("Wall")
-                .setTabListener(tabListener));
-	    actionBar.addTab(actionBar.newTab()
-                .setText("Post")
-                .setTabListener(tabListener));
-	    
 	    topLevelLayout = (RelativeLayout) findViewById(R.id.top_layout);
-         
         
-        
-	       if (isFirstTime()) {
-	        	topLevelLayout.setVisibility(View.INVISIBLE);
-	        }
+       if (isFirstTime()) {
+        	topLevelLayout.setVisibility(View.INVISIBLE);
+        }
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		super.onCreateOptionsMenu(menu);
 
 		MenuInflater inflater = getMenuInflater();
