@@ -19,6 +19,8 @@ import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -289,6 +291,16 @@ public class TapActivity extends MapActivity implements
 	}
     
 
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.options_menu, menu);
+
+		return true;
+	}
+    
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -296,7 +308,14 @@ public class TapActivity extends MapActivity implements
             NavUtils.navigateUpFromSameTask(this);
             return true;
         }
-        
+        if(item.getItemId() == R.id.settings){
+			startActivity(new Intent(this, Settings.class)); 
+			return true;
+		}
+		if(item.getItemId() == R.id.wallActionButton){
+			startActivity(new Intent(this, MainActivity.class)); 
+			return true;
+		}
         return super.onOptionsItemSelected(item);
     }
     
