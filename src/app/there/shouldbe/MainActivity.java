@@ -1,7 +1,5 @@
 package app.there.shouldbe;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -17,6 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.RelativeLayout;
 
 
@@ -40,19 +40,23 @@ public class MainActivity extends FragmentActivity {
 		pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(pagerAdapter);
+        
+//        HeightAnimation heightAnim = new HeightAnimation(R.layout.activity_twitter_feed, 250, mPager.getHeight() - 100);
+//        heightAnim.setDuration(1000);
+//        view.startAnimation(heightAnim);
 
-	    mPager.setOnPageChangeListener(
-	            new ViewPager.SimpleOnPageChangeListener() {
-	                @Override
-	                public void onPageSelected(int position) {
-	                    // When swiping between pages, select the
-	                    // corresponding tab.
-	                	if(position==0)
-	                		getActionBar().setSelectedNavigationItem(0);
-	                	else
-	                		getActionBar().setSelectedNavigationItem(1);
-	                }
-	            });
+//	    mPager.setOnPageChangeListener(
+//	            new ViewPager.SimpleOnPageChangeListener() {
+//	                @Override
+//	                public void onPageSelected(int position) {
+//	                    // When swiping between pages, select the
+//	                    // corresponding tab.
+//	                	if(position==0)
+//	                		getActionBar().setSelectedNavigationItem(0);
+//	                	else
+//	                		getActionBar().setSelectedNavigationItem(1);
+//	                }
+//	            });
 
 	    // Specify that tabs should be displayed in the action bar.
 	    //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
