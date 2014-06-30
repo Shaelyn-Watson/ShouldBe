@@ -28,7 +28,7 @@
     <string name="searchPrompt">Search</string>
     <string name="whatShouldbe">What #shouldbe here?</string>
     <string name="title_activity_what_should_be">ShouldBe</string>
-    <string name="title_activity_user_login">UserLogin</string>
+    <string name="title_activity_user_login">Login</string>
     <string name="username">E-mail: </string>
     <string name="password">Password: </string>
     <string name="exampleUsername">me\@example.com</string>
