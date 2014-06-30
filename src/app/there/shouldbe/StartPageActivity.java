@@ -131,7 +131,7 @@ public class StartPageActivity extends Activity{
             pDialog = new ProgressDialog(StartPageActivity.this);
             pDialog.setMessage("Redirecting to Twitter Login...");
             pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
+            pDialog.setCancelable(true);
             pDialog.show();
 		}
 		
