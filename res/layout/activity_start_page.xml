@@ -32,7 +32,7 @@
 	        android:src="@drawable/shouldbepin" />
 	    
 	    <ImageButton
-	        android:id="@+id/login"
+	        android:id="@+id/logintwitter"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_horizontal"
@@ -41,7 +41,7 @@
 	        android:src="@drawable/twitterlogin" />
 
 	    <ImageButton
-	        android:id="@+id/login"
+	        android:id="@+id/loginemail"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_horizontal"

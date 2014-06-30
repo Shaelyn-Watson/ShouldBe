@@ -110,6 +110,14 @@
             android:name="app.there.shouldbe.UserLogin"
             android:label="@string/title_activity_user_login" >
         </activity>
+        <activity
+            android:name="app.there.shouldbe.SignUp"
+            android:label="@string/title_activity_sign_up"
+            android:parentActivityName="app.there.shouldbe.UserLogin" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.there.shouldbe.UserLogin" />
+        </activity>
     </application>
 
 </manifest>

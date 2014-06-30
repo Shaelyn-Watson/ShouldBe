@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 public class StartPageActivity extends Activity{ 
 	ImageButton loginWithTwitter;
+	ImageButton loginWithEmail;
 	
 	private final String CONSUMER_KEY = "7TKDKSkU8e1DiF2oLTdA";
 	private final String CONSUMER_SECRET = "jRtJeN2NSXmxfAB8TV2YtS11dYrVkHQ8mG7tOxOXXw";
@@ -51,7 +52,8 @@ public class StartPageActivity extends Activity{
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         
-        loginWithTwitter  = (ImageButton) findViewById(R.id.login);
+        loginWithTwitter  = (ImageButton) findViewById(R.id.logintwitter);
+        loginWithEmail  = (ImageButton) findViewById(R.id.loginemail);
         mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
         
         // if the user is already signed in, don't show this page
@@ -67,6 +69,15 @@ public class StartPageActivity extends Activity{
 			  new LoginWithTwitter().execute("twitter");
 			}
  
+		});
+		
+		loginWithEmail.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(StartPageActivity.this, UserLogin.class);
+				startActivity(intent);
+				StartPageActivity.this.finish();
+			}
 		});
 
     }

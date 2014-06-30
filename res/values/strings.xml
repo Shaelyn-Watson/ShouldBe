@@ -36,5 +36,6 @@
     <string name="loginButtonText">Login</string>
     <string name="newuser">New User?</string>
     <string name="signup">Sign Up</string>
+    <string name="title_activity_sign_up">SignUp</string>
 
 </resources>
