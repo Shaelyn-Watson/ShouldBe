@@ -50,7 +50,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-public class TapActivity extends MapActivity implements 
+public class MainMapActivity extends MapActivity implements 
 	GooglePlayServicesClient.ConnectionCallbacks, 
 	GooglePlayServicesClient.OnConnectionFailedListener {
 	
@@ -73,14 +73,6 @@ public class TapActivity extends MapActivity implements
     private OnInfoWindowElemTouchListener likeButtonListener;
     private Boolean boolEmptyInfoWindow = false;
     private Marker currMarker;
-    
-    
-    
-	/*
-	 * TODO = reimplement marker retention
-	 */
-	//private ArrayList<Marker> markerArray = new ArrayList<Marker>();
-	//private boolean posted;
     
     
     @Override
@@ -178,7 +170,7 @@ public class TapActivity extends MapActivity implements
             	if(markers2Statuses.get(marker) == null){
                 	Log.d("**infoWINDOWListener", "onInfoWindowClick");
                 	LatLng markerPos = marker.getPosition();
-    				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
+    				Intent intent = new Intent(MainMapActivity.this, WhatShouldBeActivity.class);
     				intent.putExtra("lat", markerPos.latitude);
     				intent.putExtra("long", markerPos.longitude);
     				startActivityForResult(intent, 1);

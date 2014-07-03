@@ -117,7 +117,7 @@ public class MainActivity extends FragmentActivity {
 			return true;
 		}
 		if(item.getItemId() == R.id.mapActionButton){
-			startActivity(new Intent(this, TapActivity.class)); 
+			startActivity(new Intent(this, MainMapActivity.class)); 
 			return true;
 		}
 

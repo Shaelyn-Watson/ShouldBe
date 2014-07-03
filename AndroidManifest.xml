@@ -51,7 +51,7 @@
                 android:value="app.there.shouldbe.SplashActivity" />
         </activity>
         <activity
-            android:name="app.there.shouldbe.TapActivity"
+            android:name="app.there.shouldbe.MainMapActivity"
             android:label="@string/tap_location" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
