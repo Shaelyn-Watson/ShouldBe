@@ -38,6 +38,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -62,22 +63,16 @@ public class TapActivity extends MapActivity implements
 	private ProgressDialog pDialog;
 	
 	private HashMap<Marker, Integer> markerLikes = new HashMap<Marker, Integer>(); //TODO replace with server queries
-	private HashMap<Marker, TextView> likeCounts = new HashMap<Marker, TextView>();
 	
 	private HashMap<Marker, ViewGroup> markers2Windows = new HashMap<Marker, ViewGroup>();
 	private HashMap<Marker, String> markers2Statuses = new HashMap<Marker, String>();
 	
 	//info window global elements
 	private ViewGroup infoWindow;
-    private Button likeButton;      //like the ShouldBe *TODO connect to facebook
-    private OnInfoWindowElemTouchListener likeButtonListener; 
-    //private Button whatShouldBe;
-    //private OnInfoWindowElemTouchListener infoButtonListener;
+    private Button likeButton;
+    private OnInfoWindowElemTouchListener likeButtonListener;
+    //private Boolean boolEmptyInfoWindow = true;
     
-    //Search bar implementation to come
-    private EditText mapSearchBox;
-    private ImageButton searchButton;
-    private String searchString;
     
 	/*
 	 * TODO = reimplement marker retention
@@ -96,7 +91,7 @@ public class TapActivity extends MapActivity implements
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         
-        Log.d("TapOnCreate", "new tap activity");
+        Log.d("TapOnCreate", "new map activity");
         posted = false;
         
         // Setup Google Map
@@ -118,28 +113,29 @@ public class TapActivity extends MapActivity implements
             @Override
             public void onMapClick(LatLng point) { 
                 Marker marker = null;
+                Boolean boolEmptyInfoWindow = true;
+                
                 marker = mMap.addMarker(new MarkerOptions().position(point)
                 	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
                 	.title("There should be:")  //not used
                 	);
+                zoomToLatLngLocation(point);  //zoom can be severely disorienting to user
+                
                 //new marker is presented with simple add ShouldBe window
                 markers2Windows.put(marker, emptyInfoWindow);
-                // Move camera to position of new marker
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15)); 
-                markerLikes.put(marker, 0);  //Init like count
-                //TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+
                 
-                //check to see if should remove empty marker
+//                //check to see if should remove empty marker
                 if (!markerArray.isEmpty()){
                 	if(markers2Statuses.get(markerArray.get(markerArray.size()-1)) == null){
                 		markerArray.get(markerArray.size()-1).remove();
                 	}
                 }
-                
                 markerArray.add(marker);
+                
                 Log.d("**markerCreated", "new marker on map click");
-                TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
-                likeCount.setText(String.valueOf(markerLikes.get(marker)));
+//                TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+//                likeCount.setText("0"); //TODO set with like count from Parse
                 marker.showInfoWindow(); 
             }
 
@@ -152,29 +148,12 @@ public class TapActivity extends MapActivity implements
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 // *** TODO register click as a "like" counting towards the ShouldBe
-            	int pastLikes = (Integer) markerLikes.get(marker);
-            	markerLikes.put(marker, pastLikes+1);
             	TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
-            	likeCount.setText(String.valueOf(markerLikes.get(marker)));
+            	likeCount.setText(String.valueOf("You like this"));
             	marker.showInfoWindow();
-                Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + markerLikes.get(marker), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TapActivity.this, marker.getTitle() + "'s button clicked! " + markerLikes.get(marker), Toast.LENGTH_SHORT).show();
             }
         }; 
-        
-        // Setup map search bar  (hidden for now)
-//        mapSearchBox = (EditText) findViewById(R.id.mapSearchBox);
-//        mapSearchBox.addTextChangedListener(new EditTextChanged());
-//        searchButton = (ImageButton) findViewById(R.id.searchButton);
-//        searchButton.setOnTouchListener(new OnTouchListener() {
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				if (!searchString.isEmpty()) {
-//					new SearchClicked(mapSearchBox.getText().toString()).execute();
-//				}
-//				return false;
-//			}
-//		});
-        
         
         /* 
          * Setup pin infowindow
@@ -226,15 +205,15 @@ public class TapActivity extends MapActivity implements
             	
             	TextView postedTweet = (TextView)infoWindow.findViewById(R.id.posted_tweet);
             	postedTweet.setText(String.valueOf(markers2Statuses.get(marker)));
-//                likeButtonListener.setMarker(marker);
-//                likeButton.setOnTouchListener(likeButtonListener);
+                likeButtonListener.setMarker(marker);
+                likeButton.setOnTouchListener(likeButtonListener);
                 
             	markers2Windows.put(marker, infoWindow);  //update to new layout
 			}
 
 			@Override
             public View getInfoContents(Marker marker) {
-                //Called when a marker's infowindow is displayed
+                //TODO replace with call to Parse/ check against Parse having filled contents
             	if(markers2Statuses.get(marker) == null){
             		//infoButtonListener.setMarker(marker);
             		if (markerArray.get(markerArray.size()-1) != marker){
@@ -296,7 +275,7 @@ public class TapActivity extends MapActivity implements
 		super.onCreateOptionsMenu(menu);
 
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.options_menu, menu);
+		inflater.inflate(R.menu.home, menu);
 
 		return true;
 	}
@@ -310,10 +289,6 @@ public class TapActivity extends MapActivity implements
         }
         if(item.getItemId() == R.id.settings){
 			startActivity(new Intent(this, Settings.class)); 
-			return true;
-		}
-		if(item.getItemId() == R.id.wallActionButton){
-			startActivity(new Intent(this, MainActivity.class)); 
 			return true;
 		}
         return super.onOptionsItemSelected(item);
@@ -342,12 +317,14 @@ public class TapActivity extends MapActivity implements
     @Override
     protected void onStart() {
     	super.onStart();
+    	setUpMapIfNeeded();
     	mLocationClient.connect();
     }
     
     @Override
     protected void onResume() {
     	super.onResume();
+    	setUpMapIfNeeded();
     	mLocationClient.connect();
     	markerArray.clear();
     }
@@ -355,10 +332,37 @@ public class TapActivity extends MapActivity implements
     
     @Override 
     protected void onStop() {
+    	
+        //mMap = null;
     	super.onStop();
     	if (mLocationClient != null)
     		mLocationClient.disconnect();
     }
+    
+//    @Override
+//    public void onDestroyView() {
+//        SupportMapFragment f = (SupportMapFragment) getFragmentManager()
+//                .findFragmentById(id);
+//        if (f != null) {
+//            try {
+//                getFragmentManager().beginTransaction().remove(f).commit();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if (mMap != null) {
+//            List<Marker> temp = mMap.getMarkers();
+//            if (temp != null) {
+//                for (Marker marker : temp) {
+//                    marker.remove();
+//                    marker = null;
+//                }
+//            }
+//        }
+//        mMap = null;
+//        super.onDestroyView();
+//
+//    }
 
     private void zoomToUserLocation() {
     	mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, 15));
@@ -443,7 +447,7 @@ public class TapActivity extends MapActivity implements
 				                	);
 							markers2Statuses.put(m, (String)p.get("shouldbeText"));
 					        TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
-					        likeCount.setText(String.valueOf(markerLikes.get(m)));
+					        likeCount.setText(String.valueOf(markerLikes.get(m)));  //TODO replace with call to Parse
 						}
 					}
 					else {
@@ -453,77 +457,6 @@ public class TapActivity extends MapActivity implements
 				
 			});
 		}
-	}
-	
-	private class SearchClicked extends AsyncTask<Void, Void, Boolean> {
-		private String toSearch;
-		private Address address;
-		
-		public SearchClicked(String toSearch) {
-			this.toSearch = toSearch;
-		}
-		
-		@Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(TapActivity.this);
-            pDialog.setMessage("Searching...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-		
-		
-		@Override
-		protected Boolean doInBackground(Void... voids) {
-			Boolean result = false;
-			try {
-				// Locale.US to only search addresses in US
-				Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.US); 
-				List<Address> results = geocoder.getFromLocationName(toSearch, 1);
-				
-				if (results.size() > 0) {
-					address = results.get(0);
-					
-					result = true;
-				}
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-			return result;
-		}
-		
-		@Override
-		protected void onPostExecute(Boolean b) {
-			if (b) {
-				LatLng l = new LatLng((int) (address.getLatitude() * 1E6), (int) (address.getLongitude() * 1E6));
-				zoomToLatLngLocation(l);
-			}
-			pDialog.dismiss();
-		}
-	}
-	
-	private class EditTextChanged implements TextWatcher {
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
-			// do nothing
-		}
-
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before,
-				int count) {
-			// do nothing
-		}
-
-		@Override
-		public void afterTextChanged(Editable s) {
-			// save string
-			searchString = s.toString();
-			//Log.d("TapActivity.EditTextChanged.afterTextChanged", "s.toString() = " + s.toString());
-		}
-		
 	}
 	
 }
