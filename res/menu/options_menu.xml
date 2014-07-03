@@ -15,12 +15,4 @@
 	    android:showAsAction="always" />
 	    
 
-    <item 
-	    android:id="@+id/wallActionButton" 
-	    android:title="wallActionButton"
-	    android:icon="@drawable/post" 
-	    android:showAsAction="always"
-	    />
-	    
-
 </menu>
