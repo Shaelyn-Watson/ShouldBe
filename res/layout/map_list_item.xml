@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/official_background" >
+    
+    <TextView android:id="@+id/tweet_date"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@android:color/white"
+	    android:gravity="center_vertical"
+	    android:minHeight="8dp"
+	    android:padding="8dp"
+	    android:textColor="@android:color/black"
+	    android:textSize="15sp" >
+	 </TextView>
+    
+    <TextView android:id="@+id/tweet_message"
+	    android:layout_width="280dp"
+	    android:layout_height="wrap_content"
+	    android:background="@android:color/white"
+	    android:gravity="center_vertical"
+	    android:minHeight="8dp"
+	    android:padding="8dp"
+	    android:textColor="@android:color/black"
+	    android:textSize="15sp"
+	    android:layout_below="@+id/tweet_date" >
+	</TextView>
+    
+    <TextView android:id="@+id/tweet_name"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@android:color/white"
+	    android:gravity="center_vertical"
+	    android:minHeight="8dp"
+	    android:padding="8dp"
+	    android:textColor="@android:color/black"
+	    android:textSize="15sp" 
+	    android:layout_below="@+id/tweet_message">
+	</TextView>
+
+	<ImageButton
+        android:id="@+id/wall_like_button" 
+        android:layout_width="48.5dp"
+       	android:layout_height="37dp"
+       	android:src="@drawable/like"
+       	android:layout_toRightOf="@+id/tweet_message"
+       	android:layout_marginTop="30dp"
+       	android:layout_marginRight="15dp"
+       	android:paddingRight="10dp"
+    	android:paddingLeft="10dp"
+    	android:paddingTop="0dp"
+    	android:paddingBottom="0dp"/>
+	    
+	<TextView
+         android:id="@+id/wall_like_count"
+         android:layout_width="100dp"
+         android:layout_height="wrap_content"
+         android:textSize="12sp"
+         android:layout_below="@+id/wall_like_button"
+         android:layout_toRightOf="@+id/tweet_message" 
+         android:layout_marginLeft="30dp"
+         android:text="0"/> 
+
+</RelativeLayout>

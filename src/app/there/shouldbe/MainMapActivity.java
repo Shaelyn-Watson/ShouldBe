@@ -67,9 +67,9 @@ public class MainMapActivity extends MapActivity implements
 	private HashMap<Marker, ViewGroup> markers2Windows = new HashMap<Marker, ViewGroup>();
 	private HashMap<Marker, String> markers2Statuses = new HashMap<Marker, String>();
 	
-	//info window global elements
+	//map info window global elements
 	private ViewGroup infoWindow;
-    private Button likeButton;
+    private ImageButton likeButton;
     private OnInfoWindowElemTouchListener likeButtonListener;
     private Boolean boolEmptyInfoWindow = false;
     private Marker currMarker;
@@ -127,13 +127,13 @@ public class MainMapActivity extends MapActivity implements
 
         });
         
-        likeButton = (Button)infoWindow.findViewById(R.id.likeButton);
+        likeButton = (ImageButton)infoWindow.findViewById(R.id.likeButton);
     	likeButtonListener = new OnInfoWindowElemTouchListener(likeButton) {
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 // *** TODO register click as a "like" counting towards the ShouldBe
             	TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
-            	likeCount.setText(String.valueOf("You like this"));  //TODO replace with call to Parse
+            	likeCount.setText(String.valueOf("1"));  //TODO replace with call to Parse
             	marker.showInfoWindow();
         	}
         }; 

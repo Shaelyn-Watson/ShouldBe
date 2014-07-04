@@ -28,7 +28,7 @@ public abstract class OnInfoWindowElemTouchListener implements OnTouchListener {
         this.view = view;
         this.bgDrawableNormal = bgDrawableNormal;
         this.bgDrawablePressed = bgDrawablePressed;
-        view.setBackground(bgDrawableNormal);
+        //view.setBackground(bgDrawableNormal);
     }
 
     public void setMarker(Marker marker) {
@@ -37,8 +37,8 @@ public abstract class OnInfoWindowElemTouchListener implements OnTouchListener {
 
     @Override
     public boolean onTouch(View vv, MotionEvent event) {
-        if (0 <= event.getX() && event.getX() <= view.getWidth() &&
-            0 <= event.getY() && event.getY() <= view.getHeight())
+        if (0 <= event.getX() && event.getX() <= view.getWidth()+10 &&
+            0 <= event.getY() && event.getY() <= view.getHeight()+10)
         {
             switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: startPress(); break;
@@ -63,8 +63,8 @@ public abstract class OnInfoWindowElemTouchListener implements OnTouchListener {
         if (!pressed) {
             pressed = true;
             handler.removeCallbacks(confirmClickRunnable);
-            if (bgDrawablePressed != null)
-            	view.setBackground(bgDrawablePressed);
+//            if (bgDrawablePressed != null)
+//            	view.setBackground(bgDrawablePressed);
             if (marker != null) 
                 marker.showInfoWindow();
         }
@@ -74,8 +74,8 @@ public abstract class OnInfoWindowElemTouchListener implements OnTouchListener {
         if (pressed) {
             this.pressed = false;
             handler.removeCallbacks(confirmClickRunnable);
-            if (bgDrawableNormal != null)
-            	view.setBackground(bgDrawableNormal);
+//            if (bgDrawableNormal != null)
+//            	view.setBackground(bgDrawableNormal);
             if (marker != null) 
                 marker.showInfoWindow();
             return true;

@@ -77,7 +77,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 	             public void onClick(View v) {
 	                 // Perform action on click
 	            	 Log.d("LIKEBUTTON~~", "wall like button clicked");
-	            	 holder.likeCount.setText("You like this");
+	            	 holder.likeCount.setText("1");
 //	            	 switch (arg1.getAction()) {
 //	                 case MotionEvent.ACTION_DOWN: {
 //	                     v.setImageBitmap(res.getDrawable(R.drawable.img_down));

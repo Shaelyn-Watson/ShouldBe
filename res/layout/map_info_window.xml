@@ -31,12 +31,23 @@
         android:paddingLeft="11dp"
         android:textSize="17sp" />
 
-    <Button
+    <!-- <Button
         android:id="@+id/likeButton" 
         android:layout_width="48.5dp"
        	android:layout_height="52dp"
        	android:paddingLeft="26dp"
-       	android:layout_toRightOf="@+id/posted_tweet" />
+       	android:layout_toRightOf="@+id/posted_tweet" /> -->
+       	
+    <ImageButton
+        android:id="@+id/likeButton" 
+        android:layout_width="48.5dp"
+       	android:layout_height="37dp"
+       	android:src="@drawable/like"
+       	android:layout_toRightOf="@+id/posted_tweet"
+       	android:paddingRight="10dp"
+    	android:paddingLeft="10dp"
+    	android:paddingTop="0dp"
+    	android:paddingBottom="0dp"/>
 
     <TextView
          android:id="@+id/like_count"
