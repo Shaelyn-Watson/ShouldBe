@@ -31,7 +31,8 @@
        android:ems="10"
        android:paddingLeft="16dp"
        android:paddingRight="16dp"
-       android:hint="a healthy foodtruck here" />
+       android:hint="a healthy foodtruck"
+       android:maxLength="112" />
    
 
    <Button
