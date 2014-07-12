@@ -153,7 +153,7 @@ public class MainActivity extends FragmentActivity {
 	    		return new WallFragment();
 	    	}
 	    	else{
-	    		return new ShouldBeFragment();
+	    		return new WhatShouldBeFragment();
 	    	}
 	    }
 

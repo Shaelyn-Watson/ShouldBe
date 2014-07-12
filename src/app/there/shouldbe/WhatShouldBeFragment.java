@@ -19,10 +19,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class ShouldBeFragment extends Fragment {
+public class WhatShouldBeFragment extends Fragment {
 	
 	private final String TWITTER_PREF_KEY = "twitter_login";
 	private final String TWITTER_LOGOUT_PREF_KEY = "twitter_logout";
@@ -48,11 +47,6 @@ public class ShouldBeFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-//		if (savedInstanceState == null) {
-//			getFragmentManager().beginTransaction()
-//					.add(R.id.container, new PlaceholderFragment()).commit();
-//		}
 		
 	}
 	
@@ -65,6 +59,13 @@ public class ShouldBeFragment extends Fragment {
 		shouldBeButton.setOnClickListener(new postShouldBe());
 		
 		txtUpdate = (EditText) view.findViewById(R.id.tweetET);
+		txtUpdate.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				txtUpdate.setHint("");
+			}
+		});
 		mSharedPreferences = this.getActivity().getSharedPreferences("shouldbe_prefs", Context.MODE_PRIVATE);
 		
 		return view;

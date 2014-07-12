@@ -71,6 +71,13 @@ public class WhatShouldBeActivity extends Activity {
 		tweetButton.setOnClickListener(new postShouldBe());
 		txtUpdate = (EditText) findViewById(R.id.tweetET);
 		txtUpdate.addTextChangedListener(new EditTextChanged());
+		txtUpdate.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				txtUpdate.setHint("");
+			}
+		});
 		mSharedPreferences = getApplicationContext().getSharedPreferences("shouldbe_prefs", MODE_PRIVATE);
 		
 		// Will be used for adding GeoLocation to shouldbe post

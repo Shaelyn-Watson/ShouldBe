@@ -7,41 +7,6 @@
     tools:ignore="MergeRootFrame" 
     android:background="@drawable/blank_background"  >
 
-
-    
-    <!-- <TextView
-        android:id="@+id/whatSB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tvGenPostText" 
-        android:layout_above="@+id/sbAccount"
-        android:background="@drawable/official_background"/>  -->
-
-   <!-- <TextView
-       android:id="@+id/sbAccount"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignParentTop="true"
-       android:layout_alignRight="@+id/tweetET"
-       android:paddingLeft="9.89dp"
-	   android:paddingRight="9.89dp"
-	   android:paddingTop="9.89dp"
-	   android:paddingBottom="9.89dp"
-       android:background="@drawable/official_background"
-       android:text="@string/account" />   -->
-
-   <!-- <ImageButton
-       android:id="@+id/postTweetButton"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignRight="@+id/tweetET"
-       android:layout_below="@+id/tweetET"
-       android:layout_marginRight="22dp"
-       android:layout_marginTop="28dp"
-       android:background="@drawable/official_background"
-       android:src="@android:drawable/ic_input_add" />   -->
-
-
    <TextView
        android:id="@+id/thereSB"
        android:layout_width="wrap_content"
@@ -65,7 +30,8 @@
        android:layout_marginTop="40dp"
        android:ems="10"
        android:paddingLeft="16dp"
-       android:paddingRight="16dp" />
+       android:paddingRight="16dp"
+       android:hint="a healthy foodtruck here" />
    
 
    <Button
