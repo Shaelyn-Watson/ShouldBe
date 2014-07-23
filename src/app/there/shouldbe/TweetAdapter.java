@@ -59,19 +59,23 @@ public class TweetAdapter<T> extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
 		View vi = convertView;
+		View listMenu;
 		final ViewHolder holder;
 
 		if(convertView == null) {
 
-			/****** Inflate file for each row *******/
+			/* Inflate file for each row */
 			vi = inflater.inflate(R.layout.wall_list_item, null);
+			listMenu = inflater.inflate(R.layout.list_item_menu, null);
 
+			/* Main wall content */
 			holder = new ViewHolder();
 			holder.date = (TextView) vi.findViewById(R.id.tweet_date);
 			holder.message = (TextView) vi.findViewById(R.id.tweet_message);
-			holder.name = (TextView) vi.findViewById(R.id.tweet_name);
-			holder.likeButton = (ImageButton) vi.findViewById(R.id.wall_like_button);
-			holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count);
+			/* Wall menu */
+			holder.name = (TextView) vi.findViewById(R.id.tweet_name1);
+			holder.likeButton = (ImageButton) vi.findViewById(R.id.wall_like_button1);
+			holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count1);
 			
 			holder.likeButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {

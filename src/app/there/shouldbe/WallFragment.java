@@ -29,23 +29,18 @@ public class WallFragment extends ListFragment implements OnClickListener{
 	private final String ACCESS_KEY = "2360041674-Z2lfohxkkx3ZCeNEldLwLP81VXk8eB6rH7PKMsc";
 	private final String ACCESS_SECRET = "gDznLbH7tnYXwjaW53uqon33pKMcrIV6OYxVi2Y6nU7Zh";
 	private final long SHOULDBE_TWITTER_ID = 2360041674L; // L is required for long value - not a part of ID
-		private ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
-		
-		private Button likeButton;
-		private OnInfoWindowElemTouchListener infoButtonListener;
-		private TweetAdapter<Tweet> adapter;
+	private ArrayList<Tweet> tweetList = new ArrayList<Tweet>();	
+	private TweetAdapter<Tweet> adapter;
 		
 		
-	    @Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-			StrictMode.setThreadPolicy(policy);
-			
-	        setAdapter();
-		}
-	  
- 
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+		
+        setAdapter();
+	}
 	  
 	  @Override  
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,  
@@ -69,7 +64,7 @@ public class WallFragment extends ListFragment implements OnClickListener{
 			getTimeLine();
 		}
 		
-		/**
+	/**
 	 * Force refresh twitter feed TODO
 	 */
 	@Override
