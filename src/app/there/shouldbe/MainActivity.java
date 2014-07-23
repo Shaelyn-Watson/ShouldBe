@@ -123,6 +123,10 @@ public class MainActivity extends FragmentActivity {
 
 		return false;
 	}
+	
+    public void likeClick(View v){
+    	Log.d("LIKEBUTTON~~", "main wall like button clicked");
+    }
 
 	@Override
 	public void onBackPressed() {

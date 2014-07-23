@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-	android:paddingRight="9.89dp"
-	android:paddingTop="16dp"
-	android:paddingBottom="16dp"
     android:background="@drawable/blank_background" >
 
     <TextView
        android:id="@+id/thereSB"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_alignParentLeft="true"
        android:textSize="16sp"
        android:paddingLeft="9.89dp"
 	   android:paddingRight="9.89dp"
@@ -25,39 +20,15 @@
        
     <TextView
         android:id="@+id/posted_tweet"
-        android:layout_width="258dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/thereSB"
-        android:paddingLeft="11dp"
+        android:padding="11dp"
         android:textSize="17sp" />
 
-    <!-- <Button
-        android:id="@+id/likeButton" 
-        android:layout_width="48.5dp"
-       	android:layout_height="52dp"
-       	android:paddingLeft="26dp"
-       	android:layout_toRightOf="@+id/posted_tweet" /> -->
-       	
-    <ImageButton
-        android:id="@+id/likeButton" 
-        android:layout_width="48.5dp"
-       	android:layout_height="37dp"
-       	android:src="@drawable/like"
-       	android:layout_toRightOf="@+id/posted_tweet"
-       	android:paddingRight="10dp"
-    	android:paddingLeft="10dp"
-    	android:paddingTop="0dp"
-    	android:paddingBottom="0dp"/>
 
-    <TextView
-         android:id="@+id/like_count"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:paddingLeft="16dp"
-         android:textSize="12sp"
-         android:layout_alignRight="@+id/likeButton"
-         android:layout_below="@+id/likeButton" />
+	<include android:id="@+id/list_menu"
+	    layout="@layout/list_item_menu" />
+	
 
 
-
-</RelativeLayout>
+</LinearLayout>

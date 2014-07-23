@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal"
     android:layout_alignParentBottom="true"
-    android:background="@drawable/official_background1" >
+    android:background="@drawable/official_background" >
     
     <TextView android:id="@+id/tweet_name1"
 	    android:layout_width="wrap_content"
@@ -20,11 +20,12 @@
         android:id="@+id/wall_like_button1" 
         android:layout_width="wrap_content"
        	android:layout_height="wrap_content"
-       	android:src="@drawable/like"
+       	android:src="@drawable/sb_like"
        	android:paddingRight="10dp"
     	android:paddingLeft="10dp"
     	android:paddingTop="0dp"
-    	android:paddingBottom="0dp" />
+    	android:paddingBottom="0dp"
+    	android:onClick="likeClick" />
     	
 	    
 	<TextView

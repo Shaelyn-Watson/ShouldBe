@@ -19,6 +19,7 @@ import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -73,12 +74,16 @@ public class MainMapActivity extends MapActivity implements
     private OnInfoWindowElemTouchListener likeButtonListener;
     private Boolean boolEmptyInfoWindow = false;
     private Marker currMarker;
+    private static LayoutInflater inflater = null;
+    private View menu;
     
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tap_location);
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        menu = inflater.inflate(R.layout.list_item_menu, null);
         
         // Make sure we're running on Honeycomb or higher to use ActionBar APIs
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -127,16 +132,17 @@ public class MainMapActivity extends MapActivity implements
 
         });
         
-        likeButton = (ImageButton)infoWindow.findViewById(R.id.likeButton);
-    	likeButtonListener = new OnInfoWindowElemTouchListener(likeButton) {
-            @Override
-            protected void onClickConfirmed(View v, Marker marker) {
-                // *** TODO register click as a "like" counting towards the ShouldBe
-            	TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
-            	likeCount.setText(String.valueOf("1"));  //TODO replace with call to Parse
-            	marker.showInfoWindow();
-        	}
-        }; 
+        likeButton = (ImageButton)menu.findViewById(R.id.wall_like_button1);
+//    	likeButtonListener = new OnInfoWindowElemTouchListener(menu) {
+//            @Override
+//            protected void onClickConfirmed(View v, Marker marker) {
+//                // *** TODO register click as a "like" counting towards the ShouldBe
+//            	 Log.d("LIKEBUTTON~~", "map like button clicked");
+//            	TextView likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
+//            	likeCount.setText(String.valueOf("1"));  //TODO replace with call to Parse
+//            	marker.showInfoWindow();
+//        	}
+//        }; 
         
         /* 
          * Setup pin infowindow
@@ -192,8 +198,8 @@ public class MainMapActivity extends MapActivity implements
             	
             	TextView postedTweet = (TextView)infoWindow.findViewById(R.id.posted_tweet);
             	postedTweet.setText(String.valueOf(markers2Statuses.get(marker)));
-                likeButtonListener.setMarker(marker);
-                likeButton.setOnTouchListener(likeButtonListener);
+//                likeButtonListener.setMarker(marker);
+//                likeButton.setOnTouchListener(likeButtonListener);
                 
             	markers2Windows.put(marker, infoWindow);  //update to new layout
 			}
@@ -218,6 +224,10 @@ public class MainMapActivity extends MapActivity implements
         Parse.initialize(this, "3wJJsTSZovcJZreXDjYVeJi3e1AOqAZEA8e2S860", "y1SZ9RtY8wuv9sOaXTIHrapLK5uk6LrehEEYylZd");
         populateMarkersFromDatabase();
 
+    }
+    
+    public void likeClick(View v){
+    	Log.d("LIKEBUTTON~~", "map like button clicked");
     }
     
     public void shouldBeUpdate (String status) {
@@ -425,7 +435,7 @@ public class MainMapActivity extends MapActivity implements
 				                	.title((String)p.get("shouldbeText"))  //not used
 				                	);
 							markers2Statuses.put(m, (String)p.get("shouldbeText"));
-					        TextView likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
+					        TextView likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
 					        likeCount.setText(String.valueOf("0"));  //TODO replace with call to Parse
 						}
 					}
