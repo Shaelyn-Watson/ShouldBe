@@ -1,8 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
     android:layout_alignParentBottom="true"
     android:background="@drawable/official_background1" >
     
@@ -12,8 +12,7 @@
 	    android:minHeight="8dp"
 	    android:padding="5dp"
 	    android:textColor="@android:color/black"
-	    android:textSize="15sp" 
-	    android:layout_alignParentLeft="true" >
+	    android:textSize="15sp" >
 	</TextView>
 
 
@@ -25,8 +24,7 @@
        	android:paddingRight="10dp"
     	android:paddingLeft="10dp"
     	android:paddingTop="0dp"
-    	android:paddingBottom="0dp"
-    	android:layout_toRightOf="@+id/tweet_name1" />
+    	android:paddingBottom="0dp" />
     	
 	    
 	<TextView
@@ -37,7 +35,6 @@
          android:paddingRight="10dp"
     	 android:paddingLeft="10dp"
     	 android:paddingTop="0dp"
-    	 android:paddingBottom="0dp"
-         android:layout_toRightOf="@+id/wall_like_button1" /> 
+    	 android:paddingBottom="0dp" /> 
 
-</RelativeLayout>
+</LinearLayout>
