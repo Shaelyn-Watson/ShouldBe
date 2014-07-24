@@ -80,7 +80,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.likeButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
 	                 // Perform action on click
-	            	 Log.d("LIKEBUTTON~~", "wall like button clicked");
+	            	 Log.d("LIKEBUTTON~~", "tweetadapter =wall like button clicked");
 	            	 holder.likeCount.setText("1");
 	             }
 	         });

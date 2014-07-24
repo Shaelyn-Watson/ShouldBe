@@ -1,23 +1,15 @@
 package app.there.shouldbe;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,8 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +29,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -76,6 +65,7 @@ public class MainMapActivity extends MapActivity implements
     private Marker currMarker;
     private static LayoutInflater inflater = null;
     private View menu;
+    private TextView likeCount;
     
     
     @Override
@@ -133,16 +123,8 @@ public class MainMapActivity extends MapActivity implements
         });
         
         likeButton = (ImageButton)menu.findViewById(R.id.wall_like_button1);
-//    	likeButtonListener = new OnInfoWindowElemTouchListener(menu) {
-//            @Override
-//            protected void onClickConfirmed(View v, Marker marker) {
-//                // *** TODO register click as a "like" counting towards the ShouldBe
-//            	 Log.d("LIKEBUTTON~~", "map like button clicked");
-//            	TextView likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
-//            	likeCount.setText(String.valueOf("1"));  //TODO replace with call to Parse
-//            	marker.showInfoWindow();
-//        	}
-//        }; 
+        likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
+
         
         /* 
          * Setup pin infowindow
@@ -151,35 +133,32 @@ public class MainMapActivity extends MapActivity implements
         // 39 - default marker height
         // 20 - offset between the default InfoWindow bottom edge and it's content bottom edge 
         mapWrapperLayout.init(mMap, getPixelsFromDp(this, 39 + 20)); 
-
-        /*
-         * what ShouldBe map_empty button click listener
-         */
-//        this.whatShouldBe = (Button)emptyInfoWindow.findViewById(R.id.shouldBeButton);
-//        infoButtonListener = new OnInfoWindowElemTouchListener(whatShouldBe,
-//              getResources().getDrawable(R.drawable.official_background),
-//              getResources().getDrawable(R.drawable.official_background1)) {
-//			@Override
-//			protected void onClickConfirmed(View v, Marker marker) {
-//				Log.d("*infoButtonListener", "onClickConfirmed");
-//				Intent intent = new Intent(TapActivity.this, WhatShouldBeActivity.class);
-//				startActivityForResult(intent, 1);
-//			}
-//		};
 		
         
         /*
-		 * TODO: replace with button click above
+		 * TODO: set bounds for new post infoWindowClick
 		 */
 		mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
             public void onInfoWindowClick(Marker marker){
             	if(markers2Statuses.get(marker) == null){
-                	Log.d("**infoWINDOWListener", "onInfoWindowClick");
+                	Log.d("**infoWINDOWListener", "empty onInfoWindowClick");
                 	LatLng markerPos = marker.getPosition();
     				Intent intent = new Intent(MainMapActivity.this, WhatShouldBeActivity.class);
     				intent.putExtra("lat", markerPos.latitude);
     				intent.putExtra("long", markerPos.longitude);
     				startActivityForResult(intent, 1);
+            	}
+            	else {
+            		Log.d("**infoWINDOWListener", "onInfoWindowClick");
+            		/* TODO Catch like button clicks missed by the button's onClick method 
+            		 * set bounds for new post infoWindowClick*/
+                    if (boolEmptyInfoWindow != false && currMarker != null){
+                    	markers2Windows.remove(currMarker);
+                    	currMarker.remove();
+                    }
+                    likeCount.setText("infoClick");
+            		currMarker = marker;  //TODO explore consequences
+            		likeClick(likeButton);
             	}
             }
           });
@@ -198,8 +177,8 @@ public class MainMapActivity extends MapActivity implements
             	
             	TextView postedTweet = (TextView)infoWindow.findViewById(R.id.posted_tweet);
             	postedTweet.setText(String.valueOf(markers2Statuses.get(marker)));
-//                likeButtonListener.setMarker(marker);
-//                likeButton.setOnTouchListener(likeButtonListener);
+//            	likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
+//            	likeCount.setText("na");  //TODO replace with call to parse
                 
             	markers2Windows.put(marker, infoWindow);  //update to new layout
 			}
@@ -209,9 +188,9 @@ public class MainMapActivity extends MapActivity implements
                 //TODO replace with call to Parse/ check against Parse having filled contents
             	if(markers2Statuses.get(marker) != null){
             		giveInfoWindowTweet(marker);
-            		Log.d("getInfoContents", "giveInfoWindowTweet");
+            		Log.d("getInfoContents", "giveTweet");
             	}
-            	Log.d("getInfoContents", "getInfoContents"); 
+            	Log.d("getInfoContents", "getContents"); 
                 mapWrapperLayout.setMarkerWithInfoWindow(marker, markers2Windows.get(marker));
                 return markers2Windows.get(marker); //return infowindow associated with this marker
             }
@@ -228,6 +207,10 @@ public class MainMapActivity extends MapActivity implements
     
     public void likeClick(View v){
     	Log.d("LIKEBUTTON~~", "map like button clicked");
+    	likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
+    	likeCount.setText("liked");
+    	if (currMarker != null)
+    		currMarker.showInfoWindow();
     }
     
     public void shouldBeUpdate (String status) {
@@ -435,7 +418,7 @@ public class MainMapActivity extends MapActivity implements
 				                	.title((String)p.get("shouldbeText"))  //not used
 				                	);
 							markers2Statuses.put(m, (String)p.get("shouldbeText"));
-					        TextView likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
+//					        TextView likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
 					        likeCount.setText(String.valueOf("0"));  //TODO replace with call to Parse
 						}
 					}
