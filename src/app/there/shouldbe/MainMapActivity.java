@@ -65,15 +65,13 @@ public class MainMapActivity extends MapActivity implements
     private Marker currMarker;
     private static LayoutInflater inflater = null;
     private View menu;
-    private TextView likeCount;
+    private static TextView likeCount;
     
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tap_location);
-        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        menu = inflater.inflate(R.layout.list_item_menu, null);
         
         // Make sure we're running on Honeycomb or higher to use ActionBar APIs
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -95,6 +93,7 @@ public class MainMapActivity extends MapActivity implements
         // Marker info windows = empty and post
         final ViewGroup emptyInfoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window_empty, null);
         infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null); //initiate infowindow for after pos
+//        menu = (View)getLayoutInflater().inflate(R.layout.list_item_menu, null);
         
         //Create new marker on map click
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -122,8 +121,8 @@ public class MainMapActivity extends MapActivity implements
 
         });
         
-        likeButton = (ImageButton)menu.findViewById(R.id.wall_like_button1);
-        likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
+        likeButton = (ImageButton)infoWindow.findViewById(R.id.like_button);
+        likeCount = (TextView)infoWindow.findViewById(R.id.like_count);
 
         
         /* 
@@ -207,7 +206,7 @@ public class MainMapActivity extends MapActivity implements
     
     public void likeClick(View v){
     	Log.d("LIKEBUTTON~~", "map like button clicked");
-    	likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
+    	//likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
     	likeCount.setText("liked");
     	if (currMarker != null)
     		currMarker.showInfoWindow();
@@ -419,7 +418,7 @@ public class MainMapActivity extends MapActivity implements
 				                	);
 							markers2Statuses.put(m, (String)p.get("shouldbeText"));
 //					        TextView likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
-					        likeCount.setText(String.valueOf("0"));  //TODO replace with call to Parse
+					        likeCount.setText(String.valueOf("populate"));  //TODO replace with call to Parse
 						}
 					}
 					else {
