@@ -79,7 +79,6 @@ public class MainMapActivity extends MapActivity implements
         }
         
         Log.d("TapOnCreate", "new map activity");
-        //posted = false;
         
         // Setup Google Map
         mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -93,7 +92,6 @@ public class MainMapActivity extends MapActivity implements
         // Marker info windows = empty and post
         final ViewGroup emptyInfoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window_empty, null);
         infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.map_info_window, null); //initiate infowindow for after pos
-//        menu = (View)getLayoutInflater().inflate(R.layout.list_item_menu, null);
         
         //Create new marker on map click
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -155,7 +153,6 @@ public class MainMapActivity extends MapActivity implements
                     	markers2Windows.remove(currMarker);
                     	currMarker.remove();
                     }
-                    likeCount.setText("infoClick");
             		currMarker = marker;  //TODO explore consequences
             		likeClick(likeButton);
             	}
@@ -176,8 +173,7 @@ public class MainMapActivity extends MapActivity implements
             	
             	TextView postedTweet = (TextView)infoWindow.findViewById(R.id.posted_tweet);
             	postedTweet.setText(String.valueOf(markers2Statuses.get(marker)));
-//            	likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
-//            	likeCount.setText("na");  //TODO replace with call to parse
+            	//maybe do something with the likeCount here
                 
             	markers2Windows.put(marker, infoWindow);  //update to new layout
 			}
@@ -206,15 +202,14 @@ public class MainMapActivity extends MapActivity implements
     
     public void likeClick(View v){
     	Log.d("LIKEBUTTON~~", "map like button clicked");
-    	//likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
-    	likeCount.setText("liked");
+    	//TODO parse like case handling here
+    	likeCount.setText("1");
     	if (currMarker != null)
     		currMarker.showInfoWindow();
     }
     
     public void shouldBeUpdate (String status) {
     	
-    	//if last struct og the temp marker array != null
 		if (currMarker != null){
 			//Make new marker and display updated infowindow
             Marker marker = currMarker;
@@ -276,7 +271,7 @@ public class MainMapActivity extends MapActivity implements
      * @param context	this context
      * @param dp	dp to convert
      * @return	returns dp in pixels
-     * TODO get rid of this code
+     * TODO replace this code appropriately
      */
     public static int getPixelsFromDp(Context context, float dp) {
         final float scale = context.getResources().getDisplayMetrics().density;
@@ -297,7 +292,6 @@ public class MainMapActivity extends MapActivity implements
     	mLocationClient.connect();
     	if(currMarker != null)
     		zoomToLatLngLocation(currMarker.getPosition());
-    	//markerArray.clear();
     }
     
     
@@ -305,34 +299,8 @@ public class MainMapActivity extends MapActivity implements
     protected void onStop() {
     	if (mLocationClient != null)
     		mLocationClient.disconnect();
-    	//mMap = null;
     	super.onStop();
     }
-    
-//    @Override
-//    public void onDestroyView() {
-//        SupportMapFragment f = (SupportMapFragment) getFragmentManager()
-//                .findFragmentById(id);
-//        if (f != null) {
-//            try {
-//                getFragmentManager().beginTransaction().remove(f).commit();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        if (mMap != null) {
-//            List<Marker> temp = mMap.getMarkers();
-//            if (temp != null) {
-//                for (Marker marker : temp) {
-//                    marker.remove();
-//                    marker = null;
-//                }
-//            }
-//        }
-//        mMap = null;
-//        super.onDestroyView();
-//
-//    }
 
     private void zoomToUserLocation() {
     	mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, 15));
@@ -417,8 +385,7 @@ public class MainMapActivity extends MapActivity implements
 				                	.title((String)p.get("shouldbeText"))  //not used
 				                	);
 							markers2Statuses.put(m, (String)p.get("shouldbeText"));
-//					        TextView likeCount = (TextView)menu.findViewById(R.id.wall_like_count1);
-					        likeCount.setText(String.valueOf("populate"));  //TODO replace with call to Parse
+					        likeCount.setText(String.valueOf("0"));  //TODO replace with call to Parse for accumulated amt
 						}
 					}
 					else {
