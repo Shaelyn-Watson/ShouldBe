@@ -19,6 +19,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,24 +89,29 @@ public class WhatShouldBeActivity extends Activity {
 		Log.d("WHATSHOULDBEACTIVITY", shouldbeLong+"");
 	} 
 
-	@Override
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
 
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.tweet, menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.home, menu);
+
 		return true;
 	}
-
+    
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-	    // Respond to the action bar's Up/Home button
-	    case android.R.id.home:
-	        NavUtils.navigateUpFromSameTask(this);
-	        return true;
-	    }
-	    return super.onOptionsItemSelected(item);
-	}
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case android.R.id.home:
+        	startActivity(new Intent(this, MainMapActivity.class)); 
+            return true;
+        }
+        if(item.getItemId() == R.id.settings){
+			startActivity(new Intent(this, Settings.class)); 
+			return true;
+		}
+        return super.onOptionsItemSelected(item);
+    }
 
 	/**
 	 * A placeholder fragment containing a simple view.
