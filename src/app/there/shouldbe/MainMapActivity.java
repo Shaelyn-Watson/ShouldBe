@@ -100,7 +100,7 @@ public class MainMapActivity extends MapActivity implements
             	zoomToLatLngLocation(point);  //zoom can be severely disorienting to user
                 Marker marker = null;
                 marker = mMap.addMarker(new MarkerOptions().position(point)
-                	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
+                	.icon(BitmapDescriptorFactory.fromResource(R.drawable.sb_map_pin))
                 	.title("There should be:")  //not used
                 	);
                 if (boolEmptyInfoWindow != false && currMarker != null){
@@ -381,7 +381,7 @@ public class MainMapActivity extends MapActivity implements
 							Marker m = null;
 							LatLng pos = new LatLng((Double) p.get("lat"), (Double) p.get("long"));
 							m = mMap.addMarker(new MarkerOptions().position(pos)
-				                	.icon(BitmapDescriptorFactory.fromResource(R.drawable.shouldbepin))
+				                	.icon(BitmapDescriptorFactory.fromResource(R.drawable.sb_map_pin))
 				                	.title((String)p.get("shouldbeText"))  //not used
 				                	);
 							markers2Statuses.put(m, (String)p.get("shouldbeText"));

@@ -44,7 +44,7 @@
         android:id="@+id/wall_like_button" 
         android:layout_width="48.5dp"
        	android:layout_height="37dp"
-       	android:src="@drawable/like"
+       	android:src="@drawable/sb_endorse_official"
        	android:layout_toRightOf="@+id/tweet_message"
        	android:layout_marginTop="30dp"
        	android:layout_marginRight="15dp"

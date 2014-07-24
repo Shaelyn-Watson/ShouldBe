@@ -29,7 +29,7 @@
 	        android:layout_height="wrap_content" 
 	        android:layout_gravity="center_horizontal"
 	        android:layout_marginTop="20dp"
-	        android:src="@drawable/shouldbepin" />
+	        android:src="@drawable/sb_map_pin" />
 	    
 	    <ImageButton
 	        android:id="@+id/logintwitter"
