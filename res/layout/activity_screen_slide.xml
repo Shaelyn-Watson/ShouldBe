@@ -26,7 +26,7 @@
         android:paddingLeft="20dip"
         android:paddingTop="10dp"
         android:scaleType="center"
-        android:src="@drawable/post" />
+        android:src="@drawable/intro_post" />
 
     <ImageView
         android:id="@+id/settingsInstruction"
@@ -35,7 +35,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:src="@drawable/settings" />
+        android:src="@drawable/intro_settings" />
 
     <ImageView
         android:id="@+id/mapInstruction"
@@ -44,7 +44,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center_horizontal"
-        android:src="@drawable/map" />
+        android:src="@drawable/intro_map" />
 
     <ImageView
         android:id="@+id/ivInstruction"
@@ -56,7 +56,7 @@
         android:paddingLeft="20dip"
         android:paddingTop="10dp"
         android:scaleType="center"
-        android:src="@drawable/wall" />
+        android:src="@drawable/intro_wall" />
 
 </RelativeLayout>
     

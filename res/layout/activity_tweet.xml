@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     tools:context="app.there.shouldbe.TweetActivity"
     tools:ignore="MergeRootFrame" 
-    android:background="@drawable/blank_background"  >
+    android:background="@drawable/background_white"  >
 
    <TextView
        android:id="@+id/thereSB"
@@ -17,7 +17,7 @@
 	   android:paddingRight="9.89dp"
 	   android:paddingTop="9.89dp"
 	   android:paddingBottom="9.89dp"
-       android:background="@drawable/official_background1"
+       android:background="@drawable/background_gray"
        android:text="@string/there_sb" />
    
    
@@ -44,11 +44,12 @@
        android:layout_alignParentRight="true"
        android:layout_below="@+id/tweetET"
        android:layout_marginTop="15dp"
-       android:background="@drawable/official_background"
+       android:background="@drawable/background_purple"
        android:paddingBottom="9.89dp"
        android:paddingLeft="9.89dp"
        android:paddingRight="9.89dp"
        android:paddingTop="9.89dp"
-       android:text="@string/account" />
+       android:text="@string/account" 
+       android:textColor="@color/White"/>
 
 </RelativeLayout>
