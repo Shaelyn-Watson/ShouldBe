@@ -15,9 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 
 public class MainActivity extends FragmentActivity {
@@ -26,12 +24,12 @@ public class MainActivity extends FragmentActivity {
 	  private ViewPager mPager;  //The ViewPager that hosts the section contents
 
 	  private ScreenSlidePagerAdapter pagerAdapter;
-	  private RelativeLayout topLevelLayout;
+	  private LinearLayout topLevelLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_screen_slide);
+		setContentView(R.layout.intro_overlay);
 
 		Log.d("mainOnCreate", "new main activity");
 
@@ -92,7 +90,7 @@ public class MainActivity extends FragmentActivity {
 //	    actionBar.addTab(actionBar.newTab()
 //                .setTabListener(tabListener));
 
-	    topLevelLayout = (RelativeLayout) findViewById(R.id.top_layout);
+	    topLevelLayout = (LinearLayout) findViewById(R.id.top_layout);
         
        if (isFirstTime()) {
         	topLevelLayout.setVisibility(View.INVISIBLE);

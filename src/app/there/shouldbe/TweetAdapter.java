@@ -66,7 +66,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 
 			/* Inflate file for each row */
 			vi = inflater.inflate(R.layout.wall_list_item, null);
-			listMenu = inflater.inflate(R.layout.list_item_menu, null);
+			listMenu = inflater.inflate(R.layout.post_menu, null);
 
 			/* Main wall content */
 			holder = new ViewHolder();
