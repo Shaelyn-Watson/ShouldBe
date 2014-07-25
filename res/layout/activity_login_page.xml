@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:background="@drawable/background_purple" >
+	android:background="@drawable/background_map"  >
     
     <LinearLayout
 		android:layout_width="match_parent"
@@ -10,25 +10,21 @@
 		android:layout_marginLeft="9dp"
 		android:layout_marginRight="9dp"
 		android:layout_marginTop="9dp"
-		android:layout_marginBottom="9dp"
-		android:background="@drawable/background_purple" >
+		android:layout_marginBottom="9dp">
 	
-	    <TextView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginBottom="50dp"
+	    <ImageView
+	        android:id="@+id/info_window_graphic"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" 
+	        android:layout_gravity="center_horizontal"
 	        android:layout_marginTop="20dp"
-	        android:gravity="center_horizontal"
-	        android:text="ShouldBe"
-	        android:textColor="#454545"
-	        android:textSize="50dp" />
+	        android:src="@drawable/info_window" />
 	
 	   	<ImageView
 	        android:id="@+id/imgLogo"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" 
 	        android:layout_gravity="center_horizontal"
-	        android:layout_marginTop="20dp"
 	        android:src="@drawable/sb_map_pin" />
 	    
 	    <ImageButton
@@ -36,8 +32,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_horizontal"
-	        android:layout_marginTop="34dp"
-	        android:background="@drawable/background_purple"
+	        android:layout_marginTop="32dp"
 	        android:src="@drawable/login_twitter" />
 
 	    <ImageButton
@@ -45,8 +40,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_horizontal"
-	        android:src="@drawable/login_email"
-	        android:background="@drawable/background_purple" />
+	        android:src="@drawable/login_email" />
 
     </LinearLayout>
 </RelativeLayout>

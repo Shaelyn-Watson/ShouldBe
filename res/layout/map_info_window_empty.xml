@@ -14,12 +14,12 @@
         android:layout_marginTop="9dp"
         android:layout_marginBottom="9dp" >
 	 	
-	    <Button
+	   <Button
 	        android:id="@+id/shouldBeButton"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:gravity="center_vertical"
-		    android:textColor="@android:color/black"
+		    android:textColor="@android:color/white"
 		    android:background="@drawable/background_purple"
 		    android:text="@string/whatShouldbe"
 		    android:textSize="20sp"
