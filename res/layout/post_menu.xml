@@ -11,7 +11,7 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:minHeight="8dp"
-	    android:paddingRight="15dp"
+	    android:paddingRight="18dp"
 	    android:textColor="#5d49ff"
 	    android:textSize="13sp" >
 	</TextView>
@@ -19,11 +19,11 @@
 
 	<ImageButton
         android:id="@+id/wall_like_button1" 
-        android:layout_width="80dp"
-       	android:layout_height="35dp"
+        android:layout_width="30dp"
+       	android:layout_height="30dp"
        	android:src="@drawable/sb_endorse_official"
        	android:background="@null"
-       	android:padding="10dp"
+       	android:paddingRight="11dp"
     	android:onClick="likeClick" />
     	
 	    
@@ -32,6 +32,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:textSize="12sp" 
-         android:padding="10dp" /> 
+         android:paddingTop="11dp" 
+         android:paddingRight="11dp" /> 
 
 </LinearLayout>
