@@ -14,7 +14,7 @@ public class Tweet {
       name = st.getUser().getScreenName();
       message = st.getText();
       date = st.getCreatedAt().toString().substring(0, 10);
-      likeCount = 0;
+      likeCount = st.getFavoriteCount();
    }
    
    public void setName(String _n){name = _n;}
