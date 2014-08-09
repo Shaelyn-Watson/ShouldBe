@@ -2,6 +2,12 @@ package app.there.shouldbe;
 
 import java.util.ArrayList;
 
+import twitter4j.AsyncTwitter;
+import twitter4j.AsyncTwitterFactory;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -18,11 +24,20 @@ public class TweetAdapter<T> extends BaseAdapter {
 	private ArrayList<T> data;
 	private static LayoutInflater inflater = null;
 	private Tweet tempValues = null;
+	private final String CONSUMER_KEY = "7TKDKSkU8e1DiF2oLTdA";
+	private final String CONSUMER_SECRET = "jRtJeN2NSXmxfAB8TV2YtS11dYrVkHQ8mG7tOxOXXw";
+	private final String ACCESS_KEY = "2360041674-Z2lfohxkkx3ZCeNEldLwLP81VXk8eB6rH7PKMsc";
+	private final String ACCESS_SECRET = "gDznLbH7tnYXwjaW53uqon33pKMcrIV6OYxVi2Y6nU7Zh";
+	private AsyncTwitter twitter;
+	
 
 	public TweetAdapter(Activity a, ArrayList<T> d) {
+		
 		activity = a;
 		data = d;
 		inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		setAdapter();
 	}
 
 	/******** What is the size of Passed Arraylist Size ************/
@@ -77,14 +92,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.likeButton = (ImageButton) vi.findViewById(R.id.wall_like_button1);
 			holder.likeCount = (TextView) vi.findViewById(R.id.wall_like_count1);
 			
-			holder.likeButton.setOnClickListener(new View.OnClickListener() {
-	             public void onClick(View v) {
-	                 // Perform action on click
-	            	 Log.d("LIKEBUTTON~~", "tweetadapter =wall like button clicked");
-	            	 holder.likeCount.setText("1");
-	             }
-	         });
-			
+						
 
 			/************ Set holder with LayoutInflater ************/
 			vi.setTag(holder);
@@ -104,7 +112,24 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.message.setText(tempValues.getMessage());
 			holder.name.setText("@" + tempValues.getName());
 			holder.likeCount.setText(String.valueOf(tempValues.getLikeCount()));
+			holder.likeButton.setOnClickListener(new View.OnClickListener() {
+	             public void onClick(View v) {
+	            	 holder.likeCount.setText(tempValues.onFavoriteClick());
+	             }
+	         });
+
 		}
 		return vi;
+	}
+	
+	private void setAdapter() {
+		ConfigurationBuilder cb = new ConfigurationBuilder();
+	    cb.setDebugEnabled(true)
+	            .setOAuthConsumerKey(CONSUMER_KEY)
+	            .setOAuthConsumerSecret(CONSUMER_SECRET)
+	            .setOAuthAccessToken(ACCESS_KEY)
+	            .setOAuthAccessTokenSecret(ACCESS_SECRET);
+	    AsyncTwitterFactory tf = new AsyncTwitterFactory(cb.build());
+		twitter = tf.getInstance();
 	}
 }

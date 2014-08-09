@@ -15,6 +15,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -124,7 +125,9 @@ public class WallFragment extends ListFragment implements OnClickListener{
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		
+	   	 Log.d("wallfragment~~", "count = ");
 	}
+	
+	
 
 }
