@@ -72,7 +72,7 @@ public class TweetAdapter<T> extends BaseAdapter {
 
 	/****** Depends upon data size called for each row , Create each ListView row *****/
 	@Override
-	public View getView(int position, View convertView, final ViewGroup parent) {
+	public View getView(final int position, View convertView, final ViewGroup parent) {
 		View vi = convertView;
 		View listMenu;
 		final ViewHolder holder;
@@ -114,7 +114,8 @@ public class TweetAdapter<T> extends BaseAdapter {
 			holder.likeCount.setText(String.valueOf(tempValues.getLikeCount()));
 			holder.likeButton.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
-	            	 holder.likeCount.setText(tempValues.onFavoriteClick());
+	            	 Tweet t = (Tweet) data.get(position);
+	            	 holder.likeCount.setText(t.onFavoriteClick());
 	             }
 	         });
 

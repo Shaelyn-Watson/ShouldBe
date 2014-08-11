@@ -62,7 +62,7 @@ public class Tweet {
 	// Perform action on click
    	 Log.d("LIKEBUTTON~~", "wall like button clicked on " + this.getMessage());
   	 twitter.createFavorite(this.getId());
-  	 String count = String.valueOf(this.getLikeCount());
+  	 String count = String.valueOf(this.getLikeCount()+1);
   	 Log.d("LIKEBUTTON~~", "count = " + count);
   	 return count;
    }

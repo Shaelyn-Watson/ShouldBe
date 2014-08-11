@@ -32,63 +32,11 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.intro_overlay);
 
 		Log.d("mainOnCreate", "new main activity");
-
-		//final ActionBar actionBar = getActionBar();
+		
 	    // Instantiate a ViewPager and a PagerAdapter.
 		pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(pagerAdapter);
-        
-//        HeightAnimation heightAnim = new HeightAnimation(R.layout.activity_twitter_feed, 250, mPager.getHeight() - 100);
-//        heightAnim.setDuration(1000);
-//        view.startAnimation(heightAnim);
-
-//	    mPager.setOnPageChangeListener(
-//	            new ViewPager.SimpleOnPageChangeListener() {
-//	                @Override
-//	                public void onPageSelected(int position) {
-//	                    // When swiping between pages, select the
-//	                    // corresponding tab.
-//	                	if(position==0)
-//	                		getActionBar().setSelectedNavigationItem(0);
-//	                	else
-//	                		getActionBar().setSelectedNavigationItem(1);
-//	                }
-//	            });
-
-	    // Specify that tabs should be displayed in the action bar.
-	    //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-	    // Create a tab listener that is called when the user changes tabs.
-//	    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-//
-//			@Override
-//			public void onTabReselected(Tab arg0,
-//					android.app.FragmentTransaction arg1) {
-//				// probably ignore this event
-//
-//			}
-//
-//			@Override
-//			public void onTabSelected(Tab tab,
-//					android.app.FragmentTransaction arg1) {
-//				// show the given tab
-//	        	mPager.setCurrentItem(tab.getPosition());
-//
-//			}
-//
-//			@Override
-//			public void onTabUnselected(Tab arg0,
-//					android.app.FragmentTransaction arg1) {
-//				// hide the given tab
-//
-//			}
-//	    };
-
-//	    actionBar.addTab(actionBar.newTab()
-//                .setTabListener(tabListener));
-//	    actionBar.addTab(actionBar.newTab()
-//                .setTabListener(tabListener));
 
 	    topLevelLayout = (LinearLayout) findViewById(R.id.top_layout);
         

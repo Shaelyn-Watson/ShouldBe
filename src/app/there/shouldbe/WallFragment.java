@@ -22,7 +22,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class WallFragment extends ListFragment implements OnClickListener{ 	  
+public class WallFragment extends ListFragment{ 	  
 
 	private AsyncTwitter twitter;
 	private final String CONSUMER_KEY = "7TKDKSkU8e1DiF2oLTdA";
@@ -122,11 +122,11 @@ public class WallFragment extends ListFragment implements OnClickListener{
 		});
 	}
 
-	@Override
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-	   	 Log.d("wallfragment~~", "count = ");
-	}
+//	@Override
+//	public void onClick(View arg0) {
+//		// TODO Auto-generated method stub
+//	   	 Log.d("wallfragment~~", "count = ");
+//	}
 	
 	
 
