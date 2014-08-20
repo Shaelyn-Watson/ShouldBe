@@ -23,8 +23,7 @@
        	android:layout_height="wrap_content"
        	android:src="@drawable/sb_endorse_official"
        	android:background="@null"
-       	android:paddingRight="11dp"
-    	android:onClick="likeClick" />
+       	android:paddingRight="11dp" />
     	
 	    
 	<TextView

@@ -65,11 +65,10 @@ public class WallFragment extends ListFragment{
 			getTimeLine();
 		}
 		
-	/**
-	 * Force refresh twitter feed TODO
-	 */
+		
 	@Override
-	public void onResume() {						
+	public void onResume() {
+		setAdapter();
 		super.onResume();
 	}
 	
@@ -120,14 +119,6 @@ public class WallFragment extends ListFragment{
 				setListAdapter(adapter);
 			}
 		});
-	}
-
-//	@Override
-//	public void onClick(View arg0) {
-//		// TODO Auto-generated method stub
-//	   	 Log.d("wallfragment~~", "count = ");
-//	}
-	
-	
+	}	
 
 }

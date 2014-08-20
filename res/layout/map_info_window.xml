@@ -38,6 +38,7 @@
        	android:layout_height="35dp"
        	android:src="@drawable/sb_endorse_official"
        	android:padding="10dp"
+       	android:background="@null"
     	android:onClick="likeClick" />
     	
 	    
